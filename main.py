@@ -15,7 +15,10 @@ app.secret_key = "THIS IS NOT SECURE"
 #---------------------------------------
 @app.route('/')
 def root():
-    return render_template("home.html");
+    return render_template("home.html",
+                               logged_in = False,
+                               top_ten = ["a", "b", "c", "d", "e",
+                                              "f", "g", "h", "i", "j"])
 
 
 #---------------------------------------
@@ -29,7 +32,7 @@ def login():
 
 #---------------------------------------
 # SIGN UP PAGE
-# authenticate user
+# add user to database
 #---------------------------------------
 @app.route('/signup')
 def login():
@@ -49,7 +52,11 @@ def logout():
 #---------------------------------------
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html",
+                               user = "ANON",
+                               logged_in = True,
+                               fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
+                               my_teams = ["mTeamA", "mTeamB", "mTeamC"])
 
 
 #---------------------------------------
@@ -58,7 +65,9 @@ def profile():
 #---------------------------------------
 @app.route('/search')
 def search():
-    return render_template("search.html")
+    return render_template("search.html",
+                               results = ["sTeamA", "sTeamB", "sTeamC"],
+                               logged_in = False)
 
 
 #---------------------------------------
@@ -67,7 +76,8 @@ def search():
 #---------------------------------------
 @app.route('/createteam')
 def create():
-    return render_template("create.html")
+    return render_template("create.html",
+                               logged_in = True)
 
 
 #---------------------------------------
@@ -76,8 +86,17 @@ def create():
 #---------------------------------------
 @app.route('/editteam')
 def editT():
-    return render_template("edit_team.html")
-
+    return render_template("edit_team.html",
+                               logged_in = True,
+                               team = "TeamA",
+                               pokemon = ["a", "b", "c", "d", "e",
+                                              "f", "g", "h", "i", "j"],
+                               poke_att1 = ["a1", "b1", "c1", "d1", "e1",
+                                                "f1", "g1", "h1", "i1", "j1"],
+                               poke_att2 = ["a2", "b2", "c2", "d2", "e2",
+                                                "f2", "g2", "h2", "i2", "j2"],
+                               poke_att3 = ["a3", "b3", "c3", "d3", "e3",
+                                                "f3", "g3", "h3", "i3", "j3"])                                              
 
 #---------------------------------------
 # EDIT POKEMON
@@ -85,4 +104,12 @@ def editT():
 #---------------------------------------
 @app.route('/editpokemon')
 def editP():
-    return render_template("edit_pokemon.html")
+    return render_template("edit_pokemon.html",
+                               logged_in = True,
+                               pokemon = "pokemon name",
+                               gender_opt = ["m", "f"],
+                               level_opt = [1, 2, 3, 4, 5],
+                               abilities = ["walk", "eat", "sleep"],
+                               moves = "what moves?",
+                               item = "what item?",
+                               nature = "what nature?")
