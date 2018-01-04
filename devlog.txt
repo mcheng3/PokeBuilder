@@ -7,3 +7,6 @@ Added general frame of main.py
 linK -- 2018-01-02 14:45:50
 Attempted the api
 
+goldmanJ -- 2018-01-03 14:44:12
+began work on basic template (and started to teach myself bootstrap)
+
