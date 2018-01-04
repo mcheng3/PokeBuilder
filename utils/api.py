@@ -1,4 +1,4 @@
-import urllib2, json, time, sys
+import urllib2, json, time, sys, requests
 
 #sys encoding things to prevent Unicode encoding errors
 reload(sys)
@@ -6,11 +6,8 @@ sys.setdefaultencoding('utf-8')
 
 # CURRENTLY NOT WORKING
 def search_poke(query):
-    temp = urllib2.Request("http://pokeapi.co/api/v2/pokemon/" + query)
-    print temp
-    u = urllib2.urlopen(temp)
-    s = u.read()
-    dic = json.loads(s)
+    temp = requests.get("http://pokeapi.co/api/v2/pokemon", query)
+    dic = r.json()
     print dic
     
 if __name__ == '__main__':
