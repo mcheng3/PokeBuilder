@@ -6,7 +6,7 @@ sys.setdefaultencoding('utf-8')
 
 # CURRENTLY NOT WORKING
 def search_poke(query):
-    temp = requests.get("http://pokeapi.co/api/v2/pokemon", query)
+    temp = requests.get("http://pokeapi.co/api/v2/pokemon/", query)
     dic = r.json()
     print dic
     
