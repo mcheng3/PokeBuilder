@@ -35,7 +35,7 @@ def login():
 # add user to database
 #---------------------------------------
 @app.route('/signup')
-def login():
+def signup():
     return render_template("signup.html")
 
 #---------------------------------------
@@ -113,3 +113,7 @@ def editP():
                                moves = "what moves?",
                                item = "what item?",
                                nature = "what nature?")
+
+if __name__ == "__main__":
+    app.debug = True
+app.run()
