@@ -40,7 +40,7 @@ def login():
 #---------------------------------------
 @app.route('/logout')
 def logout():
-    return redirect( url_for("main") )
+    return redirect( url_for("root") )
 
 
 #---------------------------------------
@@ -75,7 +75,7 @@ def create():
 # edit team pokemon members overall
 #---------------------------------------
 @app.route('/editteam')
-def editT():
+def edit_team():
     return render_template("edit_team.html")
 
 
@@ -84,5 +84,5 @@ def editT():
 # edit specific pokemon traits
 #---------------------------------------
 @app.route('/editpokemon')
-def editP():
+def edit_pokemon():
     return render_template("edit_pokemon.html")
