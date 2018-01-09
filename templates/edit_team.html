@@ -2,3 +2,13 @@
 {% block title %}
 Pokebuilder
 {% endblock %}
+
+{% block body %}
+<form>
+    <h3>Team Name:</h3>
+    <input class="form-control" type="text" placeholder="Team Name" value={{teamname}} name="teamname">
+    <br><br>
+    <h3>Description:</h3>
+    <input class="form-control" type="textarea" placeholder="Description" value={{teamdesc}} name="teamdesc">
+</form>
+{% endblock %}
