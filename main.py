@@ -15,8 +15,8 @@ app.secret_key = "THIS IS NOT SECURE"
 #---------------------------------------
 @app.route('/')
 def root():
-    return render_template("home.html",
-                               logged_in = False,
+    return render_template("index.html",
+                               loggedin = False,
                                top_ten = ["a", "b", "c", "d", "e",
                                               "f", "g", "h", "i", "j"])
 
@@ -54,7 +54,7 @@ def logout():
 def profile():
     return render_template("profile.html",
                                user = "ANON",
-                               logged_in = True,
+                               loggedin = True,
                                fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
                                my_teams = ["mTeamA", "mTeamB", "mTeamC"])
 
@@ -67,7 +67,7 @@ def profile():
 def search():
     return render_template("search.html",
                                results = ["sTeamA", "sTeamB", "sTeamC"],
-                               logged_in = False)
+                               loggedin = False)
 
 
 #---------------------------------------
@@ -76,8 +76,8 @@ def search():
 #---------------------------------------
 @app.route('/createteam')
 def create():
-    return render_template("create.html",
-                               logged_in = True)
+    return render_template("edit_team.html",
+                               loggedin = True)
 
 
 #---------------------------------------
@@ -87,7 +87,7 @@ def create():
 @app.route('/editteam')
 def edit_team():
     return render_template("edit_team.html",
-                               logged_in = True,
+                               loggedin = True,
                                team = "TeamA",
                                pokemon = ["a", "b", "c", "d", "e",
                                               "f", "g", "h", "i", "j"],
@@ -96,7 +96,7 @@ def edit_team():
                                poke_att2 = ["a2", "b2", "c2", "d2", "e2",
                                                 "f2", "g2", "h2", "i2", "j2"],
                                poke_att3 = ["a3", "b3", "c3", "d3", "e3",
-                                                "f3", "g3", "h3", "i3", "j3"])                                              
+                                                "f3", "g3", "h3", "i3", "j3"])
 
 
 #---------------------------------------
@@ -118,4 +118,3 @@ def edit_pokemon():
 if __name__ == "__main__":
     app.debug = True
     app.run()
-
