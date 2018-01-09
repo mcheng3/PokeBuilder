@@ -4,11 +4,26 @@ Pokebuilder
 {% endblock %}
 
 {% block body %}
-<form>
-    <h3>Team Name:</h3>
-    <input class="form-control" type="text" placeholder="Team Name" value={{teamname}} name="teamname">
-    <br><br>
-    <h3>Description:</h3>
-    <input class="form-control" type="textarea" placeholder="Description" value={{teamdesc}} name="teamdesc">
-</form>
+<div class="container">
+  <div class="row">
+      <form>
+          <div class="form-group">
+              <label for="teamname"><h3>Team Name</h3></label>
+              <input class="form-control" type="text" placeholder="Team Name" value="{{teamname}}" name="teamname" id="teamname">
+          </div>
+          <div class="form-group">
+              <label for="textdesc"><h3>Description</h3></label>
+              <textarea class="form-control" rows="3" >{{ teamdesc }}</textarea>
+          </div>
+      </form>
+  </div>
+  <div class="row">
+    <div class="col-8">
+        temp
+    </div>
+    <div class="col">
+        temp
+    </div>
+  </div>
+</div>
 {% endblock %}
