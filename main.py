@@ -1,9 +1,9 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
-#import sqlite3
-#import utils.api as api
-#import utils.database as db
-#import utils.auth as auth
-#import time
+import sqlite3
+import utils.api as api
+import utils.database as db
+import utils.auth as auth
+import time
 
 app = Flask(__name__)
 app.secret_key = "THIS IS NOT SECURE"
@@ -16,7 +16,7 @@ app.secret_key = "THIS IS NOT SECURE"
 @app.route('/')
 def root():
     return render_template("index.html",
-                               loggedin = False,
+                               loggedin = auth.is_logged_in(),
                                top_ten = ["a", "b", "c", "d", "e",
                                               "f", "g", "h", "i", "j"])
 
@@ -25,17 +25,36 @@ def root():
 # LOGIN PAGE
 # authenticate user
 #---------------------------------------
-@app.route('/login')
+@app.route('/login', methods = ['POST', 'GET'])
 def login():
-    return render_template("login.html")
-
-
+    # checks for post method to respond to submit button
+    if request.method == 'POST':
+        # uses the database method to check the login
+        log_res = auth.login( request.form['usr'], request.form['pwd'] )
+        if log_res == 0 :
+            return redirect(url_for('root'))
+        else:
+            return redirect(url_for('login'))
+    # just render normally if no post
+    else:
+        return render_template("login.html")
+    
 #---------------------------------------
 # SIGN UP PAGE
 # add user to database
 #---------------------------------------
-@app.route('/signup')
+@app.route('/signup', methods = ['POST', 'GET'])
 def signup():
+    # CREATE ACCOUNT
+    if request.method == 'POST':
+        cr_acc_res = auth.sign_up( request.form['usr'], request.form['pwd'] )
+        # if successful
+        if cr_acc_res == 0:
+            flash("Account created!")
+            return redirect( url_for('login') )
+        # if username already exists
+        if cr_acc_res == 1:
+            return redirect( url_for('signup') )
     return render_template("signup.html")
 
 #---------------------------------------
@@ -43,6 +62,7 @@ def signup():
 #---------------------------------------
 @app.route('/logout')
 def logout():
+    logout();
     return redirect( url_for("root") )
 
 
@@ -63,8 +83,9 @@ def profile():
 # SEARCH PAGE
 # shows teams related to search
 #---------------------------------------
-@app.route('/search')
+@app.route('/search', methods = ['POST'])
 def search():
+#    api.search_query(request.form['search'])
     return render_template("search.html",
                                results = ["sTeamA", "sTeamB", "sTeamC"],
                                loggedin = False)
