@@ -33,7 +33,7 @@ def new_user(username, password):
 
     
 #adds a team to the favorites list
-def add_favorite(username, teamid);
+def add_favorite(username, teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -52,7 +52,7 @@ def add_favorite(username, teamid);
     db.close()
 
 #finds username
-def find_user(username)
+def find_user(username):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -60,17 +60,18 @@ def find_user(username)
     c.execute("SELECT user FROM users WHERE user = \"%s\";" %(username))
     found = c.fetchone()[0]
 
+    db.commit()
+    db.close()
+
     #returns true if username is found
     if found == username:
         return True
     else:
         return False
 
-    db.commit()
-    db.close()
 
 #find password
-def match_pass(username, password)
+def match_pass(username, password):
     db = sqlite3.connect(f)
     c = db.cursor()
     
@@ -88,7 +89,7 @@ def match_pass(username, password)
     db.close()
     
 #creates a new team
-def new_team(username, name, version, weaknesses, strengths, pkmnlist)
+def new_team(username, name, version, weaknesses, strengths, pkmnlist):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -105,7 +106,7 @@ def new_team(username, name, version, weaknesses, strengths, pkmnlist)
 
 
 #creating a new pokemon
-def create_poke(teamid, species, gender, level, ability, moves, item, nature)
+def create_poke(teamid, species, gender, level, ability, moves, item, nature):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -122,5 +123,5 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature)
 
     
 #updating pokemon
-def update_poke(
+#def update_poke(
 
