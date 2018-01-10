@@ -4,7 +4,6 @@ import urllib2, json, time, sys, requests
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-# CURRENTLY NOT WORKING
 def search_api(query):
     temp = requests.get("http://pokeapi.co/api/v2/"+ query, None)
     dic = temp.json()
