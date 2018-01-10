@@ -10,3 +10,6 @@ Attempted the api
 goldmanJ -- 2018-01-03 14:44:12
 began work on basic template (and started to teach myself bootstrap)
 
+chengM -- 2018-01-09 23:41:15
+Added edit_pokemon.html, fixed bugs, and did some javascript
+
