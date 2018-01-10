@@ -30,7 +30,7 @@ def logout():
         
 #if username is not taken, 
 def sign_up( usr, pwd ):
-    if !find_user( usr ):
+    if not find_user( usr ):
         #good, add user
         new_user( usr, pwd );
         return 0;

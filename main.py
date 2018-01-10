@@ -1,8 +1,6 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import sqlite3
-import utils.api as api
-import utils.database as db
-import utils.auth as auth
+from utils import api, database, auth
 import time
 
 app = Flask(__name__)
