@@ -60,14 +60,15 @@ def find_user(username):
     c.execute("SELECT user FROM users WHERE user = \"%s\";" %(username))
     found = c.fetchone()[0]
 
+    db.commit()
+    db.close()
+
     #returns true if username is found
     if found == username:
         return True
     else:
         return False
 
-    db.commit()
-    db.close()
 
 #find password
 def match_pass(username, password):
@@ -122,5 +123,6 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature):
 
     
 #updating pokemon
-def update_poke():
-    return
+
+#def update_poke(
+

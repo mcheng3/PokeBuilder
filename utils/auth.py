@@ -30,11 +30,11 @@ def logout():
         
 #if username is not taken, 
 def sign_up( usr, pwd ):
-    if not find_user( usr ):
-        #good, add user
-        new_user( usr, pwd );
-        return 0;
-    else:
+    if find_user( usr ):
         #bad, reenter info
         flash("Username taken.");
         return 1;
+    else:
+        #good, add user
+        new_user( usr, pwd );
+        return 0;

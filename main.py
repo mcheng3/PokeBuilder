@@ -81,7 +81,7 @@ def profile():
 # SEARCH PAGE
 # shows teams related to search
 #---------------------------------------
-@app.route('/search', methods = ['POST'])
+@app.route('/search', methods = ['POST', 'GET'])
 def search():
 #    api.search_query(request.form['search'])
     return render_template("search.html",
