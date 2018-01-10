@@ -16,7 +16,7 @@ Pokebuilder
               <textarea class="form-control" rows="3" name="teamdesc" id="teamdesc">{{ teamdesc }}</textarea>
           </div>
           <div class="form-group">
-              <center><button type="submit">Save Changes</button><center>
+              <center><button type="submit" class="btn btn-outline-primary">Save Changes</button><center>
           </div>
       </form>
   </div>
@@ -27,12 +27,12 @@ Pokebuilder
             <div class="form-row">
                 <h3>{{ pkmn[name] }}</h3>
                 <div class="form-group">
-                    <button type="button" class="btn btn-outline-primary" name="{{ pkmn[name] }}">EDIT</button>
+                    <button type="submit" class="btn btn-outline-primary" name="{{ pkmn[name] }}">EDIT</button>
                 </div>
             </div>
             {% endfor %}
+        <button type="submit" class="btn btn-outline-secondary" name="newpkmn">Add Pokemon</button>
         </form>
-        <button type="button" class="btn btn-outline-secondary" name="newpkmn">Add Pokemon</button>
     </div>
     <div class="col">
         <p>TEAM ANALYSIS AND STRENGTH/WEAKNESS COMING SOON<p>

@@ -28,6 +28,7 @@ def login():
     # checks for post method to respond to submit button
     if request.method == 'POST':
         # uses the database method to check the login
+        # print "username: " + request.form['usr'] + "\npassword: " + request.form['pwd']
         log_res = auth.login( request.form['usr'], request.form['pwd'] )
         if log_res == 0 :
             return redirect(url_for('root'))
@@ -36,7 +37,7 @@ def login():
     # just render normally if no post
     else:
         return render_template("login.html")
-    
+
 #---------------------------------------
 # SIGN UP PAGE
 # add user to database

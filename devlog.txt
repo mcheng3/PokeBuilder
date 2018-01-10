@@ -19,3 +19,6 @@ Added edit_pokemon.html, fixed bugs, and did some javascript
 goldmanJ -- 2018-01-10 10:59:37
 Been forgetting to log for a while (oops). Finished base.html, added a basic index.html for the demo, finished a preliminary edit_team.html
 
+goldmanJ -- 2018-01-10 12:30:04
+made login and signup pages and modified things to work with the main app
+
