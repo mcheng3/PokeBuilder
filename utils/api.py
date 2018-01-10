@@ -1,4 +1,5 @@
-import urllib2, json, time, sys, requests
+import urllib2, json, time, sys
+from flask import request
 
 #sys encoding things to prevent Unicode encoding errors
 reload(sys)
@@ -9,7 +10,7 @@ def search_api(query):
     dic = temp.json()
     return dic
 
-# Returns a dictionary of the pokemon's moves, items, abilities, etc.    
+# Returns a dictionary of the pokemon's moves, items, abilities, etc.
 def search_poke(pokemon):
     dic = search_api("pokemon/" + pokemon)
     return dic

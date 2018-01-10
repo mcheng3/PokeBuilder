@@ -52,7 +52,7 @@ def add_favorite(username, teamid):
     db.close()
 
 #finds username
-def find_user(username)
+def find_user(username):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -104,7 +104,7 @@ def new_team(username, name, version, weaknesses, strengths, pkmnlist):
 
 
 #creating a new pokemon
-def create_poke(teamid, species, gender, level, ability, moves, item, nature)
+def create_poke(teamid, species, gender, level, ability, moves, item, nature):
     db = sqlite3.connect(f)
     c = db.cursor()
 
