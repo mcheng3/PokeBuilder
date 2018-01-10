@@ -106,11 +106,11 @@ def create():
 #---------------------------------------
 @app.route('/editteam')
 def edit_team():
+    pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
     return render_template("edit_team.html",
                                loggedin = True,
-                               team = "TeamA",
-                               pokemon = ["a", "b", "c", "d", "e",
-                                              "f", "g", "h", "i", "j"],
+                               teamname = "TeamA",
+                               pokemon = pokedict,
                                poke_att1 = ["a1", "b1", "c1", "d1", "e1",
                                                 "f1", "g1", "h1", "i1", "j1"],
                                poke_att2 = ["a2", "b2", "c2", "d2", "e2",

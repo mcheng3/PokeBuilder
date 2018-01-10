@@ -23,11 +23,16 @@ Pokebuilder
   <div class="row">
     <div class="col-8">
         <form action="/editpokemon">
-            {% for pkmn in mons %}
+            <!-- mons is a dictionary of the pokemon on the team keyed by pkminid -->
+            {% for pkmn in pokemon %}
             <div class="form-row">
-                <h3>{{ pkmn[name] }}</h3>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-outline-primary" name="{{ pkmn[name] }}">EDIT</button>
+                <div class="col-4">
+                    <h3>{{ pokemon[pkmn] }}</h3>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-primary" name="{{ pkmn }}">EDIT</button>
+                    </div>
                 </div>
             </div>
             {% endfor %}

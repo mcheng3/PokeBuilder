@@ -22,3 +22,6 @@ Been forgetting to log for a while (oops). Finished base.html, added a basic ind
 goldmanJ -- 2018-01-10 12:30:04
 made login and signup pages and modified things to work with the main app
 
+goldmanJ -- 2018-01-10 14:50:38
+finished edit_team.html (demo version) and looked into ajax
+
