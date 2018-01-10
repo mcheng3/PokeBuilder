@@ -2,11 +2,12 @@ import sqlite3
 from os import system
 import hashlib
 
+f = "data/app.db"
+
 #creates database
 def create_db():
-    db = sqlite3.connect(f)
+    db = sqlite3.connect(f)#, check_same_thread=False)
     c = db.cursor()
-
     #creates users table
     c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT, favorites TEXT);")
 
@@ -56,9 +57,9 @@ def find_user(username):
     db = sqlite3.connect(f)
     c = db.cursor()
 
-    #looks through users table
-    c.execute("SELECT user FROM users WHERE user = \"%s\";" %(username))
-    found = c.fetchone()[0]
+    c.execute("SELECT user FROM users WHERE user = \"%s\";" % ( username ))
+    found = str(c.fetchone())
+    print(found)
 
     db.commit()
     db.close()
@@ -75,7 +76,7 @@ def match_pass(username, password):
 
     #looks through table for pass
     c.execute("SELECT pass FROM users WHERE user = \"%s\";" %(username))
-    found = c.fetchone()[0]
+    found = str(c.fetchone())
 
     #returns if password is found
     if found == password:
@@ -93,7 +94,7 @@ def new_team(username, name, version, weaknesses, strengths, pkmnlist):
 
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    teamid = c.fetchone()[0]
+    teamid = str(c.fetchone())
     teamid += 1
 
     #adding team to table
@@ -110,7 +111,7 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature):
 
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    pkmnid = c.fetchone()
+    pkmnid = str(c.fetchone())
     pkmnid += 1
 
     #adding team to table
@@ -140,3 +141,7 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature):
 #updating pokemon
 
 #def update_poke(
+
+if __name__ == "__main__":
+    system("rm data/app.db")
+    create_db()
