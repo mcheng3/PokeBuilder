@@ -10,3 +10,6 @@ Attempted the api
 goldmanJ -- 2018-01-03 14:44:12
 began work on basic template (and started to teach myself bootstrap)
 
+linK -- 2018-01-09 22:34:21
+Handled login/signup/logout on main.py and created auth.py
+
