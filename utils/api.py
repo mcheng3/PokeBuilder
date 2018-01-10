@@ -5,10 +5,15 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # CURRENTLY NOT WORKING
-def search_poke(query):
-    temp = requests.get("http://pokeapi.co/api/v2/pokemon/"+ query, None)
+def search_api(query):
+    temp = requests.get("http://pokeapi.co/api/v2/"+ query, None)
     dic = temp.json()
-    print dic
-    
+    return dic
+
+# Returns a dictionary of the pokemon's moves, items, abilities, etc.    
+def search_poke(pokemon):
+    dic = search_api("pokemon/" + pokemon)
+    return dic
+
 if __name__ == '__main__':
-    search_poke("pikachu")
+    print search_poke("pikachu")
