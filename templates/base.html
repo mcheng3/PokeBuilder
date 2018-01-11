@@ -60,17 +60,18 @@
     </nav>
 
 
-    <br><br>
+    <br>
     <div class="text-center">
       <div style="color: red; font-style: italic">
-	{% set messages=get_flashed_messages() %}
-	{% for m in messages %}
-	{{m}} <br>
-	{% endfor %}
+    	{% set messages=get_flashed_messages() %}
+    	{% for m in messages %}
+    	{{m}}
+        <br>
+    	{% endfor %}
       </div>
     </div>
-    <br><br>
-    
+    <br>
+
     {% block body %}{% endblock %}
     <!-- javascript stuff required for dropdowns -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
