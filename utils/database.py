@@ -118,13 +118,13 @@ def match_pass(username, password):
     db.close()
 
 #creates a new team
-def new_team(username, name, version, weaknesses, strengths, pkmnlist):
+def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
     db = sqlite3.connect(f)
     c = db.cursor()
     
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    teamid = str(c.fetchone()[0])
+    teamid = int(c.fetchone()[0])
     teamid += 1
 
     #adding team to table
@@ -169,3 +169,4 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature):
 if __name__ == "__main__":
     system("rm data/app.db")
     create_db()
+#    new_team("kl", "second", "THis is great", "NONE", "NONE", "NONE", 0)

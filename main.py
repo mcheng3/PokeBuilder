@@ -84,9 +84,10 @@ def profile():
 #---------------------------------------
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
-#    api.search_query(request.form['search'])
+    print(request.args['search'])
+    results = api.search_poke(request.args['search'])
     return render_template("search.html",
-                               results = ["sTeamA", "sTeamB", "sTeamC"],
+                               results = results,
                                loggedin = auth.is_logged_in())
 
 
@@ -97,7 +98,7 @@ def search():
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
     if request.method == 'POST':
-        database.delete_team(session['user'], request.form['teamname'])
+        #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
     return render_template("edit_team.html",
                                loggedin = auth.is_logged_in())
