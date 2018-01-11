@@ -58,7 +58,7 @@ def find_user(username):
     c = db.cursor()
 
     c.execute("SELECT user FROM users WHERE user = \"%s\";" % ( username ))
-    found = str(c.fetchone())
+    found = str(c.fetchone()[0])
     print(found)
 
     db.commit()
@@ -76,7 +76,7 @@ def match_pass(username, password):
 
     #looks through table for pass
     c.execute("SELECT pass FROM users WHERE user = \"%s\";" %(username))
-    found = str(c.fetchone())
+    found = str(c.fetchone()[0])
 
     #returns if password is found
     if found == password:
@@ -94,7 +94,7 @@ def new_team(username, name, version, weaknesses, strengths, pkmnlist):
 
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    teamid = str(c.fetchone())
+    teamid = str(c.fetchone()[0])
     teamid += 1
 
     #adding team to table
@@ -111,7 +111,7 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature):
 
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    pkmnid = str(c.fetchone())
+    pkmnid = str(c.fetchone()[0])
     pkmnid += 1
 
     #adding team to table
@@ -128,7 +128,7 @@ def create_poke(teamid, species, gender, level, ability, moves, item, nature):
 
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    pkmnid = c.fetchone()
+    pkmnid = str(c.fetchone()[0])
     pkmnid += 1
 
     #adding team to table

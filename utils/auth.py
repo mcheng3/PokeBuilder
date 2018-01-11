@@ -1,4 +1,4 @@
-from flask import session
+from flask import session, flash
 import hashlib
 from database import find_user, new_user, match_pass
 
