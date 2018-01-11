@@ -2,3 +2,21 @@
 {% block title %}
 Pokebuilder
 {% endblock %}
+
+{% block body %}
+<h1>{{user}}</h1>
+
+<br><br>
+<h5>LIST OF TEAMS</h5>
+{% for i in my_teams %}
+NAME: {{i[0]}} <br>
+DESC: {{i[1]}} <br><br>
+{% endfor %}
+
+<br><br>
+<h5>LIST OF FAVORITE TEAMS</h5>
+{% for i in fav_teams %}
+{{i}}<br>
+{% endfor %}
+
+{% endblock %}

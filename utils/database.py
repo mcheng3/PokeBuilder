@@ -12,7 +12,7 @@ def create_db():
     c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT, favorites TEXT);")
 
     #creates teams table
-    c.execute("CREATE TABLE teams (teamid INT PRIMARY KEY, user TEXT, name TEXT, version TEXT, weaknesses TEXT, strengths TEXT, upvotes INT);")
+    c.execute("CREATE TABLE teams (teamid INT PRIMARY KEY, user TEXT, name TEXT, desc TEXT, version TEXT, weaknesses TEXT, strengths TEXT, upvotes INT);")
 
     #creates pokemon table
     c.execute("CREATE TABLE pokemon (pkmnid INT PRIMARY KEY, teamid INT, species TEXT, gender TEXT, level INT, ability TEXT, moves TEXT, item TEXT, nature TEXT);")
@@ -69,6 +69,36 @@ def find_user(username):
     else:
         return False
 
+#finds team
+def find_team(teamname):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    c.execute("SELECT \* FROM teams WHERE name = \"%s\";" % ( teamname ))
+    found = str(c.fetchone()[0])
+    print(found)
+
+    db.commit()
+    db.close()
+
+    if found == teamname:
+        return True
+    else:
+        return False
+
+#get all team by user
+def get_teams(username):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    command = "SELECT name, desc FROM teams WHERE user = \"%s\";" 
+    found = list()
+    for row in c.execute(command %(username)):
+        found.append(row)
+               
+    db.commit()
+    db.close()
+    return found
 
 def match_pass(username, password):
     db = sqlite3.connect(f)
@@ -91,31 +121,25 @@ def match_pass(username, password):
 def new_team(username, name, version, weaknesses, strengths, pkmnlist):
     db = sqlite3.connect(f)
     c = db.cursor()
-
+    
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
     teamid = str(c.fetchone()[0])
     teamid += 1
 
     #adding team to table
-    c.execute("INSERT INTO teams VALUES(%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0);" %(teamid, username, name, version, weaknesses, strengths))
+    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0);" %(teamid, username, name, desc, version, weaknesses, strengths))
 
     db.commit()
     db.close()
 
-
-#creating a new pokemon
-def create_poke(teamid, species, gender, level, ability, moves, item, nature):
+#deletes team
+def delete_team(username, name):
     db = sqlite3.connect(f)
     c = db.cursor()
-
+    
     #creating a new teamid
-    c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    pkmnid = str(c.fetchone()[0])
-    pkmnid += 1
-
-    #adding team to table
-    c.execute("INSERT INTO pokemon VALUES(%d, %d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid, teamid, species, gender, level, ability, moves, item, nature))
+    c.execute("DELETE FROM teams WHERE user=\"%s\" and name=\"%s\"" %(username, name))
 
     db.commit()
     db.close()

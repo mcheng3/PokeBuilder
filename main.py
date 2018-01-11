@@ -75,7 +75,7 @@ def profile():
                                user = "ANON",
                                loggedin = auth.is_logged_in(),
                                fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
-                               my_teams = ["mTeamA", "mTeamB", "mTeamC"])
+                               my_teams = database.get_teams(session['user']))
 
 
 #---------------------------------------
@@ -94,8 +94,11 @@ def search():
 # CREATE PAGE
 # create a new team
 #---------------------------------------
-@app.route('/createteam')
+@app.route('/createteam', methods = ['POST', 'GET'])
 def create():
+    if request.method == 'POST':
+        database.delete_team(session['user'], request.form['teamname'])
+        database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
     return render_template("edit_team.html",
                                loggedin = auth.is_logged_in())
 
