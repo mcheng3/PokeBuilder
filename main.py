@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import sqlite3
 from utils import api, database, auth
-import time
+import time, json
 
 app = Flask(__name__)
 app.secret_key = "THIS IS NOT SECURE"
@@ -128,7 +128,7 @@ def edit_team():
 # EDIT POKEMON
 # edit specific pokemon traits
 #---------------------------------------
-@app.route('/editpokemon')
+@app.route('/editpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
     return render_template("edit_pokemon.html",
                                logged_in = auth.is_logged_in(),
@@ -139,6 +139,19 @@ def edit_pokemon():
                                moves = "what moves?",
                                item = "what item?",
                                nature = "what nature?")
+
+@app.route("/pokedata")
+def pokedata():
+    data = request.args.get("name")  
+    results = api.search_poke(data)
+    #print results
+    moves = []
+    #print results["moves"]
+    for each in results["moves"]:
+        moves.append(each["move"]["name"])
+    print moves
+    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"][0]["type"]["name"]}
+    return json.dumps(response)
 
 if __name__ == "__main__":
     app.debug = True
