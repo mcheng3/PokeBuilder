@@ -6,7 +6,7 @@ Pokebuilder
 {% block body %}
 <div class="container">
   <div class="row justify-content-center">
-      <form>
+      <form action="/createteam" method="POST">
           <div class="form-group text-center">
               <label for="teamname"><h3>Team Name</h3></label>
               <input class="form-control" type="text" placeholder="Team Name" value="{{teamname}}" name="teamname" id="teamname">

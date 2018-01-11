@@ -123,12 +123,12 @@ def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
     c = db.cursor()
     
     #creating a new teamid
-    c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    teamid = int(c.fetchone())
-    teamid += 1
-
+    command ="SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;"
+    for row in c.execute(command):
+        teamid = row[0]
+        
     #adding team to table
-    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0);" %(teamid, username, name, desc, version, weaknesses, strengths))
+    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0);" %(teamid+1, username, name, desc, version, weaknesses, strengths))
 
     db.commit()
     db.close()

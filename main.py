@@ -61,7 +61,7 @@ def signup():
 #---------------------------------------
 @app.route('/logout')
 def logout():
-    logout();
+    auth.logout();
     return redirect( url_for("root") )
 
 
@@ -98,7 +98,7 @@ def search():
 #---------------------------------------
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
-    if request.method == 'POST':
+    if request.method == 'POST': 
         #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
     return render_template("edit_team.html",
