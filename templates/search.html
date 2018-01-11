@@ -2,3 +2,15 @@
 {% block title %}
 Pokebuilder
 {% endblock %}
+
+{% block body %}
+<h1>Search Results</h1><hr>
+{% if 'detail' in results %}
+Not Found.
+{% else %}
+NAME: {{results["name"]}}<br>
+SPECIES: {{results["species"]["name"]}}<br>
+TYPE: {{results["types"][0]["type"]["name"]}}<br>
+{% endif %}
+
+{% endblock %}

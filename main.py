@@ -86,6 +86,7 @@ def profile():
 def search():
     print(request.args['search'])
     results = api.search_poke(request.args['search'])
+    print(results)
     return render_template("search.html",
                                results = results,
                                loggedin = auth.is_logged_in())
