@@ -36,7 +36,7 @@ def login():
             return redirect(url_for('login'))
     # just render normally if no post
     else:
-        return render_template("login.html")
+        return render_template("login.html", loggedin=auth.is_logged_in())
 
 #---------------------------------------
 # SIGN UP PAGE
@@ -54,7 +54,7 @@ def signup():
         # if username already exists
         if cr_acc_res == 1:
             return redirect( url_for('signup') )
-    return render_template("signup.html")
+    return render_template("signup.html", loggedin=auth.is_logged_in())
 
 #---------------------------------------
 # LOGOUT PAGE
@@ -73,7 +73,7 @@ def logout():
 def profile():
     return render_template("profile.html",
                                user = "ANON",
-                               loggedin = True,
+                               loggedin = auth.is_logged_in(),
                                fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
                                my_teams = ["mTeamA", "mTeamB", "mTeamC"])
 
@@ -87,7 +87,7 @@ def search():
 #    api.search_query(request.form['search'])
     return render_template("search.html",
                                results = ["sTeamA", "sTeamB", "sTeamC"],
-                               loggedin = False)
+                               loggedin = auth.is_logged_in())
 
 
 #---------------------------------------
@@ -97,7 +97,7 @@ def search():
 @app.route('/createteam')
 def create():
     return render_template("edit_team.html",
-                               loggedin = True)
+                               loggedin = auth.is_logged_in())
 
 
 #---------------------------------------
@@ -108,7 +108,7 @@ def create():
 def edit_team():
     pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
     return render_template("edit_team.html",
-                               loggedin = True,
+                               loggedin = auth.is_logged_in(),
                                teamname = "TeamA",
                                pokemon = pokedict,
                                poke_att1 = ["a1", "b1", "c1", "d1", "e1",
@@ -126,7 +126,7 @@ def edit_team():
 @app.route('/editpokemon')
 def edit_pokemon():
     return render_template("edit_pokemon.html",
-                               logged_in = True,
+                               logged_in = auth.is_logged_in(),
                                pokemon = "pokemon name",
                                gender_opt = ["m", "f"],
                                level_opt = [1, 2, 3, 4, 5],

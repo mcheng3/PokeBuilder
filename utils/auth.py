@@ -8,6 +8,7 @@ def login( usr, pwd ):
     if find_user(usr):
         #good username but password?
         if match_pass( usr, pwd ):
+            session['user'] = usr
             return 0;
         #bad password
         else:
