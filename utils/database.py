@@ -58,7 +58,7 @@ def find_user(username):
     c = db.cursor()
 
     c.execute("SELECT user FROM users WHERE user = \"%s\";" % ( username ))
-    found = str(c.fetchone()[0])
+    found = str(c.fetchone())[3:-3]
     print(found)
 
     db.commit()
@@ -75,7 +75,7 @@ def find_team(teamname):
     c = db.cursor()
 
     c.execute("SELECT \* FROM teams WHERE name = \"%s\";" % ( teamname ))
-    found = str(c.fetchone()[0])
+    found = str(c.fetchone())
     print(found)
 
     db.commit()
@@ -106,7 +106,7 @@ def match_pass(username, password):
 
     #looks through table for pass
     c.execute("SELECT pass FROM users WHERE user = \"%s\";" %(username))
-    found = str(c.fetchone()[0])
+    found = str(c.fetchone())[3:-3]
 
     #returns if password is found
     if found == password:
@@ -124,7 +124,7 @@ def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
     
     #creating a new teamid
     c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    teamid = int(c.fetchone()[0])
+    teamid = int(c.fetchone())
     teamid += 1
 
     #adding team to table
