@@ -21,7 +21,7 @@
       });
     });
     
-    $('#pokemon').select2({
+    $("#pokemon").select2({
       ajax: {
         url: '/editpokemon',
         type: 'GET',
@@ -34,8 +34,9 @@
       }
     });
 
-    $("#pokemon").on("select2:selecting", function(e) {
-      console.log("xd");
+    $("#pokemon").on("select2:open", function(e) {
+      var data = e.params.data;
+      console.log(data);
     });
   </script>
 
