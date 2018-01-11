@@ -1,6 +1,6 @@
 import urllib2, json, time, sys
 #from flask import requests
-import requests
+# import requests
 
 #sys encoding things to prevent Unicode encoding errors
 reload(sys)
