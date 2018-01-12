@@ -31,3 +31,6 @@ Linked the database, the Flask app, and HTML files
 chengM -- 2018-01-11 04:11:49
 Updated /editpokemon. Now, when you select a pokemon from the list, a sprite of it shows, along with moves and its type.
 
+goldmanJ -- 2018-01-12 14:47:48
+began working on profile, main.py integration
+

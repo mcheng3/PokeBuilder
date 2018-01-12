@@ -4,21 +4,26 @@ Pokebuilder
 {% endblock %}
 
 {% block body %}
-<h1>{{user}}</h1>
-
-<br><br>
-<h5>LIST OF TEAMS</h5>
-<hr>
-{% for i in my_teams %}
-NAME: {{i[0]}} <br>
-DESC: {{i[1]}} <br><br>
-{% endfor %}
-
-<br><br>
-<h5>LIST OF FAVORITE TEAMS</h5>
-<hr>
-{% for i in fav_teams %}
-{{i}}<br>
-{% endfor %}
-
+<div class="container">
+    <div class="row justify-content-center">
+        <h2>Hello, {{user}}</h2>
+        <br><br>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3>YOUR TEAMS</h3>
+            {% for i in my_teams %}
+            NAME: {{i[0]}} <br>
+            DESC: {{i[1]}} <br><br>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3>FAVORITED TEAMS</h3>
+            {% for i in fav_teams %}
+            NAME: {{i[0]}} <br>
+            DESC: {{i[1]}} <br><br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
