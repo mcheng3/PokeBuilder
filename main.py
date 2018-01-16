@@ -72,7 +72,7 @@ def logout():
 @app.route('/profile')
 def profile():
     return render_template("profile.html",
-                               user = "ANON",
+                               user = session['user'],
                                loggedin = auth.is_logged_in(),
                                fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
                                my_teams = database.get_teams(session['user']))
@@ -104,7 +104,22 @@ def create():
     return render_template("edit_team.html",
                                loggedin = auth.is_logged_in())
 
-
+#---------------------------------------
+# VIEW TEAM
+# view team details
+#---------------------------------------
+@app.route('/viewteam')
+def view_team():
+    return render_template("view_team.html",
+                               logged_in = auth.is_logged_in(),
+                               teamname = "team name",
+                               user = "user",
+                               desc = "Description",
+                               version = "game version",
+                               strengths = "don't nkow yet",
+                               weaknesses = "don't know yet",
+                               pkmnlist = 5)
+                               
 #---------------------------------------
 # EDIT PAGE
 # edit team pokemon members overall
