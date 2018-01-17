@@ -159,9 +159,9 @@ def edit_pokemon():
 def pokedata():
     data = request.args.get("name")  
     results = api.search_poke(data)
-    #print results
+    print results
     moves = []
-    #print results["moves"]
+    print results["moves"]
     for each in results["moves"]:
         moves.append(each["move"]["name"])
     print moves
