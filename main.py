@@ -98,10 +98,12 @@ def search():
 #---------------------------------------
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
+    #ajax should maybe check if all form items are filled before submitting to database
     if request.method == 'POST': 
         #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
-    return render_template("edit_team.html",
+        return redirect(url_for("root")
+    return render_template("create_team.html",
                                loggedin = auth.is_logged_in())
 
 #---------------------------------------
@@ -110,6 +112,7 @@ def create():
 #---------------------------------------
 @app.route('/viewteam')
 def view_team():
+    id = int(request.args["id"])
     return render_template("view_team.html",
                                logged_in = auth.is_logged_in(),
                                teamname = "team name",
@@ -118,7 +121,7 @@ def view_team():
                                version = "game version",
                                strengths = "don't nkow yet",
                                weaknesses = "don't know yet",
-                               pkmnlist = 5)
+                               pkmnlist = ["yea", "yeas", "sdfa"])
                                
 #---------------------------------------
 # EDIT PAGE

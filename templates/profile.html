@@ -10,8 +10,10 @@ Pokebuilder
 <h5>LIST OF TEAMS</h5>
 <hr>
 {% for i in my_teams %}
-NAME: {{i[0]}} <br>
-DESC: {{i[1]}} <br><br>
+<a href="/viewteam?id={{i[0]}}">"
+  NAME: {{i[0]}} <br>
+  DESC: {{i[1]}} <br><br>
+</a>
 {% endfor %}
 
 <br><br>
