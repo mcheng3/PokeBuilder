@@ -190,12 +190,12 @@ def update_poke(pkmnid, species, gender, level, ability, moves, item, nature):
     db.close()
     
 #updating team info
-def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes, pkmnid):
+def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes):
     db = sqlite3.connect(f)
     c = db.cursor()
     
     #update info
-    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d, pkmnid = \"%s\";" %(name, desc, version, weaknesses, strengths, upvotes, pkmnid))
+    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d;" %(name, desc, version, weaknesses, strengths, upvotes))
                   
     db.commit()
     db.close()
