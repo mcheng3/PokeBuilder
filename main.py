@@ -102,9 +102,10 @@ def create():
     if request.method == 'POST':
         #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
-        return redirect(url_for("root") )
-    return render_template("create_team.html",
-                               loggedin = auth.is_logged_in())
+        return redirect(url_for("root"))
+    else:
+        return render_template("create_team.html",
+                                   loggedin = auth.is_logged_in())
 
 #---------------------------------------
 # VIEW TEAM
