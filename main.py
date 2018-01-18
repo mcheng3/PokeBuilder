@@ -72,7 +72,7 @@ def logout():
 @app.route('/profile')
 def profile():
     return render_template("profile.html",
-                               user = "ANON",
+                               user = session['user'],
                                loggedin = auth.is_logged_in(),
                                fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
                                my_teams = database.get_teams(session['user']))
@@ -98,13 +98,31 @@ def search():
 #---------------------------------------
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
+    #ajax should maybe check if all form items are filled before submitting to database
     if request.method == 'POST': 
         #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
-    return render_template("edit_team.html",
+        return redirect(url_for("root")
+    return render_template("create_team.html",
                                loggedin = auth.is_logged_in())
 
-
+#---------------------------------------
+# VIEW TEAM
+# view team details
+#---------------------------------------
+@app.route('/viewteam')
+def view_team():
+    id = int(request.args["id"])
+    return render_template("view_team.html",
+                               logged_in = auth.is_logged_in(),
+                               teamname = "team name",
+                               user = "user",
+                               desc = "Description",
+                               version = "game version",
+                               strengths = "don't nkow yet",
+                               weaknesses = "don't know yet",
+                               pkmnlist = ["yea", "yeas", "sdfa"])
+                               
 #---------------------------------------
 # EDIT PAGE
 # edit team pokemon members overall
@@ -144,9 +162,9 @@ def edit_pokemon():
 def pokedata():
     data = request.args.get("name")  
     results = api.search_poke(data)
-    #print results
+    print results
     moves = []
-    #print results["moves"]
+    print results["moves"]
     for each in results["moves"]:
         moves.append(each["move"]["name"])
     print moves

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+Poke Viewer
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class = "col-8">
+      <div class = "col-6">
+	<h1>{{ teamname }}</h1>
+	<hr>
+	Author: {{ user }} Version: {{vers}}
+	<br>
+	<h4>Description</h4>
+	{{ desc }}
+      </div>
+      <div class = "col-2">
+	<form action="/viewteam">
+	  {{ if mine }}
+	  <button type="submit" name="edit" class="btn btn-outline-primary">Edit</button>
+	  {{ else }}
+	  <button type="submit" name="favorite" class="btn btn-outline-primary">Favorite</button>
+	  {{ endif }}
+	</form>
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-8">
+      <div class = "col-4">
+	<h4>Weaknesses</h4>
+	{{ weaknesses }}
+      </div>
+      <div class = "col-4">
+	<h4>Strengths</h4>
+	{{ strengths }}
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <h4>Pokemon</h4>
+    <hr>
+    {% for poke in poke_teams %}
+    {{poke}}<br>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
