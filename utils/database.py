@@ -1,7 +1,9 @@
 import sqlite3
 from os import system
 import hashlib
+
 f = "data/app.db"
+
 #creates database
 def create_db():
     db = sqlite3.connect(f)#, check_same_thread=False)
@@ -107,7 +109,7 @@ def get_teams(username):
     db = sqlite3.connect(f)
     c = db.cursor()
     
-    command = "SELECT name, desc FROM teams WHERE user = \"%s\";" 
+    command = "SELECT teamid, name, desc FROM teams WHERE user = \"%s\";" 
     found = list()
     for row in c.execute(command %(username)):
         found.append(row)
@@ -180,32 +182,60 @@ def create_poke(species, gender, level, ability, moves, item, nature):
 def update_poke(pkmnid, species, gender, level, ability, moves, item, nature):
     db = sqlite3.connect(f)
     c = db.cursor()
+    
     #update info
     c.execute("UPDATE pokemon SET species = \"%s\", gender = \"%s\", level = %d, ability = \"%s\", moves = \"%s\", item = \"%s\", nature = \"%s\";" %(species, gender, level, ability, moves, item, nature))
     
     db.commit()
     db.close()
     
-#updating team
+#updating team info
 def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes, pkmnid):
     db = sqlite3.connect(f)
     c = db.cursor()
+    
     #update info
     c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d, pkmnid = \"%s\";" %(name, desc, version, weaknesses, strengths, upvotes, pkmnid))
+                  
     db.commit()
     db.close()
+
 #deleting pokemon
 def delete_poke(teamid, delete_pkmn):
     db = sqlite3.connect(f)
     c = db.cursor()
+    
     #deleting from team datatable
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
     old_string = c.fetchone()[0]
+    if old_string.endswith(delete_pkmn):
+        new_string = old_string.replace('%s', '' %(str(delete_pkmn)))
+    else:
+        new_string = old_string.replace('%s,', '' %(str(delete_pkmn)))
+        
+    #deleting from pokemon datatable
+    c.execute("DELETE FROM pokemon WHERE pkmnid = %d;" %(delete_pkmn))
     
-    new_string = old_string.replace('%s', '' %(delete_pkmn))
+    db.commit()
+    db.close()
+    
+#gets top ten favorites
+def get_ten(user):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    
+    #getting the string of favorites
+    c.execute("SELECT favorites FROM users WHERE user = \"%s\";" %(user))
+    favorites = c.fetchone()[0]
+    
+    #splitting string into a list
+    mylist = favorites.split(',')
+    return mylist
+
+    db.commit()
+    db.close()
     
 if __name__ == "__main__":
     system("rm data/app.db")
     create_db()
 #    new_team("kl", "second", "THis is great", "NONE", "NONE", "NONE", 0)
-
