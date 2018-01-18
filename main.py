@@ -104,14 +104,14 @@ def create():
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
         return redirect(url_for("root"))
     else:
-        return render_template("create_team.html",
+        return render_template("edit_team.html",
                                    loggedin = auth.is_logged_in())
 
 #---------------------------------------
 # VIEW TEAM
 # view team details
 #---------------------------------------
-@app.route('/viewteam')
+@app.route('/viewteam', method = ['POST', 'GET'])
 def view_team():
     id = int(request.args["id"])
     return render_template("view_team.html",
@@ -128,9 +128,13 @@ def view_team():
 # EDIT PAGE
 # edit team pokemon members overall
 #---------------------------------------
-@app.route('/editteam')
+@app.route('/editteam', method = ['POST', 'GET'])
 def edit_team():
+    team = find_team(id)
+    if method = 'POST':
+        update_team()
     pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
+    id = int(request.args["id"])
     return render_template("edit_team.html",
                                loggedin = auth.is_logged_in(),
                                teamname = "TeamA",
