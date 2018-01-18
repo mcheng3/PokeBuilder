@@ -12,17 +12,27 @@ Pokebuilder
     <div class="row">
         <div class="col">
             <h3>YOUR TEAMS</h3>
-            {% for i in my_teams %}
-            NAME: {{i[0]}} <br>
-            DESC: {{i[1]}} <br><br>
-            {% endfor %}
+            <form action="/editteam" method="POST">
+                <!-- my_teams is a dictionary of teams keyed by teamid with the value as the name -->
+                {% for team in my_teams %}
+                <div class="row">
+                    NAME: {{ my_teams[team] }}
+                    <button type="submit" class="btn btn-outline-primary" name="{{ team }}">EDIT</button>
+                </div>
+                {% endfor %}
+            </form>
         </div>
         <div class="col">
             <h3>FAVORITED TEAMS</h3>
-            {% for i in fav_teams %}
-            NAME: {{i[0]}} <br>
-            DESC: {{i[1]}} <br><br>
-            {% endfor %}
+            <form action="/viewteam" method="POST">
+                <!-- fav_teams is a dictionary of teams keyed by teamid with the value as the name -->
+                {% for team in fav_teams %}
+                <div class="row">
+                    NAME: {{ fav_teams[team] }}
+                    <button type="submit" class="btn btn-outline-primary" name="{{ team }}">EDIT</button>
+                </div>
+                {% endfor %}
+            </form>
         </div>
     </div>
 </div>
