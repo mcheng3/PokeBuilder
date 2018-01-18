@@ -99,10 +99,10 @@ def search():
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
     #ajax should maybe check if all form items are filled before submitting to database
-    if request.method == 'POST': 
+    if request.method == 'POST':
         #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
-        return redirect(url_for("root")
+        return redirect(url_for("root") )
     return render_template("create_team.html",
                                loggedin = auth.is_logged_in())
 
@@ -122,7 +122,7 @@ def view_team():
                                strengths = "don't nkow yet",
                                weaknesses = "don't know yet",
                                pkmnlist = ["yea", "yeas", "sdfa"])
-                               
+
 #---------------------------------------
 # EDIT PAGE
 # edit team pokemon members overall
@@ -160,7 +160,7 @@ def edit_pokemon():
 
 @app.route("/pokedata")
 def pokedata():
-    data = request.args.get("name")  
+    data = request.args.get("name")
     results = api.search_poke(data)
     print results
     moves = []
