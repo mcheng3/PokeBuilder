@@ -191,7 +191,7 @@ def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes, pkm
     db = sqlite3.connect(f)
     c = db.cursor()
     #update info
-    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d, pkmnid = \"%s\";" %(name, desc, version, weaknesses, strengths, upvotes, pkmnid)
+    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d, pkmnid = \"%s\";" %(name, desc, version, weaknesses, strengths, upvotes, pkmnid))
     db.commit()
     db.close()
 #deleting pokemon
