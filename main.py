@@ -130,7 +130,7 @@ def view_team():
 #---------------------------------------
 @app.route('/editteam', method = ['POST', 'GET'])
 def edit_team():
-    if method = 'POST':
+    if request.method == 'POST':
         update_team()
     else:
         pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
@@ -151,7 +151,7 @@ def edit_team():
 #---------------------------------------
 @app.route('/createpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
-    if method = 'POST': 
+    if request.method == 'POST': 
         databse.create_poke(things)
     return render_template("edit_pokemon.html",
                                logged_in = auth.is_logged_in(),
@@ -169,7 +169,7 @@ def edit_pokemon():
 #---------------------------------------
 @app.route('/editpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
-    if method = 'POST':
+    if request.method == 'POST':
         update_poke(stuff)
     return render_template("edit_pokemon.html",
                                logged_in = auth.is_logged_in(),
