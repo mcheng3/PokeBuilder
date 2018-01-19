@@ -1,9 +1,7 @@
 import sqlite3
 from os import system
 import hashlib
-
 f = "data/app.db"
-
 #creates database
 def create_db():
     db = sqlite3.connect(f)#, check_same_thread=False)
@@ -12,13 +10,12 @@ def create_db():
     #creates users table
     c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT, favorites TEXT);")
     #creates teams table
-    c.execute("CREATE TABLE teams (teamid INT PRIMARY KEY, user TEXT, name TEXT, desc TEXT, version TEXT, weaknesses TEXT, strengths TEXT, upvotes INT);")
+    c.execute("CREATE TABLE teams (teamid INT PRIMARY KEY, user TEXT, name TEXT, desc TEXT, version TEXT, weaknesses TEXT, strengths TEXT, upvotes INT, pkmnid TEXT);")
     #creates pokemon table
-    c.execute("CREATE TABLE pokemon (pkmnid INT PRIMARY KEY, teamid INT, species TEXT, gender TEXT, level INT, ability TEXT, moves TEXT, item TEXT, nature TEXT);")
+    c.execute("CREATE TABLE pokemon (pkmnid INT PRIMARY KEY, species TEXT, gender TEXT, level INT, ability TEXT, moves TEXT, item TEXT, nature TEXT);")
     
     db.commit()
     db.close()
-
     
 #adds new user
 def new_user(username, password):
@@ -30,7 +27,6 @@ def new_user(username, password):
     
     db.commit()
     db.close()
-
     
 #adds a team to the favorites list
 def add_favorite(username, teamid):
@@ -43,14 +39,16 @@ def add_favorite(username, teamid):
     
     #appending string in favorites column
     fav_s = fav_t[0]
-    fav_s = fav_s + "," + teamid
+    if fav_s == "":
+        fav_s = "" + teamid
+    else:
+        fav_s = fav_s + "," + teamid
     
     #updating database
     c.execute("UPDATE users SET favorites = \"%s\" WHERE user = \"%s\";" %(fav_s, username))
     
     db.commit()
     db.close()
-
     
 #finds username
 def find_user(username):
@@ -68,14 +66,12 @@ def find_user(username):
         return True
     else:
         return False
-
     
 #searches for team names / usernames with a given string, and returns a list
 def search_name(search):
     db = sqlite3.connect(f)
     c = db.cursor()
     result = []
-
     c.execute("SELECT name,teamid FROM teams WHERE name LIKE '%%s%';" %(search))
     for row in c:
         result.append(row)
@@ -89,25 +85,22 @@ def search_name(search):
     
     db.commit()
     db.close()
-
     
 #finds team
-def find_team(teamname):
+def find_team(teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
     
-    c.execute("SELECT \* FROM teams WHERE name = \"%s\";" % ( teamname ))
+    c.execute("SELECT * FROM teams WHERE teamid = %d;" % ( teamid ))
     found = str(c.fetchone())
     print(found)
     
     db.commit()
     db.close()
-
-    if found == teamname:
+    if found == teamid:
         return True
     else:
         return False
-
     
 #get all team by user
 def get_teams(username):
@@ -123,8 +116,6 @@ def get_teams(username):
     db.close()
     
     return found
-
-
 def match_pass(username, password):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -141,7 +132,6 @@ def match_pass(username, password):
     
     db.commit()
     db.close()
-
     
 #creates a new team
 def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
@@ -154,11 +144,10 @@ def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
         teamid = row[0]
         
     #adding team to table
-    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0);" %(teamid+1, username, name, desc, version, weaknesses, strengths))
+    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0, \"%s\");" %(teamid+1, username, name, desc, version, weaknesses, strengths, pkmnlist))
     
     db.commit()
     db.close()
-
     
 #deletes team
 def delete_team(username, name):
@@ -166,33 +155,57 @@ def delete_team(username, name):
     c = db.cursor()
     
     #creating a new teamid
-    c.execute("DELETE FROM teams WHERE user=\"%s\" and name=\"%s\"" %(username, name))
+    c.execute("DELETE FROM teams WHERE user = \"%s\" and name = \"%s\"" %(username, name))
     
     db.commit()
     db.close()
-
     
 #creating a new pokemon
-def create_poke(teamid, species, gender, level, ability, moves, item, nature):
+def create_poke(species, gender, level, ability, moves, item, nature):
     db = sqlite3.connect(f)
     c = db.cursor()
     
-    #creating a new teamid
-    c.execute("SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;")
-    pkmnid = str(c.fetchone()[0])
+    #creating a new pkmnid
+    c.execute("SELECT pkmnid FROM pokemon ORDER BY pkmnid DESC LIMIT 1;")
+    pkmnid = c.fetchone()[0]
     pkmnid += 1
     
     #adding team to table
-    c.execute("INSERT INTO pokemon VALUES(%d, %d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid, teamid, species, gender, level, ability, moves, item, nature))
+    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid, species, gender, level, ability, moves, item, nature))
     
     db.commit()
     db.close()
-
     
 #updating pokemon
-#def update_poke(
-
+def update_poke(pkmnid, species, gender, level, ability, moves, item, nature):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    #update info
+    c.execute("UPDATE pokemon SET species = \"%s\", gender = \"%s\", level = %d, ability = \"%s\", moves = \"%s\", item = \"%s\", nature = \"%s\";" %(species, gender, level, ability, moves, item, nature))
+    
+    db.commit()
+    db.close()
+    
+#updating team
+def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes, pkmnid):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    #update info
+    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d, pkmnid = \"%s\";" %(name, desc, version, weaknesses, strengths, upvotes, pkmnid)
+    db.commit()
+    db.close()
+#deleting pokemon
+def delete_poke(teamid, delete_pkmn):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    #deleting from team datatable
+    c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
+    old_string = c.fetchone()[0]
+    
+    new_string = old_string.replace('%s', '' %(delete_pkmn))
+    
 if __name__ == "__main__":
     system("rm data/app.db")
     create_db()
 #    new_team("kl", "second", "THis is great", "NONE", "NONE", "NONE", 0)
+
