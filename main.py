@@ -111,7 +111,7 @@ def create():
 # VIEW TEAM
 # view team details
 #---------------------------------------
-@app.route('/viewteam', method = ['POST', 'GET'])
+@app.route('/viewteam', methods = ['POST', 'GET'])
 def view_team():
     id = int(request.args["id"])
     return render_template("view_team.html",
@@ -128,7 +128,7 @@ def view_team():
 # EDIT PAGE
 # edit team pokemon members overall
 #---------------------------------------
-@app.route('/editteam', method = ['POST', 'GET'])
+@app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
     if request.method == 'POST':
         database.update_team()
