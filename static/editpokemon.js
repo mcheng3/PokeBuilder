@@ -66,7 +66,12 @@ var transmit = function(e){
 	    $("#moveslist4").select2({
          	data: moves
    	    });
-   	    document.getElementById("type").innerHTML = d["type"];
+   	    $("type").html("");
+	    var types = "";
+	    d["type"].forEach(function(item){
+		types += item["type"]["name"] + "<br>";
+	    });
+	    document.getElementById("type").innerHTML = types;
 	}
     });
     
