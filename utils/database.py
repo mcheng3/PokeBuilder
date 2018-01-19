@@ -118,6 +118,52 @@ def get_teams(username):
     db.close()
     
     return found
+
+#returns user's favorites
+def return_favorites(user):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    command = "SELECT favorites FROM users WHERE user = \"%s\";"
+    favorite = list()
+    for row in c.execute(command %(user)):
+        favorite.append(row)
+
+    db.commit()
+    db.close()
+
+    return favorite
+
+#returns team info by searching the teamid
+def return_team(teamid):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    command = "SELECT * FROM teams WHERE teamid = %d;"
+    team_info = list()
+    for row in c.execute(command %(teamid)):
+        team_info.append(row)
+
+    db.commit()
+    db.close()
+
+    return team_info
+
+#returns pokemon info by searching the pkmnid
+def return_pkmn(pkmnid):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    command = "SELECT * FROM pokemon WHERE pkmnid = %d;"
+    pkmn_info = list()
+    for row in c.execute(command %pkmnid)):
+        pkmn_info.append(row)
+
+    db.commit()
+    db.close()
+
+    return pkmn_info
+
 def match_pass(username, password):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -142,6 +188,7 @@ def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
     
     #creating a new teamid
     command ="SELECT teamid FROM teams ORDER BY teamid DESC LIMIT 1;"
+    teamid = 0
     for row in c.execute(command):
         teamid = row[0]
         
@@ -163,7 +210,7 @@ def delete_team(username, name):
     db.close()
     
 #creating a new pokemon
-def create_poke(species, gender, level, ability, moves, item, nature):
+def create_poke(species, gender, level, ability, moves, item, nature, teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
     
@@ -172,8 +219,14 @@ def create_poke(species, gender, level, ability, moves, item, nature):
     pkmnid = c.fetchone()[0]
     pkmnid += 1
     
-    #adding team to table
+    #adding pokemon to table
     c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid, species, gender, level, ability, moves, item, nature))
+
+    #adding pkmnid to teams table
+    c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
+    pkmnlist = c.fetchone()[0]
+    pkmnlist += pkmnlist + ",%d" %(pkmnid)
+    c.execute("UPDATE teams SET pkmnid = %d WHERE teamid = %d;" %(pkmnid, teamid))
     
     db.commit()
     db.close()
@@ -184,7 +237,7 @@ def update_poke(pkmnid, species, gender, level, ability, moves, item, nature):
     c = db.cursor()
     
     #update info
-    c.execute("UPDATE pokemon SET species = \"%s\", gender = \"%s\", level = %d, ability = \"%s\", moves = \"%s\", item = \"%s\", nature = \"%s\";" %(species, gender, level, ability, moves, item, nature))
+    c.execute("UPDATE pokemon SET species = \"%s\", gender = \"%s\", level = %d, ability = \"%s\", moves = \"%s\", item = \"%s\", nature = \"%s\" WHERE pkmnid = \"%s\";" %(species, gender, level, ability, moves, item, nature, pkmnid))
     
     db.commit()
     db.close()
@@ -199,7 +252,7 @@ def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes):
                   
     db.commit()
     db.close()
-
+    
 #deleting pokemon
 def delete_poke(teamid, delete_pkmn):
     db = sqlite3.connect(f)
@@ -219,18 +272,17 @@ def delete_poke(teamid, delete_pkmn):
     db.commit()
     db.close()
     
-#gets top ten favorites
-def get_ten(user):
+------------------------------------------------------UPDATE THIS ---------------------------------------
+#gets top ten most upvoted teams and returns as a tuple made out of tuples
+def get_ten():
     db = sqlite3.connect(f)
     c = db.cursor()
     
-    #getting the string of favorites
-    c.execute("SELECT favorites FROM users WHERE user = \"%s\";" %(user))
-    favorites = c.fetchone()[0]
+    #getting the top ten most upvoted teams
+    c.execute("SELECT teamid FROM teams ORDER BY upvotes DESC LIMIT 1;" %())
+    top_ten = c.fetchall()
     
-    #splitting string into a list
-    mylist = favorites.split(',')
-    return mylist
+    return top_ten
 
     db.commit()
     db.close()
