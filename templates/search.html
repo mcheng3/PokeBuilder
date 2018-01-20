@@ -10,7 +10,7 @@ Pokebuilder
   Not Found.
   {% else %}
   {% for teams in results %}
-  <a href="/viewteam?id=teams[1]">
+  <a href="/viewteam?id={{teams[1]}}">
     {{teams[0]}} by {{teams[2]}}
   </a>
   {% endfor %}

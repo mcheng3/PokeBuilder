@@ -112,13 +112,27 @@ def create():
 #---------------------------------------
 @app.route('/viewteam', methods = ['POST', 'GET'])
 def view_team():
-    id = int(request.args["id"])
-    team = database.find_team(id)
-    return render_template("view_team.html",
-                           logged_in = auth.is_logged_in(),
-                           team = team,
-                           mine = session["user"] == team[1],
-                           poke_teams = ["yea", "yeas", "sdfa"])
+    if request.method == 'POST':
+        if 'edit' in request.form:
+            return redirect(url_for("edit_team", id = request.args['id']))
+        elif 'favorite' in request.form:
+            id = request.args["id"]
+            database.add_favorite(session["user"], id)
+            return redirect(url_for("view_team", id = id))
+        else:
+            id = request.args["id"]
+            #remove favorite
+            return redirect(url_for("view_team", id = id))
+    else:
+        id = int(request.args["id"])
+        team = database.find_team(id)
+        list = database.return_favorites(session["user"])[0][0].split(",")
+        return render_template("view_team.html",
+                               loggedin = auth.is_logged_in(),
+                               team = team,
+                               favorited = str(id) in list,
+                               mine = session["user"] == team[1],
+                               poke_teams = ["yea", "yeas", "sdfa"])
 
 #---------------------------------------
 # EDIT PAGE
@@ -153,7 +167,7 @@ def create_pokemon():
     if request.method == 'POST':
         database.create_poke(things)
     return render_template("edit_pokemon.html",
-                               logged_in = auth.is_logged_in(),
+                               loggedin = auth.is_logged_in(),
                                pokemon = "",
                                gender_opt = ["m", "f"],
                                level_opt = [1, 2, 3, 4, 5],
@@ -171,7 +185,7 @@ def edit_pokemon():
     if request.method == 'POST':
         update_poke(stuff)
     return render_template("edit_pokemon.html",
-                               logged_in = auth.is_logged_in(),
+                               loggedin = auth.is_logged_in(),
                                pokemon = "pokemon name",
                                gender_opt = ["m", "f"],
                                level_opt = [1, 2, 3, 4, 5],

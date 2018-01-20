@@ -11,12 +11,14 @@ Poke Viewer
       <span style="color: blue">BY:</span> {{ team[1] }} |
       <span style="color: blue">GAME VERSION:</span> {{ team[4] }}
     </div>
-    <div class = "col-md-auto offset-md-3">
-      <form action="/viewteam">
+    <div class = "col-md-auto offset-md-2">
+      <form action="/viewteam?id={{team[0]}}" method="POST">
 	{% if mine %}
-	<button type="submit" name="edit" class="btn btn-outline-primary">Edit</button>
+	<input type="submit" value="Edit" name="edit" class="btn btn-outline-primary">
+	{% elif favorited %}
+	<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
 	{% else %}
-	<button type="submit" name="favorite" class="btn btn-outline-primary">Favorite</button>
+	<input type="submit" value="Favorite" name="favorite" class="btn btn-outline-primary">
 	{% endif %}
       </form>
     </div>
