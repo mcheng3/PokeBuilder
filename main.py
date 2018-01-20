@@ -16,7 +16,7 @@ def root():
     return render_template("index.html",
                                loggedin = auth.is_logged_in(),
                                top_ten = ["a", "b", "c", "d", "e",
-                                              "f", "g", "h", "i", "j"])
+                                          "f", "g", "h", "i", "j"])
 
 
 #---------------------------------------
@@ -114,15 +114,12 @@ def create():
 @app.route('/viewteam', methods = ['POST', 'GET'])
 def view_team():
     id = int(request.args["id"])
+    team = database.find_team(id)
+    print team[8]
     return render_template("view_team.html",
-                               logged_in = auth.is_logged_in(),
-                               teamname = "team name",
-                               user = "user",
-                               desc = "Description",
-                               version = "game version",
-                               strengths = "don't nkow yet",
-                               weaknesses = "don't know yet",
-                               pkmnlist = ["yea", "yeas", "sdfa"])
+                           logged_in = auth.is_logged_in(),
+                           team = team,
+                           pkmnlist = ["yea", "yeas", "sdfa"])
 
 #---------------------------------------
 # EDIT PAGE
@@ -131,11 +128,7 @@ def view_team():
 @app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
     if request.method == 'POST':
-<<<<<<< HEAD
-        update_team()
-=======
         database.update_team()
->>>>>>> bcc45cefcd1bf2eef2dd65c794e9b972dda56222
     else:
         pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
         id = int(request.args["id"])
@@ -144,9 +137,12 @@ def edit_team():
                                    loggedin = auth.is_logged_in(),
                                    teamname = "TeamA",
                                    pokemon = pokedict,
-                                   poke_att1 = ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1"],
-                                   poke_att2 = ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2", "j2"],
-                                   poke_att3 = ["a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "i3", "j3"])
+                                   poke_att1 = ["a1", "b1", "c1", "d1", "e1",
+                                                "f1", "g1", "h1", "i1", "j1"],
+                                   poke_att2 = ["a2", "b2", "c2", "d2", "e2",
+                                                "f2", "g2", "h2", "i2", "j2"],
+                                   poke_att3 = ["a3", "b3", "c3", "d3", "e3",
+                                                "f3", "g3", "h3", "i3", "j3"])
 
 
 #---------------------------------------

@@ -94,15 +94,15 @@ def find_team(teamid):
     c = db.cursor()
     
     c.execute("SELECT * FROM teams WHERE teamid = %d;" % ( teamid ))
-    found = str(c.fetchone())
-    print(found)
+    for row in c: 
+        print row
     
     db.commit()
     db.close()
-    if found == teamid:
-        return True
+    if row[0] == teamid:
+       return True
     else:
-        return False
+      return False
     
 #get all team by user
 def get_teams(username):
@@ -156,7 +156,7 @@ def return_pkmn(pkmnid):
 
     command = "SELECT * FROM pokemon WHERE pkmnid = %d;"
     pkmn_info = list()
-    for row in c.execute(command %pkmnid)):
+    for row in c.execute(command %(pkmnid)):
         pkmn_info.append(row)
 
     db.commit()
@@ -272,7 +272,7 @@ def delete_poke(teamid, delete_pkmn):
     db.commit()
     db.close()
     
-------------------------------------------------------UPDATE THIS ---------------------------------------
+#------------------------------------------------------UPDATE THIS ---------------------------------------
 #gets top ten most upvoted teams and returns as a tuple made out of tuples
 def get_ten():
     db = sqlite3.connect(f)

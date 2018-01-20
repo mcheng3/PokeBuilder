@@ -8,12 +8,12 @@ Poke Viewer
   <div class="row">
     <div class = "col-8">
       <div class = "col-6">
-	<h1>{{ teamname }}</h1>
+	<h1>{{ team[2] }}</h1>
 	<hr>
-	Author: {{ user }} Version: {{vers}}
+	Author: {{ team[1] }} Game Version: {{ team[4] }}
 	<br>
 	<h4>Description</h4>
-	{{ desc }}
+	{{ team[3] }}
       </div>
       <div class = "col-2">
 	<form action="/viewteam">
@@ -30,11 +30,11 @@ Poke Viewer
     <div class = "col-8">
       <div class = "col-4">
 	<h4>Weaknesses</h4>
-	{{ weaknesses }}
+	{{ team[5] }}
       </div>
       <div class = "col-4">
 	<h4>Strengths</h4>
-	{{ strengths }}
+	{{ team[6] }}
       </div>
     </div>
   </div>
