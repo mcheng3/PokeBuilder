@@ -94,15 +94,16 @@ def find_team(teamid):
     c = db.cursor()
     
     c.execute("SELECT * FROM teams WHERE teamid = %d;" % ( teamid ))
+    team = None
     for row in c: 
-        print row
+        team = row
     
     db.commit()
     db.close()
     if row[0] == teamid:
-       return True
+       return team
     else:
-      return False
+      return None
     
 #get all team by user
 def get_teams(username):

@@ -115,11 +115,11 @@ def create():
 def view_team():
     id = int(request.args["id"])
     team = database.find_team(id)
-    print team[8]
     return render_template("view_team.html",
                            logged_in = auth.is_logged_in(),
                            team = team,
-                           pkmnlist = ["yea", "yeas", "sdfa"])
+                           mine = session["user"] == team[1],
+                           poke_teams = ["yea", "yeas", "sdfa"])
 
 #---------------------------------------
 # EDIT PAGE
