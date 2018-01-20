@@ -4,13 +4,19 @@ Pokebuilder
 {% endblock %}
 {% block body %}
 <div class="container">
+  <div class="row justify-content-center">
     <form action="/login" method="POST">
-        <center><h3>Please sign in</h2></center>
-        <div class="form-group">
-            <input type="text" name="usr" id="inputUsername" class="form-control" placeholder="username" required autofocus>
-            <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="password" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </div class="form-group">
+      <div class = "row justify-content-center">
+	<span style="font-weight: bold; font-size: 22px">LOG IN</span>
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="text" name="usr" id="inputUsername" class="form-control" placeholder="username" required autofocus>
+        <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="password" required>
+	<br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </div class="form-group">
     </form>
+  </div>
 </div> <!-- /container -->
 {% endblock %}

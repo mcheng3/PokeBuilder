@@ -74,11 +74,11 @@ def search_name(search):
     db = sqlite3.connect(f)
     c = db.cursor()
     result = []
-    c.execute("SELECT name,teamid FROM teams WHERE name LIKE '%%s%';" %(search))
+    c.execute("SELECT name,teamid,user FROM teams WHERE name LIKE '%s';" %(search))
     for row in c:
         result.append(row)
     
-    c.execute("SELECT name,teamid FROM teams WHERE user LIKE '%%s%';" %(search))
+    c.execute("SELECT name,teamid,user FROM teams WHERE user LIKE '%s';" %(search))
     for row in c:
         result.append(row)
         
