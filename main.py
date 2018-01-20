@@ -111,7 +111,7 @@ def create():
 # VIEW TEAM
 # view team details
 #---------------------------------------
-@app.route('/viewteam', method = ['POST', 'GET'])
+@app.route('/viewteam', methods = ['POST', 'GET'])
 def view_team():
     id = int(request.args["id"])
     return render_template("view_team.html",
@@ -128,9 +128,9 @@ def view_team():
 # EDIT PAGE
 # edit team pokemon members overall
 #---------------------------------------
-@app.route('/editteam', method = ['POST', 'GET'])
+@app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
-    if method = 'POST':
+    if request.method == 'POST':
         update_team()
     else:
         pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
@@ -150,8 +150,8 @@ def edit_team():
 # add new pokemon to team
 #---------------------------------------
 @app.route('/createpokemon', methods = ['POST', 'GET'])
-def edit_pokemon():
-    if method = 'POST': 
+def create_pokemon():
+    if request.method == 'POST': 
         databse.create_poke(things)
     return render_template("edit_pokemon.html",
                                logged_in = auth.is_logged_in(),
@@ -169,7 +169,7 @@ def edit_pokemon():
 #---------------------------------------
 @app.route('/editpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
-    if method = 'POST':
+    if request.method == 'POST':
         update_poke(stuff)
     return render_template("edit_pokemon.html",
                                logged_in = auth.is_logged_in(),
@@ -191,7 +191,10 @@ def pokedata():
     for each in results["moves"]:
         moves.append(each["move"]["name"])
     print moves
-    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"]}
+    abilities = []
+    for each in results["abilities"]:
+        abilities.append(each["ability"]["name"])
+    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"], 'abilities': abilities}
     return json.dumps(response)
 
 if __name__ == "__main__":

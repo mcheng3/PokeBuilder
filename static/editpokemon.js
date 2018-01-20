@@ -14,6 +14,7 @@ $( document).ready(function() {
    	transmit();
     });
     var moves = [];
+    var abilities =[];
     $("#moveslist0").select2({
         data: moves
     });
@@ -26,8 +27,8 @@ $( document).ready(function() {
     $("#moveslist3").select2({
         data: moves
     });
-    $("#moveslist4").select2({
-        data: moves
+    $("#abilitieslist").select2({
+	data: abilities
     });
     
 });
@@ -62,10 +63,11 @@ var transmit = function(e){
 	    $("#moveslist3").select2({
          	data: moves
    	    });
-	    $("#moveslist4").empty();
-	    $("#moveslist4").select2({
-         	data: moves
-   	    });
+	    abilities = d['abilities'];
+	    $("#abilitieslist").empty();
+	    $("#abilitieslist").select2({
+		data: abilities
+	    });
    	    $("type").html("");
 	    var types = "";
 	    d["type"].forEach(function(item){

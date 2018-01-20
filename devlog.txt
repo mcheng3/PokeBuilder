@@ -34,3 +34,6 @@ Updated /editpokemon. Now, when you select a pokemon from the list, a sprite of 
 goldmanJ -- 2018-01-12 14:47:48
 began working on profile, main.py integration
 
+chengM -- 2018-01-20 02:47:57
+Update /editpokemon to have abilities
+
