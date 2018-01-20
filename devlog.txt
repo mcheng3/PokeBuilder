@@ -37,3 +37,6 @@ began working on profile, main.py integration
 chengM -- 2018-01-20 02:47:57
 Update /editpokemon to have abilities
 
+linK -- 2018-01-20 14:05:27
+Linked the database, Flask app, and HTML files for favoriting, editing, viewing, searching
+
