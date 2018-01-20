@@ -135,20 +135,6 @@ def return_favorites(user):
 
     return favorite
 
-#returns team info by searching the teamid
-def return_team(teamid):
-    db = sqlite3.connect(f)
-    c = db.cursor()
-
-    command = "SELECT * FROM teams WHERE teamid = %d;"
-    team_info = list()
-    for row in c.execute(command %(teamid)):
-        team_info.append(row)
-
-    db.commit()
-    db.close()
-
-    return team_info
 
 #returns pokemon info by searching the pkmnid
 def return_pkmn(pkmnid):
