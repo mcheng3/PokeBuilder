@@ -92,8 +92,8 @@ def search():
     print(request.args['search'])
     results = database.search_name(request.args['search'])
     return render_template("search.html",
-                               results = results,
-                               loggedin = auth.is_logged_in())
+                           results = results,
+                           loggedin = auth.is_logged_in())
 
 
 #---------------------------------------
@@ -131,12 +131,15 @@ def view_team():
     else:
         id = int(request.args["id"])
         team = database.find_team(id)
-        list = database.return_favorites(session["user"])[0][0].split(",")
+        mine = 'user' in session and session["user"] == team[1]
+        faves = list()
+        if 'user' in session: 
+            faves = database.return_favorites(session["user"])[0][0].split(",")
         return render_template("view_team.html",
                                loggedin = auth.is_logged_in(),
                                team = team,
-                               favorited = str(id) in list,
-                               mine = session["user"] == team[1],
+                               favorited = str(id) in faves,
+                               mine = mine,
                                poke_teams = ["yea", "yeas", "sdfa"])
 
 #---------------------------------------
