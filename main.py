@@ -74,7 +74,8 @@ def profile():
     fav_list = database.return_favorites(session["user"])[0][0].split(",")
     fav_teams = list()
     for team in fav_list:
-        fav_teams.append(database.find_team(int(team)))
+        if team != '':
+            fav_teams.append(database.find_team(int(team)))
     return render_template("profile.html",
                                user = session['user'],
                                loggedin = auth.is_logged_in(),
