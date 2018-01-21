@@ -40,3 +40,6 @@ Update /editpokemon to have abilities
 linK -- 2018-01-20 14:05:27
 Linked the database, Flask app, and HTML files for favoriting, editing, viewing, searching
 
+linK -- 2018-01-21 00:51:51
+worked on css backgrounds
+

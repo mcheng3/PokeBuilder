@@ -3,23 +3,40 @@
 Pokebuilder
 {% endblock %}
 
+{% block background %}
+background-image:url({{url_for('static',filename='cuteee.png')}});
+background-size: 125%;
+background-attachment: fixed;
+{% endblock %}
+
 {% block body %}
 <div class="container">
-  <div class="row justify-content-center">
-      <form action="/createteam" method="POST">
-          <div class="form-group text-center">
-              <label for="teamname"><h3>Team Name</h3></label>
-              <input class="form-control" type="text" placeholder="Team Name" value="{{teamname}}" name="teamname" id="teamname">
-          </div>
-          <div class="form-group text-center">
-              <label for="teamdesc"><h3>Description</h3></label>
-              <textarea class="form-control" rows="3" name="teamdesc" id="teamdesc">{{ teamdesc }}</textarea>
-          </div>
-          <div class="form-group">
-              <center><button type="submit" class="btn btn-outline-primary">Save Changes</button><center>
-          </div>
-      </form>
-  </div>
+  <form action="/createteam" method="POST">
+    <div class="row justify-content-center">
+      <div class="col-4">
+	<div class="form-group text-center">
+          <label for="teamname"><h3>TEAM NAME</h3></label>
+          <input class="form-control" type="text" placeholder="Team Name" value="{{teamname}}" name="teamname" id="teamname">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div class="form-group text-center">
+          <label for="teamdesc"><h3>DESCRIPTION</h3></label>
+          <textarea class="form-control" rows="3" cols="20" name="teamdesc" id="teamdesc">{{ teamdesc }}</textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+      <div class="form-group">
+        <center><button type="submit" class="btn btn-outline-primary">Save Changes</button><center>
+      </div>
+    </div>
+  </form>
+  <br>
   <div class="row">
     <div class="col-8">
         <form action="/editpokemon">
