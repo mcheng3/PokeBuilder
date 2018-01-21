@@ -121,9 +121,12 @@ def view_team():
         if 'edit' in request.form:
             return redirect(url_for("edit_team", id = request.args['id']))
         elif 'favorite' in request.form:
-            id = request.args["id"]
-            database.add_favorite(session["user"], id)
-            return redirect(url_for("view_team", id = id))
+            if 'user' in session:
+                id = request.args["id"]
+                database.add_favorite(session["user"], id)
+                return redirect(url_for("view_team", id = id))
+            else:
+                return redirect(url_for('login'))
         else:
             id = request.args["id"]
             #remove favorite
