@@ -19,9 +19,9 @@ background-color:#B5FCC5;
       <!-- my_teams is a dictionary of teams keyed by teamid with the value as the name -->
       {% for team in my_teams %}
       <div class="row">
-	<a href="/viewteam?id={{team[0]}}">
+	       <a href="/viewteam?id={{team[0]}}">
           {{ team[1] }}
-	</a>
+	       </a>
       </div>
       {% endfor %}
     </div>
@@ -30,9 +30,9 @@ background-color:#B5FCC5;
       <!-- fav_teams is a dictionary of teams keyed by teamid with the value as the name -->
       {% for team in fav_teams %}
       <div class="row">
-	<a href="/viewteam?id={{team[0]}}">
+	       <a href="/viewteam?id={{team[0]}}">
           {{ team[2] }} by {{ team[1] }}
-	</a>
+	       </a>
       </div>
       {% endfor %}
     </div>

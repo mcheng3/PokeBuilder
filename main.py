@@ -109,7 +109,8 @@ def create():
     else:
         return render_template("edit_team.html",
                                action = "createteam",
-                               created = False,
+                               created = "False",
+                               new_teamid = database.next_teamid(),
                                loggedin = auth.is_logged_in())
 
 #---------------------------------------
@@ -137,7 +138,7 @@ def view_team():
         team = database.find_team(id)
         mine = 'user' in session and session["user"] == team[1]
         faves = list()
-        if 'user' in session: 
+        if 'user' in session:
             faves = database.return_favorites(session["user"])[0][0].split(",")
         return render_template("view_team.html",
                                loggedin = auth.is_logged_in(),
@@ -188,7 +189,7 @@ def create_pokemon():
                                loggedin = auth.is_logged_in(),
                                action = "createpokemon")
 
-    
+
 #---------------------------------------
 # EDIT POKEMON
 # edit specific pokemon traits

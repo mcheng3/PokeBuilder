@@ -2,79 +2,75 @@
 <html>
 
 <head>
-    <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock %}</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+  <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    {% block link %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  {% block link %}
 
-    {% endblock %}
+  {% endblock %}
 </head>
-<body style="height:100%; 
-	     {% block background %}
-	     {% endblock %}">
-	     
-    <!-- MAIN NAVBAR ============================================= -->
-    <nav class="navbar navbar-expand-lg navbar-dark"
-	 style="background-color: #D1603D">
+<body style="height:100%;
+            {% block background %}
+	          {% endblock %}">
+  <!-- MAIN NAVBAR ============================================= -->
+  <nav class="navbar navbar-expand-lg navbar-dark"
+	     style="background-color: #D1603D">
 
-        <!-- the brand icon: -->
-        <a class="navbar-brand" href="/">POKEBUILDER</a>
+    <!-- the brand icon: -->
+    <a class="navbar-brand" href="/">POKEBUILDER</a>
 
-        <!-- the toggler button for when the navbar gets collapsed -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-         <span class="navbar-toggler-icon"></span>
-        </button>
+    <!-- the toggler button for when the navbar gets collapsed -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <!-- the items in the navbar -->
-        <div class="collapse navbar-collapse" id="navbar">
-
-
-          {% if loggedin %}
-          <!-- the navbar pieces are grouped together for simple alignment -->
-          <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/profile">Profile</a>
-            <a class="nav-item nav-link" href="/createteam">Create Team</a>
-    	  </div>
-          <!-- the searchbar -->
-    	  <form class="form-inline ml-auto" action="/search">
-            <input name="search" type="search" placeholder="Search">
-    	    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    	  </form>
-          <div class="navbar-nav align-self-end">
-            <a class="nav-item nav-link" href="/logout">Logout</a>
-    	  </div>
-          {% else %}
-          <!-- the searchbar -->
-    	  <form class="form-inline ml-auto" action="/search">
-            <input name="search" type="search" placeholder="Search">
-    	    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    	  </form>
-          <div class="navbar-nav align-self-end">
-            <a class="nav-item nav-link" href="/login">Login</a>
-            <a class="nav-item nav-link" href="/signup">Signup</a>
-    	  </div>
-          {% endif %}
+    <!-- the items in the navbar -->
+    <div class="collapse navbar-collapse" id="navbar">
 
 
+      {% if loggedin %}
+      <!-- the navbar pieces are grouped together for simple alignment -->
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/profile">Profile</a>
+        <a class="nav-item nav-link" href="/createteam">Create Team</a>
+    	</div>
+      <!-- the searchbar -->
+    	<form class="form-inline ml-auto" action="/search">
+        <input name="search" type="search" placeholder="Search">
+    	     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    	</form>
+      <div class="navbar-nav align-self-end">
+        <a class="nav-item nav-link" href="/logout">Logout</a>
+    	</div>
+      {% else %}
+      <!-- the searchbar -->
+    	<form class="form-inline ml-auto" action="/search">
+        <input name="search" type="search" placeholder="Search">
+    	  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    	</form>
+      <div class="navbar-nav align-self-end">
+        <a class="nav-item nav-link" href="/login">Login</a>
+        <a class="nav-item nav-link" href="/signup">Signup</a>
+    	</div>
+      {% endif %}
+    </div>
+  </nav>
 
-        </div>
-    </nav>
 
-
-    <br>
+  <br>
     <div class="text-center">
       <div style="color: red; font-style: italic">
-    	{% set messages=get_flashed_messages() %}
-    	{% for m in messages %}
-    	{{m}}
-        <br>
-    	{% endfor %}
+    	   {% set messages=get_flashed_messages() %}
+    	   {% for m in messages %}
+    	   {{m}}
+         <br>
+    	   {% endfor %}
       </div>
     </div>
     <br>

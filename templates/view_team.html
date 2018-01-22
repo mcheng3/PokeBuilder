@@ -13,13 +13,13 @@ Poke Viewer
     </div>
     <div class = "col-md-auto offset-md-2">
       <form action="/viewteam?id={{team[0]}}" method="POST">
-	{% if mine %}
-	<input type="submit" value="Edit" name="edit" class="btn btn-outline-primary">
-	{% elif favorited %}
-	<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
-	{% else %}
-	<input type="submit" value="Favorite" name="favorite" class="btn btn-outline-primary">
-	{% endif %}
+      	{% if mine %}
+      	<input type="submit" value="Edit" name="edit" class="btn btn-outline-primary">
+      	{% elif favorited %}
+      	<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
+      	{% else %}
+      	<input type="submit" value="Favorite" name="favorite" class="btn btn-outline-primary">
+      	{% endif %}
       </form>
     </div>
   </div>
@@ -50,6 +50,6 @@ Poke Viewer
       {{poke}}<br>
       {% endfor %}
     </div>
-  </div>    
+  </div>
 </div>
 {% endblock %}
