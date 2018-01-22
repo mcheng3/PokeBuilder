@@ -7,43 +7,49 @@ Poke Viewer
 <div class="container">
   <div class="row">
     <div class = "col-8">
-      <div class = "col-6">
-	<h1>{{ teamname }}</h1>
-	<hr>
-	Author: {{ user }} Version: {{vers}}
-	<br>
-	<h4>Description</h4>
-	{{ desc }}
-      </div>
-      <div class = "col-2">
-	<form action="/viewteam">
-	  {{ if mine }}
-	  <button type="submit" name="edit" class="btn btn-outline-primary">Edit</button>
-	  {{ else }}
-	  <button type="submit" name="favorite" class="btn btn-outline-primary">Favorite</button>
-	  {{ endif }}
-	</form>
-      </div>
+      <h1>{{ team[2] }}</h1>
+      <span style="color: blue">BY:</span> {{ team[1] }} |
+      <span style="color: blue">GAME VERSION:</span> {{ team[4] }}
+    </div>
+    <div class = "col-md-auto offset-md-2">
+      <form action="/viewteam?id={{team[0]}}" method="POST">
+	{% if mine %}
+	<input type="submit" value="Edit" name="edit" class="btn btn-outline-primary">
+	{% elif favorited %}
+	<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
+	{% else %}
+	<input type="submit" value="Favorite" name="favorite" class="btn btn-outline-primary">
+	{% endif %}
+      </form>
     </div>
   </div>
-  <div class = "row">
-    <div class = "col-8">
-      <div class = "col-4">
-	<h4>Weaknesses</h4>
-	{{ weaknesses }}
-      </div>
-      <div class = "col-4">
-	<h4>Strengths</h4>
-	{{ strengths }}
-      </div>
+  <hr><br>
+
+  <div class = "row justify-content-center">
+    <div class = "col-10">
+      <h4>Description</h4>
+      {{ team[3] }}
+      <br><br><br>
     </div>
   </div>
-  <div class = "row">
-    <h4>Pokemon</h4>
-    <hr>
-    {% for poke in poke_teams %}
-    {{poke}}<br>
-    {% endfor %}
+  <div class = "row justify-content-center">
+    <div class = "col-5">
+      <h4>Weaknesses</h4>
+      {{ team[5] }}
+    </div>
+    <div class = "col-5">
+      <h4>Strengths</h4>
+      {{ team[6] }}
+    </div>
   </div>
+  <br><br>
+  <div class = "row justify-content-center">
+    <div class = "col-10">
+      <h4>Pokemon</h4>
+      {% for poke in poke_teams %}
+      {{poke}}<br>
+      {% endfor %}
+    </div>
+  </div>    
 </div>
 {% endblock %}

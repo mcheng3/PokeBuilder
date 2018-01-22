@@ -4,13 +4,17 @@ Pokebuilder
 {% endblock %}
 
 {% block body %}
-<h1>Search Results</h1><hr>
-{% if 'detail' in results %}
-Not Found.
-{% else %}
-NAME: {{results["name"]}}<br>
-SPECIES: {{results["species"]["name"]}}<br>
-TYPE: {{results["types"][0]["type"]["name"]}}<br>
-{% endif %}
-
+<div class="container">
+  <h1>Search Results</h1><hr>
+  {% if not results %}
+  Not Found.
+  {% else %}
+  {% for teams in results %}
+  <a href="/viewteam?id={{teams[1]}}">
+    {{teams[0]}} by {{teams[2]}}
+  </a>
+  <br>
+  {% endfor %}
+  {% endif %}
+</div>
 {% endblock %}

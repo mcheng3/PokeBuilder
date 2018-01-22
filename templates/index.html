@@ -1,9 +1,24 @@
 {% extends "base.html" %}
+
 {% block title %}
 Pokebuilder
 {% endblock %}
+
+{% block background %}
+background-image:url({{url_for('static',filename='map.png')}});
+background-size: 100%;
+{% endblock %}
+
 {% block body %}
-<div class="container">
-    <p><h2>This is our temporary homepage, more (beautiful) content will be added later.</h2></p>
+<div class="container" style="background-color:rgba(0,0,0,.4); color: white">
+  <h1>TOP TEAMS</h1>
+  blah<br>
+  blah<br>
+  blah<br>
+  <br><br>
+  <h3>All Teams</h3>
+  blah<br>
+  blah<br>
+  blah<br>
 </div>
 {% endblock %}

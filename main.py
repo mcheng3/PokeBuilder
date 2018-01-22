@@ -16,7 +16,7 @@ def root():
     return render_template("index.html",
                                loggedin = auth.is_logged_in(),
                                top_ten = ["a", "b", "c", "d", "e",
-                                              "f", "g", "h", "i", "j"])
+                                          "f", "g", "h", "i", "j"])
 
 
 #---------------------------------------
@@ -71,10 +71,15 @@ def logout():
 #---------------------------------------
 @app.route('/profile')
 def profile():
+    fav_list = database.return_favorites(session["user"])[0][0].split(",")
+    fav_teams = list()
+    for team in fav_list:
+        if team != '':
+            fav_teams.append(database.find_team(int(team)))
     return render_template("profile.html",
                                user = session['user'],
                                loggedin = auth.is_logged_in(),
-                               fav_teams = ["fTeamA", "fTeamB", "fTeamC"],
+                               fav_teams = fav_teams,
                                my_teams = database.get_teams(session['user']))
 
 
@@ -85,11 +90,10 @@ def profile():
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
     print(request.args['search'])
-    results = api.search_poke(request.args['search'])
-    print(results)
+    results = database.search_name(request.args['search'])
     return render_template("search.html",
-                               results = results,
-                               loggedin = auth.is_logged_in())
+                           results = results,
+                           loggedin = auth.is_logged_in())
 
 
 #---------------------------------------
@@ -98,14 +102,15 @@ def search():
 #---------------------------------------
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
-    #ajax should maybe check if all form items are filled before submitting to database
     if request.method == 'POST':
         #database.delete_team(session['user'], request.form['teamname'])
         database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
         return redirect(url_for("root"))
     else:
         return render_template("edit_team.html",
-                                   loggedin = auth.is_logged_in())
+                               action = "createteam",
+                               created = False,
+                               loggedin = auth.is_logged_in())
 
 #---------------------------------------
 # VIEW TEAM
@@ -113,16 +118,33 @@ def create():
 #---------------------------------------
 @app.route('/viewteam', methods = ['POST', 'GET'])
 def view_team():
-    id = int(request.args["id"])
-    return render_template("view_team.html",
-                               logged_in = auth.is_logged_in(),
-                               teamname = "team name",
-                               user = "user",
-                               desc = "Description",
-                               version = "game version",
-                               strengths = "don't nkow yet",
-                               weaknesses = "don't know yet",
-                               pkmnlist = ["yea", "yeas", "sdfa"])
+    if request.method == 'POST':
+        if 'edit' in request.form:
+            return redirect(url_for("edit_team", id = request.args['id']))
+        elif 'favorite' in request.form:
+            if 'user' in session:
+                id = request.args["id"]
+                database.add_favorite(session["user"], id)
+                return redirect(url_for("view_team", id = id))
+            else:
+                return redirect(url_for('login'))
+        else:
+            id = request.args["id"]
+            #remove favorite
+            return redirect(url_for("view_team", id = id))
+    else:
+        id = int(request.args["id"])
+        team = database.find_team(id)
+        mine = 'user' in session and session["user"] == team[1]
+        faves = list()
+        if 'user' in session: 
+            faves = database.return_favorites(session["user"])[0][0].split(",")
+        return render_template("view_team.html",
+                               loggedin = auth.is_logged_in(),
+                               team = team,
+                               favorited = str(id) in faves,
+                               mine = mine,
+                               poke_teams = ["yea", "yeas", "sdfa"])
 
 #---------------------------------------
 # EDIT PAGE
@@ -131,19 +153,21 @@ def view_team():
 @app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
     if request.method == 'POST':
-        database.update_team()
+        database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
+        return redirect(url_for("view_team", id = request.args['id']))
     else:
         pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
         id = int(request.args["id"])
         team = database.find_team(id)
+        #pokedict = team[8] translated into list form
+        #grab the pokemon and their name
+        #pokemon will be a list of tuples
         return render_template("edit_team.html",
-                                   loggedin = auth.is_logged_in(),
-                                   teamname = "TeamA",
-                                   pokemon = pokedict,
-                                   poke_att1 = ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1"],
-                                   poke_att2 = ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2", "j2"],
-                                   poke_att3 = ["a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "i3", "j3"])
-
+                               loggedin = auth.is_logged_in(),
+                               action = "editteam?id=" + str(team[0]),
+                               created = True,
+                               pokemon = pokedict,
+                               team = team)
 
 #---------------------------------------
 # CREATE POKEMON
@@ -151,17 +175,19 @@ def edit_team():
 #---------------------------------------
 @app.route('/createpokemon', methods = ['POST', 'GET'])
 def create_pokemon():
-    if request.method == 'POST': 
-        database.create_poke(things)
-    return render_template("edit_pokemon.html",
-                               logged_in = auth.is_logged_in(),
-                               pokemon = "",
-                               gender_opt = ["m", "f"],
-                               level_opt = [1, 2, 3, 4, 5],
-                               abilities = ["walk", "eat", "sleep"],
-                               moves = "what moves?",
-                               item = "what item?",
-                               nature = "what nature?")
+    if request.method == 'POST':
+        #HERE
+#        print request.form['pokemon']
+#        print request.form['type']
+#        print request.form['ability']
+#        print request.form['move0']
+#        database.create_poke()
+        return redirect(url_for("editteam", id = request.args['id']))
+    else:
+        return render_template("edit_pokemon.html",
+                               loggedin = auth.is_logged_in(),
+                               action = "createpokemon")
+
     
 #---------------------------------------
 # EDIT POKEMON
@@ -171,8 +197,12 @@ def create_pokemon():
 def edit_pokemon():
     if request.method == 'POST':
         update_poke(stuff)
-    return render_template("edit_pokemon.html",
-                               logged_in = auth.is_logged_in(),
+        return redirect(url_for("editteam", id=request.args['id']))
+    else:
+        #you're going to need the id of the pokemon and the team
+        return render_template("edit_pokemon.html",
+                               loggedin = auth.is_logged_in(),
+                               action = "edit_pokemon",
                                pokemon = "pokemon name",
                                gender_opt = ["m", "f"],
                                level_opt = [1, 2, 3, 4, 5],
@@ -191,7 +221,10 @@ def pokedata():
     for each in results["moves"]:
         moves.append(each["move"]["name"])
     print moves
-    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"]}
+    abilities = []
+    for each in results["abilities"]:
+        abilities.append(each["ability"]["name"])
+    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"], 'abilities': abilities}
     return json.dumps(response)
 
 if __name__ == "__main__":
