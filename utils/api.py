@@ -48,5 +48,5 @@ def get_resistance(team):
     return None
 
 if __name__ == '__main__':
-    # print search_poke("pikachu")
-    # print search_api("type/ground")
+	#print search_poke("pikachu")
+	#print search_api("type/ground")

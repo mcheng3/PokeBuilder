@@ -35,7 +35,7 @@ def add_favorite(username, teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
 
-    #retreive favorites list from table
+    #retrieve favorites list from table
     c.execute("SELECT favorites FROM users WHERE user = \"%s\";" %(username))
     fav_t = c.fetchone()
 
@@ -49,11 +49,37 @@ def add_favorite(username, teamid):
     #updating database
     c.execute("UPDATE users SET favorites = \"%s\" WHERE user = \"%s\";" %(fav_s, username))
 
-    #UPDATE TEAM UPVOTES
+    #updating team upvotes
+    c.execute("SELECT upvotes FROM teams WHERE teamid = %d;" %(teamid))
+    votes = c.fetchone()[0]
+    votes += 1
+    c.execute("UPDATE teams SET upvotes = %d WHERE teamid = %d;" %(votes, teamid))
 
     db.commit()
     db.close()
 
+#unfavorites a team 
+def remove_favorite(username, remove_team):
+    db = sqlite3.connect(f)
+    c = db.cusror()
+    
+    #deleting from users datatable
+    c.execute("SELECT favorites FROM users WHERE username = \"%s\";" %(username))
+    old_string = c.fetchone()[0]
+    if old_string.endswith(remove_team):
+        new_string = old_string.replace('%s', '' %(str(remove_team)))
+    else:
+        new_string = old_string.replace('%s,', '' %(str(remove_team)))
+
+    #updating team upvotes
+    c.execute("SELECT upvotes FROM teams WHERE teamid = %d;" %(remove_team))
+    votes = c.fetchone()[0]
+    votes -= 1
+    c.execute("UPDATE teams SET upvotes = %d WHERE teamid = %d;" %(votes, remove_team))
+    
+    db.commit()
+    db.close()
+	
 #finds username
 def find_user(username):
     db = sqlite3.connect(f)
@@ -254,7 +280,9 @@ def update_team(teamid, name, desc, version, weaknesses, strengths):
     c = db.cursor()
 
     #update info
-    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\" WHERE teamid = %d;" %(name, desc, version, weaknesses, strengths, teamid))
+    print teamid
+    print int(teamid)
+    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\" WHERE teamid = %d;" %(name, desc, version, weaknesses, strengths, int(teamid)))
 
     db.commit()
     db.close()
@@ -278,14 +306,13 @@ def delete_poke(teamid, delete_pkmn):
     db.commit()
     db.close()
 
-#------------------------------------------------------UPDATE THIS ---------------------------------------
 #gets top ten most upvoted teams and returns as a tuple made out of tuples
 def get_ten():
     db = sqlite3.connect(f)
     c = db.cursor()
 
     #getting the top ten most upvoted teams
-    c.execute("SELECT teamid FROM teams ORDER BY upvotes DESC LIMIT 1;" %())
+    c.execute("SELECT * FROM teams ORDER BY upvotes DESC LIMIT 1;" %())
     top_ten = c.fetchall()
 
     return top_ten
