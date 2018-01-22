@@ -49,3 +49,6 @@ cleaned up html, made code readable, fixed createteam, made a todo list
 goldmanJ -- 2018-01-22 01:27:19
 began working on strengths/weaknesses
 
+chengM -- 2018-01-22 02:17:58
+Fixed js in edit_pokemon.html . Edited styling for navbar.
+
