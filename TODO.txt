@@ -1,0 +1,20 @@
+WHAT STILL NEEDS TO HAPPEN:
+
+1. Get adding/editing pokemon working
+  - javascript doesn't show up
+  - doesn't modify database
+
+2. Get editing a team working
+  - trying to change the name/version/description of an already-existing team
+    throws a database error
+
+3. Get strengths/weaknesses working
+  - requires several helper functions and some api work
+
+4. Aesthetic changes
+  - make sure all color schemes work
+  - make sure everything is readable
+  - make sure everything looks nice
+
+5. Video!
+  - we'll decide on something when we meet on Tuesday
