@@ -11,12 +11,18 @@ background-attachment: fixed;
 
 {% block body %}
 <div class="container">
-  <form action="/createteam" method="POST">
+  <form action="/{{action}}" method="POST">
     <div class="row justify-content-center">
       <div class="col-4">
 	<div class="form-group text-center">
           <label for="teamname"><h3>TEAM NAME</h3></label>
-          <input class="form-control" type="text" placeholder="Team Name" value="{{teamname}}" name="teamname" id="teamname">
+          <input class="form-control" type="text" placeholder="Team Name" value="{{team[2]}}" name="teamname" id="teamname">
+        </div>
+      </div>
+      <div class="col-3">
+	<div class="form-group text-center">
+          <label for="teamvers"><h3>GAME VERSION</h3></label>
+          <input class="form-control" type="text" placeholder="Game Version" value="{{team[4]}}" name="teamvers" id="teamvers">
         </div>
       </div>
     </div>
@@ -25,7 +31,7 @@ background-attachment: fixed;
       <div class="col-8">
         <div class="form-group text-center">
           <label for="teamdesc"><h3>DESCRIPTION</h3></label>
-          <textarea class="form-control" rows="3" cols="20" name="teamdesc" id="teamdesc">{{ teamdesc }}</textarea>
+          <textarea class="form-control" rows="3" cols="20" name="teamdesc" id="teamdesc">{{ team[3] }}</textarea>
         </div>
       </div>
     </div>
@@ -53,6 +59,8 @@ background-attachment: fixed;
                 </div>
             </div>
             {% endfor %}
+	</form>
+	<form action="/createpokemon?id={{team[0]}}">
         <button type="submit" class="btn btn-outline-secondary" name="newpkmn">Add Pokemon</button>
         </form>
     </div>

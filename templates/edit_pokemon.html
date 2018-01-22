@@ -1,70 +1,25 @@
-<!doctype html>
-<html>
+{% extends "base.html" %}
+{% block title %}
+PokeSelector
+{% endblock %}
 
-<head>
-  <title>{% block title %}{% endblock %}</title>
+{% block background %}
+background-image:url({{url_for('static',filename='cuteee.png')}});
+background-size: 125%;
+background-attachment: fixed;
+{% endblock %}
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% block link %}
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<script src="{{ url_for('static', filename='editpokemon.js') }}" type='text/javascript'></script>
+{% endblock %}
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-  <script src="{{ url_for('static', filename='editpokemon.js') }}" type='text/javascript'></script>
-  <link 
-</head>
-<body>
-  <!-- MAIN NAVBAR ============================================= -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
-
-    <!-- the brand icon: -->
-    <a class="navbar-brand" href="/">POKEBUILDER</a>
-
-    <!-- the toggler button for when the navbar gets collapsed -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- the items in the navbar -->
-    <div class="collapse navbar-collapse" id="navbar">
-
-
-      {% if loggedin %}
-      <!-- the navbar pieces are grouped together for simple alignment -->
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/profile">Profile</a>
-        <a class="nav-item nav-link" href="/createteam">Create Team</a>
-      </div>
-      <!-- the searchbar -->
-      <form class="form-inline ml-auto" action="/search">
-        <input type="search" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-      <div class="navbar-nav align-self-end">
-        <a class="nav-item nav-link" href="/logout">Logout</a>
-      </div>
-      {% else %}
-      <!-- the searchbar -->
-      <form class="form-inline ml-auto" action="/search">
-        <input name="search" type="search" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-      <div class="navbar-nav align-self-end">
-        <a class="nav-item nav-link" href="/login">Login</a>
-        <a class="nav-item nav-link" href="/signup">Signup</a>
-      </div>
-      {% endif %}
-
-
-
-    </div>
-  </nav>
+{% block body %}
   <h1>Select Pokemon</h1>
   <div>
-    <form action="/editteam" method="get">
+    <form action="/{{action}}" method="get">
       <select name="pokemon" id="pokemon" style="width:300px;" type="text">
         <!-- Dropdown List Option -->
       </select><img id="sprite">
@@ -91,6 +46,4 @@
     </form>  
   </div>
 
-</body>
-
-</html>
+{% endblock %}

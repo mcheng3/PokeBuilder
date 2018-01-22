@@ -48,6 +48,8 @@ def add_favorite(username, teamid):
     
     #updating database
     c.execute("UPDATE users SET favorites = \"%s\" WHERE user = \"%s\";" %(fav_s, username))
+
+    #UPDATE TEAM UPVOTES
     
     db.commit()
     db.close()
@@ -197,7 +199,7 @@ def delete_team(username, name):
     db.close()
     
 #creating a new pokemon
-def create_poke(species, gender, level, ability, moves, item, nature, teamid):
+def create_poke(species, gender, level, ability, moves, item, nature):
     db = sqlite3.connect(f)
     c = db.cursor()
     
@@ -212,8 +214,8 @@ def create_poke(species, gender, level, ability, moves, item, nature, teamid):
     #adding pkmnid to teams table
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
     pkmnlist = c.fetchone()[0]
-    pkmnlist += pkmnlist + ",%d" %(pkmnid)
-    c.execute("UPDATE teams SET pkmnid = %d WHERE teamid = %d;" %(pkmnid, teamid))
+    pkmnlist = pkmnlist + ",%d" %(pkmnid)
+    c.execute("UPDATE teams SET pkmnid = \"%s\" WHERE teamid = %d;" %(pkmnlist, teamid))
     
     db.commit()
     db.close()
@@ -230,12 +232,12 @@ def update_poke(pkmnid, species, gender, level, ability, moves, item, nature):
     db.close()
     
 #updating team info
-def update_team(teamid, name, desc, version, weaknesses, strengths, upvotes):
+def update_team(teamid, name, desc, version, weaknesses, strengths):
     db = sqlite3.connect(f)
     c = db.cursor()
     
     #update info
-    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\", upvotes = %d;" %(name, desc, version, weaknesses, strengths, upvotes))
+    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\" WHERE teamid = %d;" %(name, desc, version, weaknesses, strengths, teamid))
                   
     db.commit()
     db.close()
