@@ -42,9 +42,9 @@ def add_favorite(username, teamid):
     #appending string in favorites column
     fav_s = fav_t[0]
     if fav_s == "":
-        fav_s = "" + teamid
+        fav_s = "" + str(teamid)
     else:
-        fav_s = fav_s + "," + teamid
+        fav_s = fav_s + "," + str(teamid)
 
     #updating database
     c.execute("UPDATE users SET favorites = \"%s\" WHERE user = \"%s\";" %(fav_s, username))
@@ -320,8 +320,11 @@ def get_ten():
     db = sqlite3.connect(f)
     c = db.cursor()
 
+    c.execute("DELETE FROM teams WHERE name = \"\"")
+    db.commit()
+    
     #getting the top ten most upvoted teams
-    c.execute("SELECT * FROM teams ORDER BY upvotes DESC LIMIT 1;" %())
+    c.execute("SELECT * FROM teams ORDER BY upvotes DESC LIMIT 10;" %())
     top_ten = c.fetchall()
 
     return top_ten
