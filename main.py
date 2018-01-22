@@ -103,14 +103,14 @@ def search():
 @app.route('/createteam', methods = ['POST', 'GET'])
 def create():
     if request.method == 'POST':
-        #database.delete_team(session['user'], request.form['teamname'])
-        database.new_team(session['user'], request.form['teamname'], request.form['teamdesc'], "NONE", "NONE", "NONE", 0)
+        database.update_team(int(request.args['id']), request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
         return redirect(url_for("root"))
     else:
+        new_teamid = database.next_teamid(session['user'])
         return render_template("edit_team.html",
-                               action = "createteam",
+                               action = "createteam?id=" + str(new_teamid),
                                created = "False",
-                               new_teamid = database.next_teamid(),
+                               new_teamid = new_teamid,
                                loggedin = auth.is_logged_in())
 
 #---------------------------------------
@@ -157,17 +157,19 @@ def edit_team():
         database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
         return redirect(url_for("view_team", id = request.args['id']))
     else:
-        pokedict = { 0001 : 'bulbasaur', 0004 : 'squirtle', 0007 : 'charmander' }
         id = int(request.args["id"])
         team = database.find_team(id)
-        #pokedict = team[8] translated into list form
-        #grab the pokemon and their name
-        #pokemon will be a list of tuples
+        pokemon = team[8].split(",")
+        pokedict2 = {}
+        for poke in pokemon:
+            if poke != '':
+                pokedict2[str(poke)] = database.return_pkmn(int(poke))[0][1]
+        print pokedict2
         return render_template("edit_team.html",
                                loggedin = auth.is_logged_in(),
                                action = "editteam?id=" + str(team[0]),
                                created = True,
-                               pokemon = pokedict,
+                               pokemon = pokedict2,
                                team = team)
 
 #---------------------------------------
@@ -177,17 +179,18 @@ def edit_team():
 @app.route('/createpokemon', methods = ['POST', 'GET'])
 def create_pokemon():
     if request.method == 'POST':
-        #HERE
-#        print request.form['pokemon']
-#        print request.form['type']
-#        print request.form['ability']
-#        print request.form['move0']
-#        database.create_poke()
-        return redirect(url_for("editteam", id = request.args['id']))
+        teamid = request.args['id']
+        moves = ""
+        for x in range(0, 3):
+            moves += (request.form['move' + str(x)]) + ", "
+        moves += request.form['move3']
+        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", int(teamid))
+        return redirect(url_for("edit_team", id = request.args['id']))
     else:
+        teamid = request.args['teamid']
         return render_template("edit_pokemon.html",
                                loggedin = auth.is_logged_in(),
-                               action = "createpokemon")
+                               action = "createpokemon?id=" + str(teamid))
 
 
 #---------------------------------------

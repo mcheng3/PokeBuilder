@@ -196,8 +196,9 @@ def match_pass(username, password):
     db.commit()
     db.close()
 
+'''
 #creates a new team
-def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
+def new_team(teamid, username, name, desc, version, weaknesses, strengths, pkmnlist):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -211,10 +212,10 @@ def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
     c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0, \"%s\");" %(teamid+1, username, name, desc, version, weaknesses, strengths, pkmnlist))
 
     db.commit()
-    db.close()
+    db.close() '''
 
 # helper function for getting the next teamid
-def next_teamid():
+def next_teamid(user):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -223,10 +224,13 @@ def next_teamid():
     for row in c.execute(command):
         teamid = row[0]
 
+     #adding team to table
+    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0, \"%s\");" %(teamid+1, user, "", "", "", "", "", ""))
+
     db.commit()
     db.close()
 
-    return teamid
+    return teamid+1
 
 
 
@@ -242,22 +246,26 @@ def delete_team(username, name):
     db.close()
 
 #creating a new pokemon
-def create_poke(species, gender, level, ability, moves, item, nature):
+def create_poke(species, gender, level, ability, moves, item, nature, teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
 
     #creating a new pkmnid
     c.execute("SELECT pkmnid FROM pokemon ORDER BY pkmnid DESC LIMIT 1;")
-    pkmnid = c.fetchone()[0]
-    pkmnid += 1
+    pkmnid = 0
+    for row in c: 
+        pkmnid = row[0]
 
     #adding pokemon to table
-    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid, species, gender, level, ability, moves, item, nature))
+    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid+1, species, gender, level, ability, moves, item, nature))
 
     #adding pkmnid to teams table
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
     pkmnlist = c.fetchone()[0]
-    pkmnlist = pkmnlist + ",%d" %(pkmnid)
+    if pkmnlist == "": 
+        pkmnlist = "%d" %(pkmnid+1)
+    else:
+        pkmnlist += ", %d" %(pkmnid+1)
     c.execute("UPDATE teams SET pkmnid = \"%s\" WHERE teamid = %d;" %(pkmnlist, teamid))
 
     db.commit()
