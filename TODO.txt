@@ -21,3 +21,9 @@ WHAT STILL NEEDS TO HAPPEN:
 
 5. Video!
   - we'll decide on something when we meet on Tuesday
+  
+6. Documents
+  - Update DESIGN.pdf
+  - Update README.md
+  
+Lastly, make a fresh new clone and confirm the app works.
