@@ -61,16 +61,19 @@ def add_favorite(username, teamid):
 #unfavorites a team 
 def remove_favorite(username, remove_team):
     db = sqlite3.connect(f)
-    c = db.cusror()
+    c = db.cursor()
     
     #deleting from users datatable
-    c.execute("SELECT favorites FROM users WHERE username = \"%s\";" %(username))
+    c.execute("SELECT favorites FROM users WHERE user = \"%s\";" %(username))
     old_string = c.fetchone()[0]
-    if old_string.endswith(remove_team):
-        new_string = old_string.replace('%s', '' %(str(remove_team)))
+    if old_string.endswith(str(remove_team)):
+        new_string = old_string.replace(str(remove_team), '')
     else:
-        new_string = old_string.replace('%s,', '' %(str(remove_team)))
+        new_string = old_string.replace(str(remove_team) + ",", '')
 
+    print "THIS IS THE NEW STRING"
+    print new_string
+        
     #updating team upvotes
     c.execute("SELECT upvotes FROM teams WHERE teamid = %d;" %(remove_team))
     votes = c.fetchone()[0]

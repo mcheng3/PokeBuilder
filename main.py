@@ -139,7 +139,7 @@ def view_team():
                 return redirect(url_for('login'))
         else:
             id = request.args["id"]
-            #remove favorite
+            database.remove_favorite(session["user"], int(id))
             return redirect(url_for("view_team", id = id))
     else:
         id = int(request.args["id"])
