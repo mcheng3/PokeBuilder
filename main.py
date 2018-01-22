@@ -162,6 +162,7 @@ def edit_team():
         pokemon = team[8].split(",")
         pokedict2 = {}
         for poke in pokemon:
+            print poke
             if poke != '':
                 pokedict2[str(poke)] = database.return_pkmn(int(poke))[0][1]
         print pokedict2
@@ -180,6 +181,7 @@ def edit_team():
 def create_pokemon():
     if request.method == 'POST':
         teamid = request.args['id']
+        print teamid
         moves = ""
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
@@ -200,20 +202,20 @@ def create_pokemon():
 @app.route('/editpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
     if request.method == 'POST':
-        update_poke(stuff)
-        return redirect(url_for("editteam", id=request.args['id']))
+        print request.args['id']
+        teampkmn = request.args['id'].split(",")
+        moves = ""
+        for x in range(0, 3):
+            moves += (request.form['move' + str(x)]) + ", "
+        moves += request.form['move3']
+        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A")
+        return redirect(url_for("edit_team", id=int(teampkmn[1])))
     else:
         #you're going to need the id of the pokemon and the team
         return render_template("edit_pokemon.html",
                                loggedin = auth.is_logged_in(),
-                               action = "edit_pokemon",
-                               pokemon = "pokemon name",
-                               gender_opt = ["m", "f"],
-                               level_opt = [1, 2, 3, 4, 5],
-                               abilities = ["walk", "eat", "sleep"],
-                               moves = "what moves?",
-                               item = "what item?",
-                               nature = "what nature?")
+                               action = "editpokemon?id=" + request.args['pkmnid'])
+
 
 @app.route("/pokedata")
 def pokedata():
