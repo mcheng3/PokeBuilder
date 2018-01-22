@@ -14,7 +14,7 @@ def create_db():
     #creates teams table
     c.execute("CREATE TABLE teams (teamid INT PRIMARY KEY, user TEXT, name TEXT, desc TEXT, version TEXT, weaknesses TEXT, strengths TEXT, upvotes INT, pkmnid TEXT);")
     #creates pokemon table
-    c.execute("CREATE TABLE pokemon (pkmnid INT PRIMARY KEY, species TEXT, gender TEXT, level INT, ability TEXT, moves TEXT, item TEXT, nature TEXT);")
+    c.execute("CREATE TABLE pokemon (pkmnid INT PRIMARY KEY, species TEXT, gender TEXT, level INT, ability TEXT, moves TEXT, item TEXT, nature TEXT, img TEXT);")
 
     db.commit()
     db.close()
@@ -172,11 +172,12 @@ def return_pkmn(pkmnid):
     command = "SELECT * FROM pokemon WHERE pkmnid = %d;"
     pkmn_info = list()
     for row in c.execute(command %(pkmnid)):
+        print row
         pkmn_info.append(row)
 
     db.commit()
     db.close()
-
+    print pkmn_info
     return pkmn_info
 
 def match_pass(username, password):
@@ -246,7 +247,7 @@ def delete_team(username, name):
     db.close()
 
 #creating a new pokemon
-def create_poke(species, gender, level, ability, moves, item, nature, teamid):
+def create_poke(species, gender, level, ability, moves, item, nature, teamid, img):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -257,7 +258,7 @@ def create_poke(species, gender, level, ability, moves, item, nature, teamid):
         pkmnid = row[0]
 
     #adding pokemon to table
-    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid+1, species, gender, level, ability, moves, item, nature))
+    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid+1, species, gender, level, ability, moves, item, nature, img))
 
     #adding pkmnid to teams table
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
@@ -272,12 +273,12 @@ def create_poke(species, gender, level, ability, moves, item, nature, teamid):
     db.close()
 
 #updating pokemon
-def update_poke(pkmnid, species, gender, level, ability, moves, item, nature):
+def update_poke(pkmnid, species, gender, level, ability, moves, item, nature, img):
     db = sqlite3.connect(f)
     c = db.cursor()
 
     #update info
-    c.execute("UPDATE pokemon SET species = \"%s\", gender = \"%s\", level = %d, ability = \"%s\", moves = \"%s\", item = \"%s\", nature = \"%s\" WHERE pkmnid = \"%s\";" %(species, gender, level, ability, moves, item, nature, pkmnid))
+    c.execute("UPDATE pokemon SET species = \"%s\", gender = \"%s\", level = %d, ability = \"%s\", moves = \"%s\", item = \"%s\", nature = \"%s\", img = \"%s\" WHERE pkmnid = \"%s\";" %(species, gender, level, ability, moves, item, nature, img, pkmnid))
 
     db.commit()
     db.close()

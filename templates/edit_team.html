@@ -41,31 +41,34 @@ background-attachment: fixed;
     <br>
     <div class="row justify-content-center">
       <div class="form-group">
-        <center><button type="submit" class="btn btn-outline-primary">Save Changes</button><center>
+        <center><button type="submit" class="btn btn-primary">Save Changes</button><center>
       </div>
     </div>
   </form>
   <br>
   <div class="row">
-    <div class="col-8">
-        <form action="/editpokemon">
-          <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
-          {% for pkmn in pokemon %}
-          <div class="form-row">
-            <div class="col-4">
-              <h3>{{ pokemon[pkmn] }}</h3>
-            </div>
-            <div class="col">
-              <div class="form-group">
-		            <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
-                <button type="submit" class="btn btn-outline-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">EDIT</button>
-              </div>
+    <div class="col-5">
+      <form action="/editpokemon" style="background-color: rgba(220,220,220,0.8)">
+        <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
+        {% for pkmn in pokemon %}
+        <div class="form-row">
+          <div class="col-3">
+            <img src="{{ pokemon[pkmn][1]}}">
+          </div>
+          <div class="col-6 text-left">
+            <h3 style="margin-top: 20px;">{{ pokemon[pkmn][0]}}</h3>    
+          </div>
+          <div class="col-1">
+            <div class="form-group">
+              <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
+              <button style="margin-top: 20px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">EDIT</button>
             </div>
           </div>
-          {% endfor %}
-	</form>
+        </div>
+        {% endfor %}
+      </form>
 	<form action="/createpokemon">
-	  <button type="submit" class="btn btn-outline-secondary" name="teamid" value="{{team[0]}}">Add Pokemon</button>
+	  <button type="submit" class="btn btn-secondary" name="teamid" value="{{team[0]}}">Add Pokemon</button>
         </form>
     </div>
     <div class="col">

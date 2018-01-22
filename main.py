@@ -154,6 +154,7 @@ def view_team():
 @app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
     if request.method == 'POST':
+        print "posted"
         database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
         return redirect(url_for("view_team", id = request.args['id']))
     else:
@@ -161,10 +162,15 @@ def edit_team():
         team = database.find_team(id)
         pokemon = team[8].split(",")
         pokedict2 = {}
+        
         for poke in pokemon:
             print poke
+            pokelist = []
             if poke != '':
-                pokedict2[str(poke)] = database.return_pkmn(int(poke))[0][1]
+                pokelist.append(database.return_pkmn(int(poke))[0][1])
+                pokelist.append(database.return_pkmn(int(poke))[0][8])
+                pokedict2[str(poke)] = pokelist
+
         print pokedict2
         return render_template("edit_team.html",
                                loggedin = auth.is_logged_in(),
@@ -180,13 +186,14 @@ def edit_team():
 @app.route('/createpokemon', methods = ['POST', 'GET'])
 def create_pokemon():
     if request.method == 'POST':
+        print "IMAGE: " + request.form['img']
         teamid = request.args['id']
         print teamid
         moves = ""
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
         moves += request.form['move3']
-        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", int(teamid))
+        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", int(teamid), request.form['img'])
         return redirect(url_for("edit_team", id = request.args['id']))
     else:
         teamid = request.args['teamid']
@@ -208,7 +215,7 @@ def edit_pokemon():
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
         moves += request.form['move3']
-        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A")
+        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", request.form['img'])
         return redirect(url_for("edit_team", id=int(teampkmn[1])))
     else:
         #you're going to need the id of the pokemon and the team
@@ -221,12 +228,12 @@ def edit_pokemon():
 def pokedata():
     data = request.args.get("name")
     results = api.search_poke(data)
-    print results
+    #print results
     moves = []
-    print results["moves"]
+    #print results["moves"]
     for each in results["moves"]:
         moves.append(each["move"]["name"])
-    print moves
+    #print moves
     abilities = []
     for each in results["abilities"]:
         abilities.append(each["ability"]["name"])

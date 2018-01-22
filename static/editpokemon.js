@@ -60,6 +60,7 @@ var transmit = function(e){
         //console.log(JSON.parse(d));
         d = JSON.parse(d);
         $("#sprite").attr("src", d['img']); 
+        $("#spriteimg").attr("value", d['img']);
         moves = d['moves'];
         console.log(moves);
         $("#moveslist0").empty();
