@@ -7,7 +7,7 @@ $( document).ready(function() {
     });
 
     $("#pokemon").on("select2:select", function(e) {
-        
+        $()
         var data = e.params.data;
         console.log(data.text);
         transmit();

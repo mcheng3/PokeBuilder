@@ -18,36 +18,39 @@ background-attachment: fixed;
     <div class="row justify-content-center">
       <div class="col-4">
         <div class="form-group text-center">
-              <label for="teamname"><h3>TEAM NAME</h3></label>
-              <input class="form-control" type="text" placeholder="Team Name" value="{{team[2]}}" name="teamname" id="teamname">
+          <label for="teamname"><h3>Team Name</h3></label>
+          <input class="form-control" type="text" placeholder="Team Name" value="{{team[2]}}" name="teamname" id="teamname">
         </div>
       </div>
       <div class="col-3">
-	       <div class="form-group text-center">
-           <label for="teamvers"><h3>GAME VERSION</h3></label>
-           <input class="form-control" type="text" placeholder="Game Version" value="{{team[4]}}" name="teamvers" id="teamvers">
-         </div>
-      </div>
-    </div>
-    <br>
-    <div class="row justify-content-center">
-      <div class="col-8">
         <div class="form-group text-center">
-          <label for="teamdesc"><h3>DESCRIPTION</h3></label>
-          <textarea class="form-control" rows="3" cols="20" name="teamdesc" id="teamdesc">{{ team[3] }}</textarea>
-        </div>
+         <label for="teamvers"><h3>Game Version</h3></label>
+         <input class="form-control" type="text" placeholder="Game Version" value="{{team[4]}}" name="teamvers" id="teamvers">
+       </div>
+     </div>
+   </div>
+   <br>
+   <div class="row justify-content-center">
+    <div class="col-8">
+      <div class="form-group text-center">
+        <label for="teamdesc"><h3>Description</h3></label>
+        <textarea class="form-control" rows="3" cols="20" name="teamdesc" id="teamdesc">{{ team[3] }}</textarea>
       </div>
     </div>
-    <br>
-    <div class="row justify-content-center">
-      <div class="form-group">
-        <center><button type="submit" class="btn btn-primary">Save Changes</button><center>
+  </div>
+  <br>
+  <div class="row justify-content-center">
+    <div class="form-group">
+      <center><button type="submit" class="btn btn-primary">Save Changes</button><center>
       </div>
     </div>
   </form>
   <br>
-  <div class="row">
-    <div class="col-5">
+  <div class="row" style="margin-bottom: 20px">
+    <div class="col-6">
+     <form action="/createpokemon">
+        <button style="margin-bottom: 20px;" type="submit" class="btn btn-dark" name="teamid" value="{{team[0]}}">Add Pokémon</button>
+     </form>
       <form action="/editpokemon" style="background-color: rgba(220,220,220,0.8)">
         <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
         {% for pkmn in pokemon %}
@@ -61,18 +64,16 @@ background-attachment: fixed;
           <div class="col-1">
             <div class="form-group">
               <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
-              <button style="margin-top: 20px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">EDIT</button>
+              <button style="margin-top: 20px; padding-left: 35px;padding-right: 35px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">Edit</button>
             </div>
           </div>
         </div>
         {% endfor %}
       </form>
-	<form action="/createpokemon">
-	  <button type="submit" class="btn btn-secondary" name="teamid" value="{{team[0]}}">Add Pokemon</button>
-        </form>
-    </div>
-    <div class="col">
-        <p>TEAM ANALYSIS AND STRENGTH/WEAKNESS COMING SOON<p>
+
+   </div>
+   <div class="col">
+    <p>TEAM ANALYSIS AND STRENGTH/WEAKNESS COMING SOON<p>
     </div>
   </div>
 </div>
