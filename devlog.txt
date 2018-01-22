@@ -46,3 +46,6 @@ worked on css backgrounds
 goldmanJ -- 2018-01-22 01:05:53
 cleaned up html, made code readable, fixed createteam, made a todo list
 
+goldmanJ -- 2018-01-22 01:27:19
+began working on strengths/weaknesses
+
