@@ -35,7 +35,7 @@ def add_favorite(username, teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
 
-    #retreive favorites list from table
+    #retrieve favorites list from table
     c.execute("SELECT favorites FROM users WHERE user = \"%s\";" %(username))
     fav_t = c.fetchone()
 
@@ -49,11 +49,37 @@ def add_favorite(username, teamid):
     #updating database
     c.execute("UPDATE users SET favorites = \"%s\" WHERE user = \"%s\";" %(fav_s, username))
 
-    #UPDATE TEAM UPVOTES
+    #updating team upvotes
+    c.execute("SELECT upvotes FROM teams WHERE teamid = %d;" %(teamid))
+    votes = c.fetchone()[0]
+    votes += 1
+    c.execute("UPDATE teams SET upvotes = %d WHERE teamid = %d;" %(votes, teamid))
 
     db.commit()
     db.close()
 
+#unfavorites a team 
+def remove_favorite(username, remove_team):
+    db = sqlite3.connect(f)
+    c = db.cusror()
+    
+    #deleting from users datatable
+    c.execute("SELECT favorites FROM users WHERE username = \"%s\";" %(username))
+    old_string = c.fetchone()[0]
+    if old_string.endswith(remove_team):
+        new_string = old_string.replace('%s', '' %(str(remove_team)))
+    else:
+        new_string = old_string.replace('%s,', '' %(str(remove_team)))
+
+    #updating team upvotes
+    c.execute("SELECT upvotes FROM teams WHERE teamid = %d;" %(remove_team))
+    votes = c.fetchone()[0]
+    votes -= 1
+    c.execute("UPDATE teams SET upvotes = %d WHERE teamid = %d;" %(votes, remove_team))
+    
+    db.commit()
+    db.close()
+	
 #finds username
 def find_user(username):
     db = sqlite3.connect(f)
@@ -170,8 +196,9 @@ def match_pass(username, password):
     db.commit()
     db.close()
 
+'''
 #creates a new team
-def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
+def new_team(teamid, username, name, desc, version, weaknesses, strengths, pkmnlist):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -185,10 +212,10 @@ def new_team(username, name, desc, version, weaknesses, strengths, pkmnlist):
     c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0, \"%s\");" %(teamid+1, username, name, desc, version, weaknesses, strengths, pkmnlist))
 
     db.commit()
-    db.close()
+    db.close() '''
 
 # helper function for getting the next teamid
-def next_teamid():
+def next_teamid(user):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -197,10 +224,13 @@ def next_teamid():
     for row in c.execute(command):
         teamid = row[0]
 
+     #adding team to table
+    c.execute("INSERT INTO teams VALUES (%d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", 0, \"%s\");" %(teamid+1, user, "", "", "", "", "", ""))
+
     db.commit()
     db.close()
 
-    return teamid
+    return teamid+1
 
 
 
@@ -216,22 +246,26 @@ def delete_team(username, name):
     db.close()
 
 #creating a new pokemon
-def create_poke(species, gender, level, ability, moves, item, nature):
+def create_poke(species, gender, level, ability, moves, item, nature, teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
 
     #creating a new pkmnid
     c.execute("SELECT pkmnid FROM pokemon ORDER BY pkmnid DESC LIMIT 1;")
-    pkmnid = c.fetchone()[0]
-    pkmnid += 1
+    pkmnid = 0
+    for row in c: 
+        pkmnid = row[0]
 
     #adding pokemon to table
-    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid, species, gender, level, ability, moves, item, nature))
+    c.execute("INSERT INTO pokemon VALUES(%d, \"%s\", \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\");" %(pkmnid+1, species, gender, level, ability, moves, item, nature))
 
     #adding pkmnid to teams table
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
     pkmnlist = c.fetchone()[0]
-    pkmnlist = pkmnlist + ",%d" %(pkmnid)
+    if pkmnlist == "": 
+        pkmnlist = "%d" %(pkmnid+1)
+    else:
+        pkmnlist += ", %d" %(pkmnid+1)
     c.execute("UPDATE teams SET pkmnid = \"%s\" WHERE teamid = %d;" %(pkmnlist, teamid))
 
     db.commit()
@@ -254,7 +288,9 @@ def update_team(teamid, name, desc, version, weaknesses, strengths):
     c = db.cursor()
 
     #update info
-    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\" WHERE teamid = %d;" %(name, desc, version, weaknesses, strengths, teamid))
+    print teamid
+    print int(teamid)
+    c.execute("UPDATE teams SET name = \"%s\", desc = \"%s\", version = \"%s\", weaknesses = \"%s\", strengths = \"%s\" WHERE teamid = %d;" %(name, desc, version, weaknesses, strengths, int(teamid)))
 
     db.commit()
     db.close()
@@ -278,14 +314,13 @@ def delete_poke(teamid, delete_pkmn):
     db.commit()
     db.close()
 
-#------------------------------------------------------UPDATE THIS ---------------------------------------
 #gets top ten most upvoted teams and returns as a tuple made out of tuples
 def get_ten():
     db = sqlite3.connect(f)
     c = db.cursor()
 
     #getting the top ten most upvoted teams
-    c.execute("SELECT teamid FROM teams ORDER BY upvotes DESC LIMIT 1;" %())
+    c.execute("SELECT * FROM teams ORDER BY upvotes DESC LIMIT 1;" %())
     top_ten = c.fetchall()
 
     return top_ten
