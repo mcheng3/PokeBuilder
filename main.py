@@ -137,6 +137,11 @@ def view_team():
         id = int(request.args["id"])
         team = database.find_team(id)
         mine = 'user' in session and session["user"] == team[1]
+        pokedict2 = {}
+        for poke in team[8].split(","):
+            print poke
+            if poke != '':
+                pokedict2[str(poke)] = database.return_pkmn(int(poke))[0]
         faves = list()
         if 'user' in session:
             faves = database.return_favorites(session["user"])[0][0].split(",")
@@ -145,7 +150,7 @@ def view_team():
                                team = team,
                                favorited = str(id) in faves,
                                mine = mine,
-                               poke_teams = ["yea", "yeas", "sdfa"])
+                               poke_teams = pokedict2)
 
 #---------------------------------------
 # EDIT PAGE
