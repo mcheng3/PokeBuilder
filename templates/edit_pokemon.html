@@ -10,10 +10,9 @@ background-attachment: fixed;
 {% endblock %}
 
 {% block link %}
-<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-<script src="{{ url_for('static', filename='editpokemon.js') }}" type='text/javascript'></script>
+
 {% endblock %}
 
 {% block body %}
@@ -46,4 +45,8 @@ background-attachment: fixed;
     </form>  
   </div>
 
+{% endblock %}
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<script src="{{ url_for('static', filename='editpokemon.js') }}" type='text/javascript'></script>
 {% endblock %}
