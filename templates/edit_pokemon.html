@@ -16,34 +16,38 @@ background-attachment: fixed;
 {% endblock %}
 
 {% block body %}
-  <h1>Select Pokémon</h1>
-  <div>
-    <form action="/{{action}}" method="POST">
-      <select name="pokemon" id="pokemon" style="width:300px;" type="text">
-        <!-- Dropdown List Option -->
-      </select><img id="sprite">
-      <h5>Types:</h5>
-      <span id="type"></span><br>
-      <span id="loading"> </span>
-      <h5>Abilities:</h5>
-      <select name="ability" id="abilitieslist" style="width:300px;" type="text">
-      </select>
-      <h5>Moves:</h5>
-      <select name="move0" id="moveslist0" style="width:300px;" type="text">
-      </select>
-      <select name="move1" id="moveslist1" style="width:300px;" type="text">
-      </select>
-      <select name="move2" id="moveslist2" style="width:300px;" type="text">
-      </select>
-      <select name="move3" id="moveslist3" style="width:300px;" type="text">
-      </select>
-      <br>
-      <span id="moves">
-      </span>
-      <br> 
-      <button type="submit" class="btn btn-outline-success" id="pokesubmit">Submit</button>
-    </form>  
+<div class="container">
+  <div class="row">
+    <h1>Select Pokémon</h1>
+    <div>
+      <form action="/{{action}}" method="POST">
+	<select name="pokemon" id="pokemon" style="width:300px;" type="text">
+          <!-- Dropdown List Option -->
+	</select><img id="sprite">
+	<h5>Types:</h5>
+	<span id="type"></span><br>
+	<span id="loading"> </span>
+	<h5>Abilities:</h5>
+	<select name="ability" id="abilitieslist" style="width:300px;" type="text">
+	</select>
+	<h5>Moves:</h5>
+	<select name="move0" id="moveslist0" style="width:300px;" type="text">
+	</select>
+	<select name="move1" id="moveslist1" style="width:300px;" type="text">
+	</select>
+	<select name="move2" id="moveslist2" style="width:300px;" type="text">
+	</select>
+	<select name="move3" id="moveslist3" style="width:300px;" type="text">
+	</select>
+	<br>
+	<span id="moves">
+	</span>
+	<br> 
+	<button type="submit" class="btn btn-outline-success" id="pokesubmit">Submit</button>
+      </form>
+    </div>
   </div>
+</div>
 
 {% endblock %}
 {% block extrajs %}
