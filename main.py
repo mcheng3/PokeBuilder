@@ -13,18 +13,33 @@ app.secret_key = "THIS IS NOT SECURE"
 #---------------------------------------
 @app.route('/')
 def root():
-    top_ten = database.get_ten()
+    top_recent = database.get_recent()
     top_five = list()
     bottom_five = list()
-    for team in range(0, 10):
-        if team < 5:
+    recent_thalf = list()
+    recent_bhalf = list()
+    recent_another = list()
+    for team in range(0, len(top_ten)):
+        if team < len(top_ten)/2:
             top_five.append(top_ten[team])
         else:
             bottom_five.append(top_ten[team])
+    for team in range(0, len(top_recent)):
+        if team < (len(top_recent)+2)/3:
+            recent_thalf.append(top_recent[team])
+        elif team < 2 * ((len(top_recent)+2)/3):
+            recent_bhalf.append(top_recent[team])            
+        else:
+            recent_another.append(top_recent[team])            
     return render_template("index.html",
                            loggedin = auth.is_logged_in(),
                            top_five = top_five,
-                           bottom_five = bottom_five)
+                           bottom_five = bottom_five,
+                           recent_thalf = recent_thalf,
+                           recent_bhalf = recent_bhalf,
+                           recent_another = recent_another)
+
+
 
 
 #---------------------------------------
