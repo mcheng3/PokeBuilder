@@ -71,8 +71,8 @@ def remove_favorite(username, remove_team):
     else:
         new_string = old_string.replace(str(remove_team) + ",", '')
 
-    print "THIS IS THE NEW STRING"
-    print new_string
+    c.execute("UPDATE users SET favorites=\"%s\" WHERE user = \"%s\";" %(new_string, username))
+    db.commit()
         
     #updating team upvotes
     c.execute("SELECT upvotes FROM teams WHERE teamid = %d;" %(remove_team))
@@ -239,12 +239,12 @@ def next_teamid(user):
 
 
 #deletes team
-def delete_team(username, name):
+def delete_team(teamid):
     db = sqlite3.connect(f)
     c = db.cursor()
 
     #creating a new teamid
-    c.execute("DELETE FROM teams WHERE user = \"%s\" and name = \"%s\"" %(username, name))
+    c.execute("DELETE FROM teams WHERE teamid = %d" %(teamid))
 
     db.commit()
     db.close()

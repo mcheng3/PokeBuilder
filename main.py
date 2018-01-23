@@ -130,6 +130,9 @@ def view_team():
     if request.method == 'POST':
         if 'edit' in request.form:
             return redirect(url_for("edit_team", id = request.args['id']))
+        elif 'delete' in request.form:
+            database.delete_team(int(request.args['id']))
+            return redirect(url_for("profile"))
         elif 'favorite' in request.form:
             if 'user' in session:
                 id = request.args["id"]
