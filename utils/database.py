@@ -183,6 +183,20 @@ def return_pkmn(pkmnid):
     print pkmn_info
     return pkmn_info
 
+#returns type (nature) of the pokemon
+def return_type(pkmnid):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    c.execute("SELECT nature FROM pokemon WHERE pkmnid = %d;" %(pkmnid))
+    nature_s = c.fetchone()[0]
+    nature_l = nature_s.split(",")
+
+    return nature_l
+
+    db.commit()
+    db.close()
+
 def match_pass(username, password):
     db = sqlite3.connect(f)
     c = db.cursor()
