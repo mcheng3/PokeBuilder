@@ -233,7 +233,10 @@ def create_pokemon():
     if request.method == 'POST':
         print "IMAGE: " + request.form['img']
         teamid = request.args['id']
-        
+
+        #list of types
+        typelist = request.form['type'][:-1]
+
         # get moves for each pokemon by appending all the user selected moves
         moves = ""
         for x in range(0, 3):
@@ -241,7 +244,7 @@ def create_pokemon():
         moves += request.form['move3']
 
         #add to database
-        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", int(teamid), request.form['img'])
+        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, int(teamid), request.form['img'])
         
         return redirect(url_for("edit_team", id = request.args['id']))
     else:
@@ -263,6 +266,9 @@ def edit_pokemon():
         print request.args['id']
         teampkmn = request.args['id'].split(",")
 
+        #list of types
+        typelist = request.form['type'][:-1]
+        
         #get selected moves and put in list form
         moves = ""
         for x in range(0, 3):
@@ -270,7 +276,7 @@ def edit_pokemon():
         moves += request.form['move3']
 
         #update database with new pokemon traits
-        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", request.form['img'])
+        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, request.form['img'])
 
         #return to edit_team
         return redirect(url_for("edit_team", id=int(teampkmn[1])))
@@ -298,6 +304,6 @@ def pokedata():
     return json.dumps(response)
 
 if __name__ == "__main__":
-    api.type_info("electric")
+#    api.type_info("electric")
     app.debug = True
     app.run()
