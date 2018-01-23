@@ -3,6 +3,7 @@
 Poke Viewer
 {% endblock %}
 
+
 {% block body %}
 <div class="container">
   <div class="row">
@@ -15,6 +16,7 @@ Poke Viewer
       <form action="/viewteam?id={{team[0]}}" method="POST">
       	{% if mine %}
       	<input type="submit" value="Edit" name="edit" class="btn btn-outline-primary">
+	<input id="del" type="submit" value="Delete" name="delete" class="btn btn-warning">
       	{% elif favorited %}
       	<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
       	{% else %}
@@ -56,4 +58,9 @@ Poke Viewer
     </div>
   </div>
 </div>
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{{ url_for('static', filename='delete.js') }}" type='text/javascript'></script>
 {% endblock %}

@@ -52,6 +52,11 @@ began working on strengths/weaknesses
 chengM -- 2018-01-22 02:17:58
 Fixed js in edit_pokemon.html . Edited styling for navbar.
 
+<<<<<<< HEAD
 chengM -- 2018-01-22 16:30:30
 Update /editteam so that it shows pokemon sprites
+=======
+linK -- 2018-01-22 19:39:19
+Today I linked all the edit team, pokemon, create pokemon pages, home page with the database. I also worked on some css for the home page. The basic functions of the site, such as favoriting, deleting, creating team and pokemon are in place.
+>>>>>>> 69e58b2b30fc015e116fa04afb3bc126e879e917
 

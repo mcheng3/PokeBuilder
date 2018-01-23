@@ -13,10 +13,18 @@ app.secret_key = "THIS IS NOT SECURE"
 #---------------------------------------
 @app.route('/')
 def root():
+    top_ten = database.get_ten()
+    top_five = list()
+    bottom_five = list()
+    for team in range(0, 10):
+        if team < 5:
+            top_five.append(top_ten[team])
+        else:
+            bottom_five.append(top_ten[team])
     return render_template("index.html",
-                               loggedin = auth.is_logged_in(),
-                               top_ten = ["a", "b", "c", "d", "e",
-                                          "f", "g", "h", "i", "j"])
+                           loggedin = auth.is_logged_in(),
+                           top_five = top_five,
+                           bottom_five = bottom_five)
 
 
 #---------------------------------------
@@ -122,16 +130,19 @@ def view_team():
     if request.method == 'POST':
         if 'edit' in request.form:
             return redirect(url_for("edit_team", id = request.args['id']))
+        elif 'delete' in request.form:
+            database.delete_team(int(request.args['id']))
+            return redirect(url_for("profile"))
         elif 'favorite' in request.form:
             if 'user' in session:
                 id = request.args["id"]
-                database.add_favorite(session["user"], id)
+                database.add_favorite(session["user"], int(id))
                 return redirect(url_for("view_team", id = id))
             else:
                 return redirect(url_for('login'))
         else:
             id = request.args["id"]
-            #remove favorite
+            database.remove_favorite(session["user"], int(id))
             return redirect(url_for("view_team", id = id))
     else:
         id = int(request.args["id"])
