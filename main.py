@@ -245,16 +245,27 @@ def create_pokemon():
         #list of types
         typelist = request.form['type'][:-1]
 
-        # get moves for each pokemon by appending all the user selected moves
+        #get selected moves and put in list form
         moves = ""
+        movelist = []
+
+        for x in range(0, 3):
+            moves += (request.form['move' + str(x)]) + ", "
+            movelist.append(request.form['move' + str(x)])
+        moves += request.form['move3']
+        movelist.append(request.form['move3'])
+        # if one move was selected multiple times
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
         moves += request.form['move3']
-
-        #add to database
-        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, int(teamid), request.form['img'])
+        if len(movelist) != len(set(movelist)):
+            flash("Do not select a move more than once")
+            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "createpokemon?id=" + request.args['id'])
+        else:
+            #add to database
+            database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, int(teamid), request.form['img'])
         
-        return redirect(url_for("edit_team", id = request.args['id']))
+            return redirect(url_for("edit_team", id = request.args['id']))
     else:
         teamid = request.args['teamid']
         return render_template("edit_pokemon.html",
