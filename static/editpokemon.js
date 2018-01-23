@@ -87,11 +87,14 @@ var transmit = function(e){
         });
         $("type").html("");
         var types = "";
+	var typelist = "";
         d["type"].forEach(function(item){
-        types += item["type"]["name"] + "<br>";
+            types += item["type"]["name"] + "<br>";
+	    typelist += item["type"]["name"] + ","
         });
         document.getElementById("type").innerHTML = types;
-	$("#typeinput").attr("value", d["type"]);
+	console.log(typelist);
+	$("#typeinput").attr("value", typelist);
         $("#pokesubmit").removeAttr(d['disabled']);
         $("#pokesubmit").attr("class", d['btn'] + " btn-dark");
         $("#pokesubmit").html("Submit");
