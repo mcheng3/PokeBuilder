@@ -13,6 +13,7 @@ app.secret_key = "THIS IS NOT SECURE"
 #---------------------------------------
 @app.route('/')
 def root():
+    top_ten = database.get_ten()
     top_recent = database.get_recent()
     top_five = list()
     bottom_five = list()
