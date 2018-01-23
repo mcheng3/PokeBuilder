@@ -46,35 +46,37 @@ background-attachment: fixed;
     </div>
   </form>
   <br>
+  {% if showPokemon %}
   <div class="row" style="margin-bottom: 20px">
     <div class="col-6">
      <form action="/createpokemon">
-        <button style="margin-bottom: 20px;" type="submit" class="btn btn-dark" name="teamid" value="{{team[0]}}">Add Pokémon</button>
-     </form>
-      <form action="/editpokemon" style="background-color: rgba(220,220,220,0.8)">
-        <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
-        {% for pkmn in pokemon %}
-        <div class="form-row">
-          <div class="col-3">
-            <img src="{{ pokemon[pkmn][1]}}">
-          </div>
-          <div class="col-6 text-left">
-            <h3 style="margin-top: 20px;">{{ pokemon[pkmn][0]}}</h3>    
-          </div>
-          <div class="col-1">
-            <div class="form-group">
-              <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
-              <button style="margin-top: 20px; padding-left: 35px;padding-right: 35px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">Edit</button>
-            </div>
+      <button style="margin-bottom: 20px;" type="submit" class="btn btn-dark" name="teamid" value="{{team[0]}}">Add Pokémon</button>
+    </form>
+    <form action="/editpokemon" style="background-color: rgba(220,220,220,0.8)">
+      <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
+      {% for pkmn in pokemon %}
+      <div class="form-row">
+        <div class="col-3">
+          <img src="{{ pokemon[pkmn][1]}}">
+        </div>
+        <div class="col-6 text-left">
+          <h3 style="margin-top: 20px;">{{ pokemon[pkmn][0]}}</h3>    
+        </div>
+        <div class="col-1">
+          <div class="form-group">
+            <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
+            <button style="margin-top: 20px; padding-left: 35px;padding-right: 35px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">Edit</button>
           </div>
         </div>
-        {% endfor %}
-      </form>
+      </div>
+      {% endfor %}
+    </form>
 
-   </div>
-   <div class="col">
+  </div>
+  <div class="col">
     <p>TEAM ANALYSIS AND STRENGTH/WEAKNESS COMING SOON<p>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock %}

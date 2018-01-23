@@ -69,7 +69,7 @@ def signup():
 #---------------------------------------
 @app.route('/logout')
 def logout():
-    auth.logout();
+    auth.logout()
     return redirect( url_for("root") )
 
 
@@ -112,10 +112,11 @@ def search():
 def create():
     if request.method == 'POST':
         database.update_team(int(request.args['id']), request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
-        return redirect(url_for("root"))
+        return redirect("/editteam?id=" +   request.args['id'])
     else:
         new_teamid = database.next_teamid(session['user'])
         return render_template("edit_team.html",
+                               showPokemon = False,
                                action = "createteam?id=" + str(new_teamid),
                                created = "False",
                                new_teamid = new_teamid,
@@ -189,6 +190,7 @@ def edit_team():
 
         print pokedict2
         return render_template("edit_team.html",
+                               showPokemon = True,
                                loggedin = auth.is_logged_in(),
                                action = "editteam?id=" + str(team[0]),
                                created = True,

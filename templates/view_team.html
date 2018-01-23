@@ -6,57 +6,60 @@ Poke Viewer
 
 {% block body %}
 <div class="container">
-  <div class="row">
-    <div class = "col-8">
-      <h1>{{ team[2] }}</h1>
-      <span style="color: blue">BY:</span> {{ team[1] }} |
-      <span style="color: blue">GAME VERSION:</span> {{ team[4] }}
-    </div>
-    <div class = "col-md-auto offset-md-2">
-      <form action="/viewteam?id={{team[0]}}" method="POST">
-      	{% if mine %}
-      	<input type="submit" value="Edit" name="edit" class="btn btn-outline-primary">
-	<input id="del" type="submit" value="Delete" name="delete" class="btn btn-warning">
-      	{% elif favorited %}
-      	<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
-      	{% else %}
-      	<input type="submit" value="Favorite" name="favorite" class="btn btn-outline-primary">
-      	{% endif %}
-      </form>
-    </div>
-  </div>
-  <hr><br>
+	<div class="row">
+		<div class = "col-8">
+			<h1>{{ team[2] }}</h1>
+			<span style="color: blue">By:</span> {{ team[1] }} |
+			<span style="color: blue">Game Version:</span> {{ team[4] }}
+		</div>
+		<div class = "col-md-auto offset-md-2">
+			<form action="/viewteam?id={{team[0]}}" method="POST">
+				{% if mine %}
+				<input type="submit" value="Edit" name="edit" class="btn btn-primary">
+				<input id="del" type="submit" value="Delete" name="delete" class="btn btn-warning">
+				{% elif favorited %}
+				<input type="submit" value="Unfavorite" name="unfavorite" class="btn btn-outline-primary">
+				{% else %}
+				<input type="submit" value="Favorite" name="favorite" class="btn btn-outline-primary">
+				{% endif %}
+			</form>
+		</div>
+	</div>
+	<hr><br>
 
-  <div class = "row justify-content-center">
-    <div class = "col-10">
-      <h4>Description</h4>
-      {{ team[3] }}
-      <br><br><br>
-    </div>
-  </div>
-  <div class = "row justify-content-center">
-    <div class = "col-5">
-      <h4>Weaknesses</h4>
-      {{ team[5] }}
-    </div>
-    <div class = "col-5">
-      <h4>Strengths</h4>
-      {{ team[6] }}
-    </div>
-  </div>
-  <br><br>
-  <div class = "row justify-content-center">
-    <div class = "col-10">
-      <h4>Pokemon</h4>
-      {% for poke in poke_teams %}
-      <ol>
-	<b>SPECIES</b>: {{poke_teams[poke][1]}} <br>
-	<b>ABILITIES</b>: {{poke_teams[poke][4]}} <br>
-	<b>MOVES</b>: {{poke_teams[poke][5]}} 
-      </ol>
-      {% endfor %}
-    </div>
-  </div>
+	<div class = "row justify-content-center">
+		<div class = "col-10">
+			<h4>Description</h4>
+			{{ team[3] }}
+			<br><br><br>
+		</div>
+	</div>
+	<div class = "row justify-content-center">
+		<div class = "col-5">
+			<h4>Weaknesses</h4>
+			{{ team[5] }}
+		</div>
+		<div class = "col-5">
+			<h4>Strengths</h4>
+			{{ team[6] }}
+		</div>
+	</div>
+	<br><br>
+	<div class = "row justify-content-center">
+		<div class = "col-10">
+			<h4>Pokemon</h4>
+			{% for poke in poke_teams %}
+      <div class="row">
+      <img src={{poke_teams[poke][8]}}>
+			<ol style="margin-top: 10px">
+				<b>SPECIES</b>: {{poke_teams[poke][1]}} <br>
+				<b>ABILITIES</b>: {{poke_teams[poke][4]}} <br>
+				<b>MOVES</b>: {{poke_teams[poke][5]}} 
+			</ol>
+      </div>
+			{% endfor %}
+		</div>
+	</div>
 </div>
 {% endblock %}
 
