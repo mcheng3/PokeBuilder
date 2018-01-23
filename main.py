@@ -242,7 +242,7 @@ def pokedata():
     abilities = []
     for each in results["abilities"]:
         abilities.append(each["ability"]["name"])
-    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"], 'abilities': abilities}
+    response = {'img': results["sprites"]["front_default"], 'moves': moves, "type": results["types"], 'abilities': abilities, 'btn': "btn", 'disabled': "disabled"}
     return json.dumps(response)
 
 if __name__ == "__main__":

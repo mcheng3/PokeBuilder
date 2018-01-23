@@ -17,11 +17,12 @@ background-attachment: fixed;
 
 {% block body %}
 <div class="container">
+
   <div class="row">
-    <h1>Select Pokémon</h1>
+
     <div>
-      <form action="/{{action}}" method="POST" >
-	<select name="pokemon" id="pokemon" style="width:300px;" type="text">
+      <form id="pokeform" action="/{{action}}" method="POST" >
+	<h1>Select Pokémon</h1><select name="pokemon" id="pokemon" style="width:300px;" type="text">
           <!-- Dropdown List Option -->
 	</select><img id="sprite">
   	<input name="img" type="hidden" id="spriteimg" value=""> 
@@ -32,19 +33,19 @@ background-attachment: fixed;
 	<select name="ability" id="abilitieslist" style="width:300px;" type="text">
 	</select>
 	<h5>Moves:</h5>
-	<select name="move0" id="moveslist0" style="width:300px;" type="text">
+	<select name="move0" id="moveslist0" style="width:200px;" type="text">
 	</select>
-	<select name="move1" id="moveslist1" style="width:300px;" type="text">
+	<select name="move1" id="moveslist1" style="width:200px;" type="text">
 	</select>
-	<select name="move2" id="moveslist2" style="width:300px;" type="text">
+	<select name="move2" id="moveslist2" style="width:200px;" type="text">
 	</select>
-	<select name="move3" id="moveslist3" style="width:300px;" type="text">
+	<select name="move3" id="moveslist3" style="width:200px;" type="text">
 	</select>
 	<br>
 	<span id="moves">
 	</span>
 	<br> 
-	<button type="submit" class="btn btn-dark		" id="pokesubmit">Submit</button>
+	<button type="submit" class="btn btn-dark disabled" id="pokesubmit">Please select a pokémon first</button>
       </form>
     </div>
   </div>

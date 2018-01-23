@@ -52,3 +52,6 @@ began working on strengths/weaknesses
 chengM -- 2018-01-22 02:17:58
 Fixed js in edit_pokemon.html . Edited styling for navbar.
 
+chengM -- 2018-01-22 16:30:30
+Update /editteam so that it shows pokemon sprites
+
