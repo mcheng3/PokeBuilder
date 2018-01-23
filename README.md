@@ -3,7 +3,7 @@
 ---
 Welcome to our project, __PokéBuilder__!
 
-[<h2>Link to our demo video</h2>](www.youtube.com) 
+[<h2>Link to our demo video</h2>](https://www.youtube.com) 
 
 Our pokemon team builder will allow you to create custom pokémon teams, giving you a variety of stats to guide your decisions.  
 
