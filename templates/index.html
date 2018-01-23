@@ -80,12 +80,70 @@ background-attachment: fixed;
 		 -webkit-text-stroke-width: 2px;
 		 -webkit-text-stroke-color: black;
 		 font-size: 50pt;
-		 text-indent: 50px">ALL TEAMS</span><br>
+		 text-indent: 50px">LATEST TEAMS</span><br>
     <hr>
   </div>
-  <h3>All Teams</h3>
-  blah<br>
-  blah<br>
+  <br><br>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div class="list-group">
+	{% for team in recent_thalf %}
+	<a href="/viewteam?id={{team[0]}}"
+	   class="list-group-item"
+	   style="background-color:rgba(255, 255, 255, .55);
+		  color:black">
+	  <span style="text-transform:uppercase;
+		       font-size: 21px">{{team[2]}}</span> <br>
+	  <div style="text-indent: 30px">
+	    by {{team[1]}} <br>
+	  </div>
+	  <div style="text-indent: 30px">
+	  Upvotes: {{team[7]}}
+	  </div>
+	</a>
+	{% endfor %}
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="list-group">
+	{% for team in recent_bhalf %}
+	<a href="/viewteam?id={{team[0]}}"
+	   class="list-group-item"
+	   style="background-color:rgba(255, 255, 255, .55);
+		  color: black">
+	  <span style="text-transform:uppercase;
+		       font-size: 21px">{{team[2]}}</span> <br>
+	  <div style="text-indent: 30px">
+	    by {{team[1]}} <br>
+	  </div>
+	  <div style="text-indent: 30px">
+	  Upvotes: {{team[7]}}
+	  </div>
+	</a>
+	{% endfor %}
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="list-group">
+	{% for team in recent_another %}
+	<a href="/viewteam?id={{team[0]}}"
+	   class="list-group-item"
+	   style="background-color:rgba(255, 255, 255, .55);
+		  color:black">
+	  <span style="text-transform:uppercase;
+		       font-size: 21px">{{team[2]}}</span> <br>
+	  <div style="text-indent: 30px">
+	    by {{team[1]}} <br>
+	  </div>
+	  <div style="text-indent: 30px">
+	  Upvotes: {{team[7]}}
+	  </div>
+	</a>
+	{% endfor %}
+      </div>
+    </div>
+  </div>
+  <br><br>
 </div>
 <br><br><br>
 {% endblock %}

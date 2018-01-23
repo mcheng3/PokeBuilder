@@ -335,6 +335,22 @@ def get_ten():
     db.commit()
     db.close()
 
+def get_recent():
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    #getting the top ten most upvoted teams
+    c.execute("SELECT * FROM teams ORDER BY teamid DESC LIMIT 16;" %())
+    top_ten = c.fetchall()
+
+    print "LATEST"
+    print top_ten
+    return top_ten
+
+    db.commit()
+    db.close()
+
+
 if __name__ == "__main__":
     system("rm data/app.db")
     create_db()

@@ -49,9 +49,11 @@ background-attachment: fixed;
   {% if showPokemon %}
   <div class="row" style="margin-bottom: 20px">
     <div class="col-6">
+      {% if more %}
      <form action="/createpokemon">
       <button style="margin-bottom: 20px;" type="submit" class="btn btn-dark" name="teamid" value="{{team[0]}}">Add Pokémon</button>
-    </form>
+     </form>
+     {% endif %}
     <form action="/editpokemon" style="background-color: rgba(220,220,220,0.8)">
       <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
       {% for pkmn in pokemon %}
@@ -62,7 +64,7 @@ background-attachment: fixed;
         <div class="col-6 text-left">
           <h3 style="margin-top: 20px;">{{ pokemon[pkmn][0]}}</h3>    
         </div>
-        <div class="col-1">
+        <div class="cnol-1">
           <div class="form-group">
             <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
             <button style="margin-top: 20px; padding-left: 35px;padding-right: 35px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">Edit</button>
@@ -79,4 +81,5 @@ background-attachment: fixed;
   </div>
   {% endif %}
 </div>
+<br><br>
 {% endblock %}
