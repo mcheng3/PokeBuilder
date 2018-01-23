@@ -50,7 +50,7 @@ $( document).ready(function() {
     });
     $("#moveslist1").on("select2:select", function(e) {
 	 var movelist = [];
-	$("#moveslist0 option").each(function(){
+	$("#moveslist1 option").each(function(){
 	    movelist.push($(this).val());
 	});
 	const index = movelist.indexOf(e.params.data.text);
@@ -74,7 +74,7 @@ $( document).ready(function() {
     });
     $("#moveslist2").on("select2:select", function(e) {
          var movelist = [];
-	$("#moveslist0 option").each(function(){
+	$("#moveslist2 option").each(function(){
 	    movelist.push($(this).val());
 	});
 	const index = movelist.indexOf(e.params.data.text);
@@ -98,7 +98,7 @@ $( document).ready(function() {
     });
     $("#moveslist3").on("select2:select", function(e) {
          var movelist = [];
-	$("#moveslist0 option").each(function(){
+	$("#moveslist3 option").each(function(){
 	    movelist.push($(this).val());
 	});
 	const index = movelist.indexOf(e.params.data.text);
@@ -170,6 +170,7 @@ var transmit = function(e){
         types += item["type"]["name"] + "<br>";
         });
         document.getElementById("type").innerHTML = types;
+	$("#typeinput").attr("value", d["type"]);
         $("#pokesubmit").removeAttr(d['disabled']);
         $("#pokesubmit").attr("class", d['btn'] + " btn-dark");
         $("#pokesubmit").html("Submit");
