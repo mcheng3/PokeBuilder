@@ -85,4 +85,6 @@ Change routing and edit styling
 chengM -- 2018-01-23 12:07:19
 Prevent user from selecting move multiple times
 
+parkP -- 2018-01-23 1:41:20
+Added a return_type function to database.py
 
