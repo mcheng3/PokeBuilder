@@ -195,9 +195,17 @@ def view_team():
 @app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
     if request.method == 'POST':
-        print "posted"
-        database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
-        return redirect(url_for("view_team", id = request.args['id']))
+        print request.args
+        if 'deletepkmn' in request.args:
+            teamid = request.args['deletepkmn'].split(",")[1]
+            pkmnid = request.args['deletepkmn'].split(",")[0]
+            database.delete_poke(int(teamid), int(pkmnid))
+            #go back to edit page
+            return redirect(url_for('edit_team', id=teamid))
+        else :
+            #save the team again
+            database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
+            return redirect(url_for("view_team", id = request.args['id']))
     else:
         id = int(request.args["id"])
         team = database.find_team(id)

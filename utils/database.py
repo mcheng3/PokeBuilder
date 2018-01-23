@@ -321,10 +321,12 @@ def delete_poke(teamid, delete_pkmn):
     #deleting from team datatable
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
     old_string = c.fetchone()[0]
-    if old_string.endswith(delete_pkmn):
-        new_string = old_string.replace('%s', '' %(str(delete_pkmn)))
+    if old_string.endswith(str(delete_pkmn)):
+        new_string = old_string.replace(str(delete_pkmn), '')
     else:
-        new_string = old_string.replace('%s,', '' %(str(delete_pkmn)))
+        new_string = old_string.replace(str(delete_pkmn) + ", " , '')
+    c.execute("UPDATE teams SET pkmnid = \"%s\" WHERE teamid = %d;" %(new_string, teamid))
+    db.commit()
 
     #deleting from pokemon datatable
     c.execute("DELETE FROM pokemon WHERE pkmnid = %d;" %(delete_pkmn))
