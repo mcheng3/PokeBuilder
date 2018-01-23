@@ -269,7 +269,6 @@ def create_pokemon():
 @app.route('/editpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
     if request.method == 'POST':
-
         #team id and pokemon id separated by comma
         print request.args['id']
         teampkmn = request.args['id'].split(",")
@@ -279,15 +278,23 @@ def edit_pokemon():
         
         #get selected moves and put in list form
         moves = ""
+        movelist = []
+
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
+            movelist.append(request.form['move' + str(x)])
         moves += request.form['move3']
+        movelist.append(request.form['move3'])
+        # if one move was selected multiple times
+        if len(movelist) != len(set(movelist)):
+            flash("Do not select a move more than once")
+            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+        else:
+            #update database with new pokemon traits
+            database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, request.form['img'])
 
-        #update database with new pokemon traits
-        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, request.form['img'])
-
-        #return to edit_team
-        return redirect(url_for("edit_team", id=int(teampkmn[1])))
+            #return to edit_team
+            return redirect(url_for("edit_team", id=int(teampkmn[1])))
     else:
         #you're going to need the id of the pokemon and the team
         return render_template("edit_pokemon.html",

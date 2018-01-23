@@ -13,4 +13,4 @@ Our pokemon team builder will allow you to create custom pokémon teams, giving 
 3. Search for a team by typing in the search box in the navbar.  
 
 #### Known bugs:
-Occasionally, the API request times out, causing a JSON error. When this occurs, restart the flask app.
+Occasionally, the API request times out. Two things might have happened. If there is a JSON error printed in terminal, restart the flask app. Otherwise, the API might be offline. To check, [go to this link](https://pokeapi.co/)
