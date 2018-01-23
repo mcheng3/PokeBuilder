@@ -26,8 +26,9 @@ def type_info(type):
     for relation in dmg_rel:
         type_list = []
         for type_entry in dmg_rel[relation]:
-            type_list.append( dmg_rel[relation][type_entry]["name"] )
-        dmg_rel[relation] = type_tist
+            type_list.append( type_entry["name"] )
+        dmg_rel[relation] = type_list
+    print dmg_rel
     return dmg_rel
 
 

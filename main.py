@@ -259,5 +259,6 @@ def pokedata():
     return json.dumps(response)
 
 if __name__ == "__main__":
+    api.type_info("electric")
     app.debug = True
     app.run()
