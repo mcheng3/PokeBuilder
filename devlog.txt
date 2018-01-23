@@ -63,3 +63,6 @@ Today I linked all the edit team, pokemon, create pokemon pages, home page with 
 chengM -- 2018-01-22 20:52:19
 Change routing and edit styling
 
+chengM -- 2018-01-23 12:07:19
+Prevent user from selecting move multiple times
+
