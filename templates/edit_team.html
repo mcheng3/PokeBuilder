@@ -61,13 +61,14 @@ background-attachment: fixed;
         <div class="col-3">
           <img src="{{ pokemon[pkmn][1]}}">
         </div>
-        <div class="col-6 text-left">
+        <div class="col-2 text-left">
           <h3 style="margin-top: 20px;">{{ pokemon[pkmn][0]}}</h3>    
         </div>
-        <div class="cnol-1">
+        <div class="col text-right">
           <div class="form-group">
             <!--each button should have their own action; use the teamid and the pokemon id (pkmn)-->
             <button style="margin-top: 20px; padding-left: 35px;padding-right: 35px;" type="submit" class="btn btn-primary" value="{{pkmn}},{{team[0]}}" name="pkmnid">Edit</button>
+	    <button style="margin-top: 20px; margin-right: 20px;" type="button" class="btn btn-danger" value="{{pkmn}},{{team[0]}}" name="pkmnid">Remove</button>
           </div>
         </div>
       </div>
