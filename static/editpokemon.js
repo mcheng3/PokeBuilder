@@ -19,104 +19,25 @@ $( document).ready(function() {
     });
     
     var abilities =[];
+   
+    
+
     $("#moveslist0").select2({
         data: moves
-    });
-    
-    $("#moveslist0").on("select2:select", function(e) {
-        var movelist = [];
-	$("#moveslist0 option").each(function(){
-	    movelist.push($(this).val());
-	});
-	const index = movelist.indexOf(e.params.data.text);
-	movelist.splice(index, 1);
-	console.log(movelist);
-	$("#moveslist1").empty(); 
-	$("#moveslist1").select2({
-	    data: movelist
-	});
-	$("#moveslist2").empty(); 
-	$("#moveslist2").select2({
-	    data: movelist
-	});
-	$("#moveslist3").empty(); 
-	$("#moveslist3").select2({
-	    data: movelist
-	});				
     });
     
     $("#moveslist1").select2({
         data: moves
     });
-    $("#moveslist1").on("select2:select", function(e) {
-	 var movelist = [];
-	$("#moveslist1 option").each(function(){
-	    movelist.push($(this).val());
-	});
-	const index = movelist.indexOf(e.params.data.text);
-	movelist.splice(index, 1);
-	console.log(movelist);
-	$("#moveslist0").empty(); 
-	$("#moveslist0").select2({
-	    data: movelist
-	});
-	$("#moveslist2").empty(); 
-	$("#moveslist2").select2({
-	    data: movelist
-	});
-	$("#moveslist3").empty(); 
-	$("#moveslist3").select2({
-	    data: movelist
-	});
-    });
+    
     $("#moveslist2").select2({
         data: moves
     });
-    $("#moveslist2").on("select2:select", function(e) {
-         var movelist = [];
-	$("#moveslist2 option").each(function(){
-	    movelist.push($(this).val());
-	});
-	const index = movelist.indexOf(e.params.data.text);
-	movelist.splice(index, 1);
-	console.log(movelist);
-	$("#moveslist1").empty(); 
-	$("#moveslist1").select2({
-	    data: movelist
-	});
-	$("#moveslist0").empty(); 
-	$("#moveslist0").select2({
-	    data: movelist
-	});
-	$("#moveslist3").empty(); 
-	$("#moveslist3").select2({
-	    data: movelist
-	});
-    });
+    
     $("#moveslist3").select2({
         data: moves
     });
-    $("#moveslist3").on("select2:select", function(e) {
-         var movelist = [];
-	$("#moveslist3 option").each(function(){
-	    movelist.push($(this).val());
-	});
-	const index = movelist.indexOf(e.params.data.text);
-	movelist.splice(index, 1);
-	console.log(movelist);
-	$("#moveslist1").empty(); 
-	$("#moveslist1").select2({
-	    data: movelist
-	});
-	$("#moveslist2").empty(); 
-	$("#moveslist2").select2({
-	    data: movelist
-	});
-	$("#moveslist0").empty(); 
-	$("#moveslist0").select2({
-	    data: movelist
-	});
-    });
+    
     $("#abilitieslist").select2({
     data: abilities
     });
