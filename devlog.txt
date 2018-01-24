@@ -88,3 +88,6 @@ Prevent user from selecting move multiple times
 parkP -- 2018-01-23 1:41:20
 Added a return_type function to database.py
 
+linK -- 2018-01-23 21:27:48
+Today I worked on remove pokemon, adding types to the database for pokemon, and latest teams on the front page
+
