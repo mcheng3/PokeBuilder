@@ -15,7 +15,7 @@ background-image:url({{url_for('static',filename='profile.png')}});
   </div>
   <div class="row">
     <div class="col">
-      <h3>YOUR TEAMS</h3>
+      <h3>Your Teams</h3>
       <!-- my_teams is a dictionary of teams keyed by teamid with the value as the name -->
       {% for team in my_teams %}
       <div class="row">
@@ -26,7 +26,7 @@ background-image:url({{url_for('static',filename='profile.png')}});
       {% endfor %}
     </div>
     <div class="col">
-      <h3>FAVORITED TEAMS</h3>
+      <h3>Favorited Teams</h3>
       <!-- fav_teams is a dictionary of teams keyed by teamid with the value as the name -->
       {% for team in fav_teams %}
       <div class="row">

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Pokebuilder
+Team Builder
 {% endblock %}
 
 {% block background %}
@@ -81,7 +81,7 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
     </form>
 
     </div>
-    <div style="background-color: rgba(220,220,220,0.8)" class="col">
+    <div style="background-color: rgba(220,220,220,0.8); padding-top: 20px;" class="col">
       <h3>Strengths:</h3>
       <b>In Offense:</b><br>
       {% for type in strengths['offensive'] %}
@@ -92,7 +92,7 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
       {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
     </div>
-    <div style="background-color: rgba(220,220,220,0.8)" class="col">
+    <div style="background-color: rgba(220,220,220,0.8); padding-top: 20px;" class="col">
       <h3>Weaknesses:</h3>
       <b>In Offense:</b><br>
       {% for type in weaknesses['offensive'] %}
