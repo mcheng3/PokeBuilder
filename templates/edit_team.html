@@ -52,7 +52,7 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
       <button style="margin-bottom: 20px;" type="submit" class="btn btn-dark" name="teamid" value="{{team[0]}}">Add Pokémon</button>
      </form>
      {% endif %}
-    <form action="/editpokemon" style="background-color: rgba(220,220,220,0.8)">
+    <form action="/editpokemon" style="background-color: rgba(220,220,220,0.9)">
       <!-- pokemon is a dictionary of the pokemon on the team keyed by pkminid -->
       {% for pkmn in pokemon %}
       <div class="form-row row">
@@ -81,8 +81,8 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
     </form>
 
     </div>
-    <div style="background-color: rgba(220,220,220,0.8); padding-top: 20px;" class="col">
-      <h3>Strengths:</h3>
+    <div style="background-color: rgba(220,220,220,0.9); padding-top: 20px;" class="col">
+      <h3>Strengths</h3>
       <b>In Offense:</b><br>
       {% for type in strengths['offensive'] %}
       {{type}}{{ ", " if not loop.last }}  
@@ -92,8 +92,8 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
       {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
     </div>
-    <div style="background-color: rgba(220,220,220,0.8); padding-top: 20px;" class="col">
-      <h3>Weaknesses:</h3>
+    <div style="background-color: rgba(220,220,220,0.9); padding-top: 20px;" class="col">
+      <h3>Weaknesses</h3>
       <b>In Offense:</b><br>
       {% for type in weaknesses['offensive'] %}
       {{type}}{{ ", " if not loop.last }} 
