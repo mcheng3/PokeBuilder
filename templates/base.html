@@ -15,74 +15,93 @@
 
   {% endblock %}
 </head>
-<body style="height:100%;
-            {% block background %}
-	          {% endblock %}">
-  <!-- MAIN NAVBAR ============================================= -->
-  <nav class="navbar navbar-expand-lg navbar-dark"
-	     style="background-color: #D1603D">
+<body style="height:100%; position: relative; min-height: 100vh; padding-bottom: 30px;
+{% block background %}
+{% endblock %}">
+<!-- MAIN NAVBAR ============================================= -->
+<nav class="navbar navbar-expand-lg navbar-dark"
+style="background-color: #D1603D">
 
-    <!-- the brand icon: -->
-    <a class="navbar-brand" href="/"><h3>PokéBuilder</h3></a>
+<!-- the brand icon: -->
+<a class="navbar-brand" href="/"><h3>PokéBuilder</h3></a>
 
-    <!-- the toggler button for when the navbar gets collapsed -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- the toggler button for when the navbar gets collapsed -->
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+  <span class="navbar-toggler-icon"></span>
+</button>
 
-    <!-- the items in the navbar -->
-    <div class="collapse navbar-collapse" id="navbar">
-
-
-      {% if loggedin %}
-      <!-- the navbar pieces are grouped together for simple alignment -->
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/profile">Profile</a>
-        <a class="nav-item nav-link" href="/createteam">Create Team</a>
-    	</div>
-      <!-- the searchbar -->
-    	<form class="form-inline ml-auto" action="/search">
-        <input style="margin-right: 10px;" name="search" type="search" placeholder="Team Name">
-    	<button style="margin-right: 10px;padding-left: 35px;padding-right: 35px;"class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-    	</form>
-      <div class="navbar-nav align-self-end">
-        <a class="nav-item btn nav-link-success btn-danger" style="margin-bottom: 2px;" href="/logout">Logout</a>
-    	</div>
-      {% else %}
-      <!-- the searchbar -->
-    	<form class="form-inline ml-auto" action="/search">
-        <input style="margin-right: 10px;" name="search" type="search" placeholder="Team Name">
-        <button style="margin-right: 10px;padding-left: 35px;padding-right: 35px;"class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      <div class="navbar-nav align-self-end">
-        <a class="btn nav-link-success btn-success nav-item my-2 my-sm-0" href="/login">Login</a>
-        <a class="nav-item nav-link" href="/signup">or Sign up</a>
-    	</div>
-      {% endif %}
-    </div>
-  </nav>
+<!-- the items in the navbar -->
+<div class="collapse navbar-collapse" id="navbar">
 
 
-  <br>
-    <div class="text-center">
-      <div style="color: red; font-style: italic">
-    	   {% set messages=get_flashed_messages() %}
-    	   {% for m in messages %}
-    	   {{m}}
-         <br>
-    	   {% endfor %}
-      </div>
-    </div>
-    <br>
+  {% if loggedin %}
+  <!-- the navbar pieces are grouped together for simple alignment -->
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" href="/profile">Profile</a>
+    <a class="nav-item nav-link" href="/createteam">Create Team</a>
+  </div>
+  <!-- the searchbar -->
+  <form class="form-inline ml-auto" action="/search">
+    <input style="margin-right: 10px;" name="search" type="search" placeholder="Team Name">
+    <button style="margin-right: 10px;padding-left: 35px;padding-right: 35px;"class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  <div class="navbar-nav align-self-end">
+    <a class="nav-item btn nav-link-success btn-danger" style="margin-bottom: 2px;" href="/logout">Logout</a>
+  </div>
+  {% else %}
+  <!-- the searchbar -->
+  <form class="form-inline ml-auto" action="/search">
+    <input style="margin-right: 10px;" name="search" type="search" placeholder="Team Name">
+    <button style="margin-right: 10px;padding-left: 35px;padding-right: 35px;"class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  <div class="navbar-nav align-self-end">
+    <a class="btn nav-link-success btn-success nav-item my-2 my-sm-0" href="/login">Login</a>
+    <a class="nav-item nav-link" href="/signup">or Sign up</a>
+  </div>
+  {% endif %}
+</div>
+</nav>
 
-    {% block body %}{% endblock %}
-    <!-- javascript stuff required for dropdowns -->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    
-    {% block extrajs %}{% endblock %}
 
+<br>
+<div class="text-center">
+  <div style="color: red; font-style: italic">
+   {% set messages=get_flashed_messages() %}
+   {% for m in messages %}
+   {{m}}
+   <br>
+   {% endfor %}
+ </div>
+</div>
+<br>
+
+
+{% block body %}{% endblock %}
+
+<!-- javascript stuff required for dropdowns -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+{% block extrajs %}{% endblock %}
+<style>
+  .footer {
+    min-height: 10vh;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: rgba(10, 30, 63, 0.8);
+    color: white;
+    text-align: center;
+  }
+</style>
+<div class="footer">
+  <p>
+    <h6>PokéBuilder</h6>
+    Michael Cheng, Jake Goldman, Kristin Lin, and Philip Park<br>
+    Uses Pokéapi V2
+  </p>
+</div>
 </body>
 
 </html>
