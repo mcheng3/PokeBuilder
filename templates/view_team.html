@@ -42,22 +42,22 @@ background-image:url({{url_for('static',filename='profile.png')}});
        <h4>Strengths</h4>
       <b>In Offense:</b><br>
       {% for type in strengths['offensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
       <br><b>In Defense:</b><br>
       {% for type in strengths['defensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
     </div>
     <div class = "col-5">
       <h4>Weaknesses</h4>
       <b>In Offense:</b><br>
       {% for type in weaknesses['offensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
       <br><b>In Defense:</b><br>
       {% for type in weaknesses['defensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
     </div>
   </div>

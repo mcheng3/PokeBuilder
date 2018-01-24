@@ -82,25 +82,25 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
 
     </div>
     <div style="background-color: rgba(220,220,220,0.8)" class="col">
-      <h3>STRENGTHS:</h3>
+      <h3>Strengths:</h3>
       <b>In Offense:</b><br>
       {% for type in strengths['offensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }}  
       {% endfor %}
       <br><b>In Defense:</b><br>
       {% for type in strengths['defensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
     </div>
     <div style="background-color: rgba(220,220,220,0.8)" class="col">
-      <h3>WEAKNESSES:</h3>
+      <h3>Weaknesses:</h3>
       <b>In Offense:</b><br>
       {% for type in weaknesses['offensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
       <br><b>In Defense:</b><br>
       {% for type in weaknesses['defensive'] %}
-      {{type}}, 
+      {{type}}{{ ", " if not loop.last }} 
       {% endfor %}
     </div>
   </div>
