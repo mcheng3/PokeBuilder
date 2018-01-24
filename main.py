@@ -28,9 +28,9 @@ def root():
         else:
             bottom_five.append(top_ten[team])
     for team in range(0, len(top_recent)):
-        if team < (len(top_recent)+2)/3:
+        if team < (len(top_recent)+1)/3:
             recent_thalf.append(top_recent[team])
-        elif team < 2 * ((len(top_recent)+2)/3):
+        elif team < 2 * ((len(top_recent)+1)/3):
             recent_bhalf.append(top_recent[team])            
         else:
             recent_another.append(top_recent[team])            
