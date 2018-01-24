@@ -1,4 +1,26 @@
 h3{
-	font: sans-serif;
+	font: sans-serif initial;
+	font-weight: 600;
+}
+
+h6{
+	margin-top: -10px;
+}
+
+h4{
 	font-weight: 700;
+}
+
+.bold{
+	font-weight: 600;
+}
+
+.footer {
+    min-height: 9vh;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: rgba(10, 30, 63, 0.85);
+    color: white;
+    text-align: center;
 }
