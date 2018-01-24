@@ -28,9 +28,9 @@ def root():
         else:
             bottom_five.append(top_ten[team])
     for team in range(0, len(top_recent)):
-        if team < (len(top_recent)+2)/3:
+        if team < (len(top_recent)+1)/3:
             recent_thalf.append(top_recent[team])
-        elif team < 2 * ((len(top_recent)+2)/3):
+        elif team < 2 * ((len(top_recent)+1)/3):
             recent_bhalf.append(top_recent[team])            
         else:
             recent_another.append(top_recent[team])            
@@ -115,8 +115,9 @@ def profile():
 #---------------------------------------
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
-    print(request.args['search'])
-    results = database.search_name(request.args['search'])
+    search_term = request.args['search'].replace("\'", "\'\'")
+    print search_term
+    results = database.search_name(search_term)
     return render_template("search.html",
                            results = results,
                            loggedin = auth.is_logged_in())
@@ -328,6 +329,15 @@ def edit_pokemon():
                                loggedin = auth.is_logged_in(),
                                action = "editpokemon?id=" + request.args['pkmnid'])
 
+@app.route("/fillform")
+def fillform():
+    pkmnid = request.args['id']
+    pkmninfo = database.return_pkmn(int(pkmnid))
+    print "HEllo"
+    print pkmninfo
+    response = {'name': pkmninfo[1], 'moves': pkmninfo[5], 'type':pkmninfo[7], 'abilities':pkmninfo[4], 'img':pkmninfo[8]}
+    return response
+    
 
 @app.route("/pokedata")
 def pokedata():

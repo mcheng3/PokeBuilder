@@ -356,7 +356,7 @@ def get_recent():
     c = db.cursor()
 
     #getting the top ten most upvoted teams
-    c.execute("SELECT * FROM teams ORDER BY teamid DESC LIMIT 16;" %())
+    c.execute("SELECT * FROM teams ORDER BY teamid DESC LIMIT 15;" %())
     top_ten = c.fetchall()
 
     print "LATEST"
