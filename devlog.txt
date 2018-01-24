@@ -94,3 +94,6 @@ Today I worked on remove pokemon, adding types to the database for pokemon, and 
 chengM -- 2018-01-24 00:50:03
 Now shows previously submitted answers on /editpokemon form
 
+linK -- 2018-01-24 02:56:46
+Added strengths and weaknesses feature.
+
