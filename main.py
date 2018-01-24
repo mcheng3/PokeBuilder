@@ -258,7 +258,15 @@ def create_pokemon():
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
         moves += request.form['move3']
-        if len(movelist) != len(set(movelist)):
+        print "MOVELIST" 
+        print movelist
+        try:
+            if movelist.index("") != -1:
+                flash("Please select all 4 moves")
+                return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+        except ValueError:
+            print 
+        if len(movelist) == 4 and len(movelist) != len(set(movelist)):
             flash("Do not select a move more than once")
             return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "createpokemon?id=" + request.args['id'])
         else:
@@ -297,7 +305,15 @@ def edit_pokemon():
         moves += request.form['move3']
         movelist.append(request.form['move3'])
         # if one move was selected multiple times
-        if len(movelist) != len(set(movelist)):
+        print "MOVELIST" 
+        print movelist
+        try:
+            if movelist.index("") != -1:
+                flash("Please select all 4 moves")
+                return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+        except ValueError:
+            print 
+        if len(movelist) == 4 and len(movelist) != len(set(movelist)):
             flash("Do not select a move more than once")
             return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
         else:
@@ -333,3 +349,4 @@ if __name__ == "__main__":
 #    api.type_info("electric")
     app.debug = True
     app.run()
+    
