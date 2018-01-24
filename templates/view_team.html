@@ -3,9 +3,12 @@
 Poke Viewer
 {% endblock %}
 
+{% block background %}
+background-image:url({{url_for('static',filename='profile.png')}});
+{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container" style="background-color: rgba(255,255,255,0.3);">
 	<div class="row">
 		<div class = "col-8">
 			<h1>{{ team[2] }}</h1>
@@ -51,7 +54,7 @@ Poke Viewer
 			{% for poke in poke_teams %}
       <div class="row">
       <div class="col-1"><img src={{poke_teams[poke][8]}}></div>
-			<div class="col-4"><ol style="margin-top: 10px">
+			<div class="col"><ol style="margin-top: 10px">
 				<b>SPECIES</b>: {{poke_teams[poke][1]}} <br>
 				<b>ABILITIES</b>: {{poke_teams[poke][4]}} <br>
 				<b>MOVES</b>: {{poke_teams[poke][5]}} 
