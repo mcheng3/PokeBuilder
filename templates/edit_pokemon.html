@@ -19,21 +19,24 @@ background-attachment: fixed;
 <div class="container">
 
   <div class="row">
-
     <div>
       <form id="pokeform" action="/{{action}}" method="POST" >
-	<h1>Select Pokémon</h1><select name="pokemon" id="pokemon" style="width:300px;" type="text">
+	  <h1>Select Pokémon</h1><select name="pokemon" id="pokemon" style="width:300px;" type="text">
           <!-- Dropdown List Option -->
 	</select><img style="color: #384a66; padding-left: 10px;" alt="   Please select a pokemon" id="sprite">
   	<input name="img" type="hidden" id="spriteimg" value=""> 
-	<h5>Types:</h5>
+	<br><br>
+	<h5><span style="background-color: rgba(255, 255, 255, .7);">TYPES:</span></h5>
 	<span id="type"></span>
 	<span id="loading"> </span>
-	<h5>Ability:</h5>
 	<input name="type" type="hidden" id="typeinput" value="">
+	<br>
+	<h5><span style="background-color: rgba(255, 255, 255, .7);">ABILITY:</span></h5>
+
 	<select name="ability" id="abilitieslist" style="width:300px;" type="text">
 	</select>
-	<h5>Moves:</h5>
+	<br><br>
+	<h5><span style="background-color: rgba(255, 255, 255, .7);">MOVES:</span></h5>
 	<select name="move0" id="moveslist0" style="width:200px;" type="text">
 	</select>
 	<select name="move1" id="moveslist1" style="width:200px;" type="text">
