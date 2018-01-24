@@ -3,12 +3,12 @@
 ---
 Welcome to our project, __PokéBuilder__!
 
-[<h2>Link to our demo video</h2>](https://www.youtube.com) 
+[<h2>Link to our demo video</h2>](https://youtu.be/XTyc5oLf238) 
 
 Our pokemon team builder will allow you to create custom pokémon teams, giving you a variety of stats to guide your decisions.  
 This project requires the Requests library.
 #### Directions for using our site:  
-1. Create an account, and login with it.  
+1. Go to the root route, create an account by pressing "Sign up" in the navbar, and login with it.  
 2. Create a team by clicking "Create Team" in the navbar. After filling in the inputs, click "Save Changes".
 3. Add a pokemon by clicking "Add Pokemon".
 4. Click a pokemon under "Select Pokemon", and wait until the sprite appears. Fill in all the boxes, and press Submit.
