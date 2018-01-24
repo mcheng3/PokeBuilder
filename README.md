@@ -9,8 +9,11 @@ Our pokemon team builder will allow you to create custom pokémon teams, giving 
 
 #### Directions for using our site:  
 1. Create an account, and login with it.  
-2. Create a team by clicking "Create Team" in the navbar.
-3. Search for a team by typing in the search box in the navbar.  
+2. Create a team by clicking "Create Team" in the navbar. After filling in the inputs, click "Save Changes".
+3. Add a pokemon by clicking "Add Pokemon".
+4. Click a pokemon under "Select Pokemon", and wait until the sprite appears. Fill in all the boxes, and press Submit.
+4. Search for a team by typing in the search box in the navbar.  
 
-#### Known bugs:
+#### Known bugs and issues:
 Occasionally, the API request times out. Two things might have happened. If there is a JSON error printed in terminal, restart the flask app. Otherwise, the API might be offline. To check, [go to this link](https://pokeapi.co/)
+  
