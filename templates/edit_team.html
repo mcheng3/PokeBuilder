@@ -80,9 +80,28 @@ background-image:url({{url_for('static',filename='cuteee.png')}});
       {% endfor %}
     </form>
 
-  </div>
-  <div class="col">
-    <p>TEAM ANALYSIS AND STRENGTH/WEAKNESS COMING SOON<p>
+    </div>
+    <div style="background-color: rgba(220,220,220,0.8)" class="col">
+      <h3>STRENGTHS:</h3>
+      <b>In Offense:</b><br>
+      {% for type in strengths['offensive'] %}
+      {{type}}, 
+      {% endfor %}
+      <br><b>In Defense:</b><br>
+      {% for type in strengths['defensive'] %}
+      {{type}}, 
+      {% endfor %}
+    </div>
+    <div style="background-color: rgba(220,220,220,0.8)" class="col">
+      <h3>WEAKNESSES:</h3>
+      <b>In Offense:</b><br>
+      {% for type in weaknesses['offensive'] %}
+      {{type}}, 
+      {% endfor %}
+      <br><b>In Defense:</b><br>
+      {% for type in weaknesses['defensive'] %}
+      {{type}}, 
+      {% endfor %}
     </div>
   </div>
   {% endif %}

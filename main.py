@@ -172,12 +172,23 @@ def view_team():
         id = int(request.args["id"])
         team = database.find_team(id)
         mine = 'user' in session and session["user"] == team[1]
+
         # get poke list from team; find pokemon info
         pokedict2 = {}
+        alltypes = list()
         for poke in team[8].split(","):
             print poke
             if poke != '':
-                pokedict2[str(poke)] = database.return_pkmn(int(poke))[0]
+                pokeinfo = database.return_pkmn(int(poke))[0]
+                pokedict2[str(poke)] = pokeinfo
+                #create comprehensive list of types
+                for ptype in pokeinfo[7].split(","):
+                    if ptype not in alltypes:
+                        alltypes.append(ptype)
+
+        sandw = api.get_sandw(alltypes)
+        print sandw
+
         #check if it's favorited already
         faves = list()
         if 'user' in session:
@@ -186,6 +197,8 @@ def view_team():
                                loggedin = auth.is_logged_in(),
                                team = team,
                                favorited = str(id) in faves,
+                               strengths = sandw[0],
+                               weaknesses = sandw[1],
                                mine = mine,
                                poke_teams = pokedict2)
 
@@ -212,16 +225,24 @@ def edit_team():
         team = database.find_team(id)
         pokemon = team[8].split(",")
 
-        # list of tuples- id, name&moves
+        # list of tuples- id, name&moves & list of types
         pokedict2 = {}
+        alltypes = list()
         for poke in pokemon:
             print poke
             pokelist = []
             if poke != '':
                 # append name and moves to tuple
-                pokelist.append(database.return_pkmn(int(poke))[0][1])
-                pokelist.append(database.return_pkmn(int(poke))[0][8])
+                pokeinfo = database.return_pkmn(int(poke))[0]
+                pokelist.append(pokeinfo[1])
+                pokelist.append(pokeinfo[8])
                 pokedict2[str(poke)] = pokelist
+                #create comprehensive list of types
+                for ptype in pokeinfo[7].split(","):
+                    if ptype not in alltypes:
+                        alltypes.append(ptype)
+
+        sandw = api.get_sandw(alltypes)
 
         print pokedict2
         return render_template("edit_team.html",
@@ -230,6 +251,8 @@ def edit_team():
                                action = "editteam?id=" + str(team[0]),
                                created = True,
                                pokemon = pokedict2,
+                               strengths = sandw[0],
+                               weaknesses = sandw[1],
                                more = len(pokedict2) < 6,
                                team = team)
 
