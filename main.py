@@ -115,8 +115,9 @@ def profile():
 #---------------------------------------
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
-    print(request.args['search'])
-    results = database.search_name(request.args['search'])
+    search_term = request.args['search'].replace("\'", "\'\'")
+    print search_term
+    results = database.search_name(search_term)
     return render_template("search.html",
                            results = results,
                            loggedin = auth.is_logged_in())
