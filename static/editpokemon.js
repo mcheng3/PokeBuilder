@@ -25,28 +25,31 @@ $( document).ready(function() {
             data: moves
         });
     };
-     
+
     $("#abilitieslist").select2({
         data: abilities
     });
     
 });
 
+
 var transmit = function(e){
     
     var input = $('#pokemon :selected').text();
     $.ajax({
 
-    url: '/pokedata',
-    type: 'GET',
-    data: {'name':input},
-    success: function(d){
-        console.log(d);
+        url: '/pokedata',
+        type: 'GET',
+        data: {'name':input},
+        success: function(d){
+            console.log(d);
         //console.log(JSON.parse(d));
         d = JSON.parse(d);
-        $("#sprite").attr("src", d['img']); 
+        $("#sprite").attr("src", d['img']);
+        $("#sprite").attr("alt", "No sprite found"); 
         $("#spriteimg").attr("value", d['img']);
-        moves = d['moves'];
+        moves = d['moves']
+        moves.unshift("");
         console.log(moves);
         for(i = 0; i < 4; i++){
             $("#moveslist" + i).empty();
@@ -55,21 +58,26 @@ var transmit = function(e){
             });
         };
         abilities = d['abilities'];
+        abilities.unshift("");
         $("#abilitieslist").empty();
         $("#abilitieslist").select2({
-        data: abilities
+            data: abilities
         });
         $("type").html("");
         var types = "";
+        var typelist = "";
         d["type"].forEach(function(item){
-        types += item["type"]["name"] + "<br>";
+            types += item["type"]["name"] + "<br>";
+            typelist += item["type"]["name"] + ","
         });
         document.getElementById("type").innerHTML = types;
+        console.log(typelist);
+        $("#typeinput").attr("value", typelist);
         $("#pokesubmit").removeAttr(d['disabled']);
         $("#pokesubmit").attr("class", d['btn'] + " btn-dark");
         $("#pokesubmit").html("Submit");
     }
-    });
+});
     
 };
 

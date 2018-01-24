@@ -183,6 +183,20 @@ def return_pkmn(pkmnid):
     print pkmn_info
     return pkmn_info
 
+#returns type (nature) of the pokemon
+def return_type(pkmnid):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    c.execute("SELECT nature FROM pokemon WHERE pkmnid = %d;" %(pkmnid))
+    nature_s = c.fetchone()[0]
+    nature_l = nature_s.split(",")
+
+    return nature_l
+
+    db.commit()
+    db.close()
+
 def match_pass(username, password):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -307,10 +321,12 @@ def delete_poke(teamid, delete_pkmn):
     #deleting from team datatable
     c.execute("SELECT pkmnid FROM teams WHERE teamid = %d;" %(teamid))
     old_string = c.fetchone()[0]
-    if old_string.endswith(delete_pkmn):
-        new_string = old_string.replace('%s', '' %(str(delete_pkmn)))
+    if old_string.endswith(str(delete_pkmn)):
+        new_string = old_string.replace(str(delete_pkmn), '')
     else:
-        new_string = old_string.replace('%s,', '' %(str(delete_pkmn)))
+        new_string = old_string.replace(str(delete_pkmn) + ", " , '')
+    c.execute("UPDATE teams SET pkmnid = \"%s\" WHERE teamid = %d;" %(new_string, teamid))
+    db.commit()
 
     #deleting from pokemon datatable
     c.execute("DELETE FROM pokemon WHERE pkmnid = %d;" %(delete_pkmn))
@@ -334,6 +350,22 @@ def get_ten():
 
     db.commit()
     db.close()
+
+def get_recent():
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    #getting the top ten most upvoted teams
+    c.execute("SELECT * FROM teams ORDER BY teamid DESC LIMIT 16;" %())
+    top_ten = c.fetchall()
+
+    print "LATEST"
+    print top_ten
+    return top_ten
+
+    db.commit()
+    db.close()
+
 
 if __name__ == "__main__":
     system("rm data/app.db")

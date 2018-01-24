@@ -14,17 +14,35 @@ app.secret_key = "THIS IS NOT SECURE"
 @app.route('/')
 def root():
     top_ten = database.get_ten()
+    top_recent = database.get_recent()
+
+    # trying to separate into lists for columns
     top_five = list()
     bottom_five = list()
-    for team in range(0, 10):
-        if team < 5:
+    recent_thalf = list()
+    recent_bhalf = list()
+    recent_another = list()
+    for team in range(0, len(top_ten)):
+        if team < len(top_ten)/2:
             top_five.append(top_ten[team])
         else:
             bottom_five.append(top_ten[team])
+    for team in range(0, len(top_recent)):
+        if team < (len(top_recent)+2)/3:
+            recent_thalf.append(top_recent[team])
+        elif team < 2 * ((len(top_recent)+2)/3):
+            recent_bhalf.append(top_recent[team])            
+        else:
+            recent_another.append(top_recent[team])            
     return render_template("index.html",
                            loggedin = auth.is_logged_in(),
                            top_five = top_five,
-                           bottom_five = bottom_five)
+                           bottom_five = bottom_five,
+                           recent_thalf = recent_thalf,
+                           recent_bhalf = recent_bhalf,
+                           recent_another = recent_another)
+
+
 
 
 #---------------------------------------
@@ -129,11 +147,14 @@ def create():
 @app.route('/viewteam', methods = ['POST', 'GET'])
 def view_team():
     if request.method == 'POST':
+        # edit team; go to edit_team
         if 'edit' in request.form:
             return redirect(url_for("edit_team", id = request.args['id']))
+        # delete team; database call; return to profile
         elif 'delete' in request.form:
             database.delete_team(int(request.args['id']))
             return redirect(url_for("profile"))
+        # favorite team; dataase call; stay on team page
         elif 'favorite' in request.form:
             if 'user' in session:
                 id = request.args["id"]
@@ -141,6 +162,7 @@ def view_team():
                 return redirect(url_for("view_team", id = id))
             else:
                 return redirect(url_for('login'))
+        # favorited; unfavorite button; database call; stay on page
         else:
             id = request.args["id"]
             database.remove_favorite(session["user"], int(id))
@@ -149,11 +171,13 @@ def view_team():
         id = int(request.args["id"])
         team = database.find_team(id)
         mine = 'user' in session and session["user"] == team[1]
+        # get poke list from team; find pokemon info
         pokedict2 = {}
         for poke in team[8].split(","):
             print poke
             if poke != '':
                 pokedict2[str(poke)] = database.return_pkmn(int(poke))[0]
+        #check if it's favorited already
         faves = list()
         if 'user' in session:
             faves = database.return_favorites(session["user"])[0][0].split(",")
@@ -171,19 +195,29 @@ def view_team():
 @app.route('/editteam', methods = ['POST', 'GET'])
 def edit_team():
     if request.method == 'POST':
-        print "posted"
-        database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
-        return redirect(url_for("view_team", id = request.args['id']))
+        print request.args
+        if 'deletepkmn' in request.args:
+            teamid = request.args['deletepkmn'].split(",")[1]
+            pkmnid = request.args['deletepkmn'].split(",")[0]
+            database.delete_poke(int(teamid), int(pkmnid))
+            #go back to edit page
+            return redirect(url_for('edit_team', id=teamid))
+        else :
+            #save the team again
+            database.update_team(request.args['id'], request.form['teamname'], request.form['teamdesc'], request.form['teamvers'], "NONE", "NONE")
+            return redirect(url_for("view_team", id = request.args['id']))
     else:
         id = int(request.args["id"])
         team = database.find_team(id)
         pokemon = team[8].split(",")
+
+        # list of tuples- id, name&moves
         pokedict2 = {}
-        
         for poke in pokemon:
             print poke
             pokelist = []
             if poke != '':
+                # append name and moves to tuple
                 pokelist.append(database.return_pkmn(int(poke))[0][1])
                 pokelist.append(database.return_pkmn(int(poke))[0][8])
                 pokedict2[str(poke)] = pokelist
@@ -195,6 +229,7 @@ def edit_team():
                                action = "editteam?id=" + str(team[0]),
                                created = True,
                                pokemon = pokedict2,
+                               more = len(pokedict2) < 6,
                                team = team)
 
 #---------------------------------------
@@ -206,13 +241,31 @@ def create_pokemon():
     if request.method == 'POST':
         print "IMAGE: " + request.form['img']
         teamid = request.args['id']
-        print teamid
+
+        #list of types
+        typelist = request.form['type'][:-1]
+
+        #get selected moves and put in list form
         moves = ""
+        movelist = []
+
+        for x in range(0, 3):
+            moves += (request.form['move' + str(x)]) + ", "
+            movelist.append(request.form['move' + str(x)])
+        moves += request.form['move3']
+        movelist.append(request.form['move3'])
+        # if one move was selected multiple times
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
         moves += request.form['move3']
-        database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", int(teamid), request.form['img'])
-        return redirect(url_for("edit_team", id = request.args['id']))
+        if len(movelist) != len(set(movelist)):
+            flash("Do not select a move more than once")
+            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "createpokemon?id=" + request.args['id'])
+        else:
+            #add to database
+            database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, int(teamid), request.form['img'])
+        
+            return redirect(url_for("edit_team", id = request.args['id']))
     else:
         teamid = request.args['teamid']
         return render_template("edit_pokemon.html",
@@ -227,14 +280,32 @@ def create_pokemon():
 @app.route('/editpokemon', methods = ['POST', 'GET'])
 def edit_pokemon():
     if request.method == 'POST':
+        #team id and pokemon id separated by comma
         print request.args['id']
         teampkmn = request.args['id'].split(",")
+
+        #list of types
+        typelist = request.form['type'][:-1]
+        
+        #get selected moves and put in list form
         moves = ""
+        movelist = []
+
         for x in range(0, 3):
             moves += (request.form['move' + str(x)]) + ", "
+            movelist.append(request.form['move' + str(x)])
         moves += request.form['move3']
-        database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", "N/A", request.form['img'])
-        return redirect(url_for("edit_team", id=int(teampkmn[1])))
+        movelist.append(request.form['move3'])
+        # if one move was selected multiple times
+        if len(movelist) != len(set(movelist)):
+            flash("Do not select a move more than once")
+            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+        else:
+            #update database with new pokemon traits
+            database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, request.form['img'])
+
+            #return to edit_team
+            return redirect(url_for("edit_team", id=int(teampkmn[1])))
     else:
         #you're going to need the id of the pokemon and the team
         return render_template("edit_pokemon.html",
@@ -259,5 +330,6 @@ def pokedata():
     return json.dumps(response)
 
 if __name__ == "__main__":
+#    api.type_info("electric")
     app.debug = True
     app.run()
