@@ -19,36 +19,15 @@ $( document).ready(function() {
     });
     
     var abilities =[];
-    $("#moveslist0").on("select2:select", function(e) {
-        var data = e.params.data;
-        updateMoves();
-    });
-    $("#moveslist0").select2({
-        data: moves
-    });
-    $("#moveslist1").select2({
-        data: moves
-    });
-    $("#moveslist1").on("select2:select", function(e) {
-        var data = e.params.data;
-        updateMoves();
-    });
-    $("#moveslist2").select2({
-        data: moves
-    });
-    $("#moveslist2").on("select2:select", function(e) {
-        var data = e.params.data;
-        updateMoves();
-    });
-    $("#moveslist3").select2({
-        data: moves
-    });
-    $("#moveslist3").on("select2:select", function(e) {
-        var data = e.params.data;
-        updateMoves();
-    });
+
+    for(i = 0; i < 4; i++){
+        $("#moveslist" + i).select2({
+            data: moves
+        });
+    };
+     
     $("#abilitieslist").select2({
-    data: abilities
+        data: abilities
     });
     
 });
@@ -69,22 +48,12 @@ var transmit = function(e){
         $("#spriteimg").attr("value", d['img']);
         moves = d['moves'];
         console.log(moves);
-        $("#moveslist0").empty();
-        $("#moveslist0").select2({
-            data: moves
-        });
-        $("#moveslist1").empty();
-        $("#moveslist1").select2({
-            data: moves
-        });
-        $("#moveslist2").empty();
-        $("#moveslist2").select2({
-            data: moves
-        });
-        $("#moveslist3").empty();
-        $("#moveslist3").select2({
-            data: moves
-        });
+        for(i = 0; i < 4; i++){
+            $("#moveslist" + i).empty();
+            $("#moveslist" + i).select2({
+                data: moves
+            });
+        };
         abilities = d['abilities'];
         $("#abilitieslist").empty();
         $("#abilitieslist").select2({

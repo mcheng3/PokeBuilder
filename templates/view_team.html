@@ -50,12 +50,13 @@ Poke Viewer
 			<h4>Pokemon</h4>
 			{% for poke in poke_teams %}
       <div class="row">
-      <img src={{poke_teams[poke][8]}}>
-			<ol style="margin-top: 10px">
+      <div class="col-1"><img src={{poke_teams[poke][8]}}></div>
+			<div class="col-4"><ol style="margin-top: 10px">
 				<b>SPECIES</b>: {{poke_teams[poke][1]}} <br>
 				<b>ABILITIES</b>: {{poke_teams[poke][4]}} <br>
 				<b>MOVES</b>: {{poke_teams[poke][5]}} 
 			</ol>
+      </div>
       </div>
 			{% endfor %}
 		</div>
