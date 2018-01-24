@@ -185,9 +185,9 @@ def view_team():
                 for ptype in pokeinfo[7].split(","):
                     if ptype not in alltypes:
                         alltypes.append(ptype)
-
-        sandw = api.get_sandw(alltypes)
-        print sandw
+        sandw = ["", ""]
+        if len(alltypes) != 0:
+            sandw = api.get_sandw(alltypes)
 
         #check if it's favorited already
         faves = list()
@@ -242,7 +242,9 @@ def edit_team():
                     if ptype not in alltypes:
                         alltypes.append(ptype)
 
-        sandw = api.get_sandw(alltypes)
+        sandw = ["", ""]
+        if len(alltypes) != 0:
+            sandw = api.get_sandw(alltypes)
 
         print pokedict2
         return render_template("edit_team.html",
@@ -279,9 +281,6 @@ def create_pokemon():
         moves += request.form['move3']
         movelist.append(request.form['move3'])
         # if one move was selected multiple times
-        for x in range(0, 3):
-            moves += (request.form['move' + str(x)]) + ", "
-        moves += request.form['move3']
         print "MOVELIST" 
         print movelist
         try:
