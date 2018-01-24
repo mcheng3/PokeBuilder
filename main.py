@@ -333,12 +333,12 @@ def edit_pokemon():
 
 @app.route("/fillform")
 def fillform():
-    pkmnid = request.args['id']
+    pkmnid = request.args.get('id')
     pkmninfo = database.return_pkmn(int(pkmnid))[0]
-    response = {'name': pkmninfo[1], 'moves': pkmninfo[5], 'type':pkmninfo[7], 'abilities':pkmninfo[4], 'img': pkmninfo[8]}
+    response = {'name': pkmninfo[1], 'moves': pkmninfo[5], 'type':pkmninfo[7], 'ability':pkmninfo[4], 'img': pkmninfo[8]}
     print "HELLO"
     print response
-    return response
+    return json.dumps(response)
     
 
 @app.route("/pokedata")
