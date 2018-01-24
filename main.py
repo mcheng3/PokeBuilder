@@ -313,6 +313,15 @@ def edit_pokemon():
                                loggedin = auth.is_logged_in(),
                                action = "editpokemon?id=" + request.args['pkmnid'])
 
+@app.route("/fillform")
+def fillform():
+    pkmnid = request.args['id']
+    pkmninfo = database.return_pkmn(int(pkmnid))
+    print "HEllo"
+    print pkmninfo
+    response = {'name': pkmninfo[1], 'moves': pkmninfo[5], 'type':pkmninfo[7], 'abilities':pkmninfo[4], 'img':pkmninfo[8]}
+    return response
+    
 
 @app.route("/pokedata")
 def pokedata():
