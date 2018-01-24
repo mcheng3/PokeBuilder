@@ -8,10 +8,11 @@ $( document).ready(function() {
         data: pokemon
     });
     if($("#action").attr("class") == "edit"){
+        $("#pokesubmit").html("Loading...");
         var pkmncsv = get("pkmnid")
         console.log(pkmncsv);
         var pos = pkmncsv.indexOf(",");
-        var pkmnid = pkmncsv.slice(1, pos);
+        var pkmnid = pkmncsv.slice(0, pos);
         console.log(pkmnid);
         fillForm(pkmnid);
     }
