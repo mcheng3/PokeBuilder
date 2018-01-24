@@ -264,12 +264,12 @@ def create_pokemon():
         try:
             if movelist.index("") != -1:
                 flash("Please select all 4 moves")
-                return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+                return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'], which = "create")
         except ValueError:
             print 
         if len(movelist) == 4 and len(movelist) != len(set(movelist)):
             flash("Do not select a move more than once")
-            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "createpokemon?id=" + request.args['id'])
+            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "createpokemon?id=" + request.args['id'], which = "create")
         else:
             #add to database
             database.create_poke(request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, int(teamid), request.form['img'])
@@ -279,6 +279,7 @@ def create_pokemon():
         teamid = request.args['teamid']
         return render_template("edit_pokemon.html",
                                loggedin = auth.is_logged_in(),
+                               which = "create",
                                action = "createpokemon?id=" + str(teamid))
 
 
@@ -311,12 +312,12 @@ def edit_pokemon():
         try:
             if movelist.index("") != -1:
                 flash("Please select all 4 moves")
-                return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+                return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'], which = "edit")
         except ValueError:
             print 
         if len(movelist) == 4 and len(movelist) != len(set(movelist)):
             flash("Do not select a move more than once")
-            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'])
+            return render_template("edit_pokemon.html", loggedin = auth.is_logged_in(), action = "editpokemon?id=" + request.args['id'], which = "edit")
         else:
             #update database with new pokemon traits
             database.update_poke(int(teampkmn[0]), request.form['pokemon'], "N/A", 0, request.form['ability'], moves, "N/A", typelist, request.form['img'])
@@ -327,6 +328,7 @@ def edit_pokemon():
         #you're going to need the id of the pokemon and the team
         return render_template("edit_pokemon.html",
                                loggedin = auth.is_logged_in(),
+                               which = "edit",
                                action = "editpokemon?id=" + request.args['pkmnid'])
 
 @app.route("/fillform")
@@ -335,7 +337,7 @@ def fillform():
     pkmninfo = database.return_pkmn(int(pkmnid))
     print "HEllo"
     print pkmninfo
-    response = {'name': pkmninfo[1], 'moves': pkmninfo[5], 'type':pkmninfo[7], 'abilities':pkmninfo[4], 'img':pkmninfo[8]}
+    response = {'name': pkmninfo[1], 'moves': pkmninfo[5], 'abilities':pkmninfo[4]}
     return response
     
 

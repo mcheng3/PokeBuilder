@@ -7,7 +7,14 @@ $( document).ready(function() {
     $("#pokemon").select2({
         data: pokemon
     });
-
+    if($("#action").attr("class") == "edit"){
+        var pkmncsv = get("pkmnid")
+        console.log(pkmncsv);
+        var pos = pkmncsv.indexOf(",");
+        var pkmnid = pkmncsv.slice(0, pos);
+        console.log(pkmnid);
+        fillForm();
+    }
     $("#pokemon").on("select2:select", function(e) {
         $("#pokesubmit").html("Loading...");
         $("#pokesubmit").attr("disabled");
@@ -32,6 +39,10 @@ $( document).ready(function() {
     
 });
 
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
 
 var transmit = function(e){
     
