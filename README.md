@@ -1,11 +1,13 @@
 # Team Piggy My Jiggy Kindly  
 ### Michael Cheng, Jake Goldman, Kristin Lin, Philip Park
+#### Period 9
 ---
 Welcome to our project, __PokéBuilder__!
 
 [<h2>Link to our demo video</h2>](https://youtu.be/XTyc5oLf238) 
 
-Our pokemon team builder will allow you to create custom pokémon teams, giving you a variety of stats to guide your decisions.  
+Our pokemon team builder will allow you to create custom pokémon teams, giving you a variety of tools to guide your decisions. Teams can also be favorited (upvoted), so they reach the front page.
+
 This project requires the Requests library.
 #### Directions for using our site:  
 1. Go to the root route, create an account by pressing "Sign up" in the navbar, and login with it.  
