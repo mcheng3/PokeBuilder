@@ -1,5 +1,5 @@
 # Team Piggy My Jiggy Kindly  
-### Michael Cheng, Jake Goldman, Kristin Lin, Philip Park
+### Michael Cheng (Project Manager), Jake Goldman, Kristin Lin, Philip Park
 #### Period 9
 ---
 Welcome to our project, __PokéBuilder__!
